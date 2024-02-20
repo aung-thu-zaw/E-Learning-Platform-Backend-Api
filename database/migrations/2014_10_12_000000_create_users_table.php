@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,10 +12,25 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('google_id')->unique()->nullable();
+            $table->string('facebook_id')->unique()->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('username')->unique();
+            $table->string('display_name');
+            $table->string('headline')->nullable();
+            $table->text('about_me')->nullable();
+            $table->enum('role', ['admin', 'instructor', 'student'])->default('student');
+            $table->enum('status', ['active', 'suspended'])->default('active');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('facebook_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('pinterest_url')->nullable();
+            $table->string('youtube_url')->nullable();
+            $table->string('github_url')->nullable();
+            $table->string('personal_website_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
