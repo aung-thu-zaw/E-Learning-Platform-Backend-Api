@@ -23,10 +23,10 @@ class SocialAuthController extends Controller
         try {
             $serviceUser = Socialite::driver($service)->stateless()->user();
         } catch (InvalidStateException $e) {
-            return redirect(env("FRONTEND_URL").'?error=Unable to login using '.$service.' please try again.');
+            return redirect(env('FRONTEND_URL').'?error=Unable to login using '.$service.' please try again.');
         }
 
-        if(in_array($service, ["google","facebook"])) {
+        if (in_array($service, ['google', 'facebook'])) {
 
             return $this->handleAuthenticate($serviceUser, $service);
         } else {
@@ -38,16 +38,16 @@ class SocialAuthController extends Controller
     private function handleAuthenticate($serviceUser, $serviceProvider): RedirectResponse
     {
         $user = User::where('provider', $serviceProvider)
-                    ->where('provider_id', $serviceUser->getId())
-                    ->first();
+            ->where('provider_id', $serviceUser->getId())
+            ->first();
 
-        if (!$user) {
+        if (! $user) {
             $user = $this->createUserFromServiceUser($serviceUser, $serviceProvider);
         }
 
         Auth::login($user);
 
-        return redirect(env("FRONTEND_URL"));
+        return redirect(env('FRONTEND_URL'));
 
     }
 

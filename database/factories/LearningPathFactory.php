@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\LearningPath;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LearningPathFactory extends Factory
 {
@@ -28,7 +27,7 @@ class LearningPathFactory extends Factory
             'description' => $this->faker->text(),
             'materials' => $this->faker->word(),
             'final_product' => $this->faker->word(),
-            'level' => $this->faker->randomElement(["beginner","intermediate","advanced","all_levels"]),
+            'level' => $this->faker->randomElement(['beginner', 'intermediate', 'advanced', 'all_levels']),
             'creator_id' => User::factory(),
         ];
     }

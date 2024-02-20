@@ -21,9 +21,9 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
-    use Notifiable;
     use HasRoles;
     use HasSlug;
+    use Notifiable;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -63,13 +63,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Attribute::make(
             get: function ($value) {
-                if(!$value) {
+                if (! $value) {
                     return asset("storage/avatars/default-avatar-$this->id.png");
 
-                } elseif(!str_starts_with($value, 'https')) {
+                } elseif (! str_starts_with($value, 'https')) {
                     return asset("storage/avatars/$value");
 
-                } elseif(str_starts_with($value, 'https')) {
+                } elseif (str_starts_with($value, 'https')) {
                     return $value;
                 }
             }
@@ -85,5 +85,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ResetPasswordQueued($token));
     }
-
 }

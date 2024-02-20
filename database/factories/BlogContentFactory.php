@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\BlogCategory;
 use App\Models\BlogContent;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BlogContentFactory extends Factory
 {
@@ -29,7 +28,7 @@ class BlogContentFactory extends Factory
             'slug' => $this->faker->slug(),
             'thumbnail' => $this->faker->word(),
             'content' => $this->faker->paragraphs(3, true),
-            'status' => $this->faker->randomElement(["draft","published"]),
+            'status' => $this->faker->randomElement(['draft', 'published']),
             'published_at' => $this->faker->dateTime(),
             'blog_category_id' => BlogCategory::factory(),
         ];

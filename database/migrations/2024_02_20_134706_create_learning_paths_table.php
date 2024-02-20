@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('materials');
             $table->string('final_product');
-            $table->enum('level', ["beginner","intermediate","advanced","all_levels"]);
+            $table->enum('level', ['beginner', 'intermediate', 'advanced', 'all_levels']);
             $table->foreignId('creator_id');
             $table->timestamps();
         });

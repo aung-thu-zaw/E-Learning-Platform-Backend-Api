@@ -19,20 +19,22 @@ class SocialAuthMiddleware
 
         $enabledServices = [];
         foreach ($services as $service) {
-            if (config('services.' . $service)) {
+            if (config('services.'.$service)) {
                 $enabledServices[] = $service;
             }
         }
 
-        if (!in_array(strtolower($request->service), $enabledServices)) {
+        if (! in_array(strtolower($request->service), $enabledServices)) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'invalid social service'
+                    'message' => 'invalid social service',
                 ], 403);
             }
+
             return redirect()->back();
         }
+
         return $next($request);
     }
 }

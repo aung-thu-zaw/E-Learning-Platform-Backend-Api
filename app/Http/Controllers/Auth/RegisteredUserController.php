@@ -24,9 +24,9 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'display_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'captcha_token' => ['required',new RecaptchaRule()]
+            'captcha_token' => ['required', new RecaptchaRule()],
         ]);
 
         $user = User::create([
@@ -37,8 +37,8 @@ class RegisteredUserController extends Controller
 
         $colors = ['#f44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFC107', '#FF9800', '#FF5722'];
 
-        if (!is_dir(storage_path("app/public/avatars"))) {
-            mkdir(storage_path("app/public/avatars"), 0775, true);
+        if (! is_dir(storage_path('app/public/avatars'))) {
+            mkdir(storage_path('app/public/avatars'), 0775, true);
         }
 
         $avatar = new Avatar();

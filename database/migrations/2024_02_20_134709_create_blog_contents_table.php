@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumbnail');
             $table->text('content');
-            $table->enum('status', ["draft","published"])->default('draft');
+            $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamp('published_at')->nullable();
             $table->foreignId('blog_category_id');
             $table->timestamps();

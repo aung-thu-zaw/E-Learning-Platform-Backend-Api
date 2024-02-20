@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Section;
 use App\Models\Subcategory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
 {
@@ -33,7 +32,7 @@ class CourseFactory extends Factory
             'course_description' => $this->faker->text(),
             'project_description' => $this->faker->text(),
             'spread_by_section' => $this->faker->boolean(),
-            'level' => $this->faker->randomElement(["beginner","intermediate","advanced","all_levels"]),
+            'level' => $this->faker->randomElement(['beginner', 'intermediate', 'advanced', 'all_levels']),
         ];
     }
 }

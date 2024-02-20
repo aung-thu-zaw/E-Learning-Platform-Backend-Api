@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\FacebookAuthController;
-use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -39,7 +37,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+Route::get('/auth/redirect/{service}', [SocialAuthController::class, 'redirect']);
 
-Route::get('/auth/redirect/{service}', [SocialAuthController::class,"redirect"]);
-
-Route::get('/auth/callback/{service}', [SocialAuthController::class,"callback"]);
+Route::get('/auth/callback/{service}', [SocialAuthController::class, 'callback']);
