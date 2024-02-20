@@ -1,0 +1,73 @@
+created:
+    - database/factories/SliderFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/SubcategoryFactory.php
+    - database/factories/TagFactory.php
+    - database/factories/CourseFactory.php
+    - database/factories/SectionFactory.php
+    - database/factories/LessonFactory.php
+    - database/factories/ResourceFactory.php
+    - database/factories/ProjectFactory.php
+    - database/factories/SubtitleFactory.php
+    - database/factories/LearningPathFactory.php
+    - database/factories/LearningPathCourseFactory.php
+    - database/factories/BlogCategoryFactory.php
+    - database/factories/BlogContentFactory.php
+    - database/migrations/2024_02_20_134656_create_sliders_table.php
+    - database/migrations/2024_02_20_134657_create_categories_table.php
+    - database/migrations/2024_02_20_134658_create_subcategories_table.php
+    - database/migrations/2024_02_20_134659_create_tags_table.php
+    - database/migrations/2024_02_20_134700_create_courses_table.php
+    - database/migrations/2024_02_20_134701_create_sections_table.php
+    - database/migrations/2024_02_20_134702_create_lessons_table.php
+    - database/migrations/2024_02_20_134703_create_resources_table.php
+    - database/migrations/2024_02_20_134704_create_projects_table.php
+    - database/migrations/2024_02_20_134705_create_subtitles_table.php
+    - database/migrations/2024_02_20_134706_create_learning_paths_table.php
+    - database/migrations/2024_02_20_134707_create_learning_path_courses_table.php
+    - database/migrations/2024_02_20_134708_create_blog_categories_table.php
+    - database/migrations/2024_02_20_134709_create_blog_contents_table.php
+    - database/migrations/2024_02_20_134710_create_course_tag_table.php
+    - database/migrations/2024_02_20_134711_create_blog_content_course_table.php
+    - app/Models/Slider.php
+    - app/Models/Category.php
+    - app/Models/Subcategory.php
+    - app/Models/Tag.php
+    - app/Models/Course.php
+    - app/Models/Section.php
+    - app/Models/Lesson.php
+    - app/Models/Resource.php
+    - app/Models/Project.php
+    - app/Models/Subtitle.php
+    - app/Models/LearningPath.php
+    - app/Models/LearningPathCourse.php
+    - app/Models/BlogCategory.php
+    - app/Models/BlogContent.php
+    - database/seeders/CategorySeeder.php
+    - database/seeders/SubcategorySeeder.php
+    - database/seeders/CourseSeeder.php
+    - database/seeders/SectionSeeder.php
+    - database/seeders/LessonSeeder.php
+    - database/seeders/ResourceSeeder.php
+    - database/seeders/ProjectSeeder.php
+    - database/seeders/SubtitleSeeder.php
+    - database/seeders/TagSeeder.php
+    - database/seeders/BlogCategorySeeder.php
+    - database/seeders/BlogContentSeeder.php
+    - database/seeders/Seeder.php
+models:
+    User: { provider_id: 'string nullable', provider: 'enum:facebook,google nullable', avatar: 'string nullable', username: string, display_name: string, headline: 'string nullable', about_me: 'text nullable', role: 'enum:admin,instructor,student default:student', status: 'enum:active,suspended default:active', email: string, email_verified_at: 'datetime nullable', password: 'string nullable', facebook_url: 'string nullable', twitter_url: 'string nullable', instagram_url: 'string nullable', pinterest_url: 'string nullable', youtube_url: 'string nullable', github_url: 'string nullable', personal_website_url: 'string nullable', remember_token: 'string:100 nullable' }
+    Slider: { title: string, description: text, button: string, url: string, image: string, status: 'boolean default:false' }
+    Category: { name: 'string unique', slug: 'string unique', description: text, image: string, status: 'boolean default:false', relationships: { hasMany: 'Subcategory, Course, Tag' } }
+    Subcategory: { category_id: 'id foreign:categories.id onDelete', name: 'string unique', slug: 'string unique', status: 'boolean default:false', relationships: { belongsTo: Category, hasMany: 'Course, Tag' } }
+    Tag: { category_id: 'id foreign:categories.id nullable', subcategory_id: 'id foreign:subcategories.id nullable', name: 'string unique', slug: 'string unique', relationships: { belongsTo: 'Category, Subcategory', belongsToMany: Course } }
+    Course: { category_id: 'id foreign:categories.id onDelete', subcategory_id: 'id foreign:subcategories.id onDelete', section_id: 'id foreign:section.id onDelete nullable', thumbnail: 'string nullable', title: 'string unique', slug: 'string unique', course_description: text, project_description: 'text nullable', spread_by_section: 'boolean default:false', level: 'enum:beginner,intermediate,advanced,all_levels', relationships: { belongsTo: 'Category, Subcategory', hasMany: 'Section, Lesson, Resource, Project', belongsToMany: 'BlogContent, Tag' } }
+    Section: { title: string, slug: string, relationships: { belongsTo: Course, hasMany: Lesson } }
+    Lesson: { section_id: 'id foreign:section.id onDelete nullable', course_id: 'id foreign:courses.id onDelete', title: string, slug: string, thumbnail: 'string nullable', video_path: string, description: 'text nullable', duration_seconds: 'int unsigned', relationships: { belongsTo: 'Course, Section', hasMany: Subtitle } }
+    Resource: { title: string, file_path: string, relationships: { belongsTo: Course } }
+    Project: { course_id: 'id foreign:courses.id onDelete', user_id: 'id foreign:users.id onDelete', title: string, thumbnail: string, submission: string, content: string, relationships: { belongsTo: 'Course, User' } }
+    Subtitle: { lesson_id: 'id foreign:lessons.id onDelete', language: string, content: text, relationships: { belongsTo: Lesson } }
+    LearningPath: { creator: 'foreignId:users.id nullable', title: 'string unique', slug: 'string unique', description: text, materials: string, final_product: 'string,', level: 'enum:beginner,intermediate,advanced,all_levels', relationships: { belongsTo: 'User:creator' } }
+    LearningPathCourse: { learning_path_id: 'foreignId:learning_paths.id onDelete', course_id: 'foreignId:courses.id onDelete', title: string, description: text, relationships: { hasMany: Course, belongsTo: LearningPath } }
+    BlogCategory: { name: 'string unique', slug: 'string unique', description: text, status: 'boolean default:false', relationships: { hasMany: BlogContent } }
+    BlogContent: { category_id: 'id foreign:blog_categories.id onDelete', author_id: 'id foreign:users.id onDelete', title: 'string unique', slug: 'string unique', thumbnail: string, content: text, status: 'enum:draft,published default:draft', published_at: 'timestamp nullable', relationships: { belongsTo: 'BlogCategory, User:author', belongsToMany: Course } }

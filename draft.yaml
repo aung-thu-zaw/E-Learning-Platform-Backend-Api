@@ -1,0 +1,143 @@
+models:
+  # For Courses
+  # Banner:
+
+  Slider:
+    title: string
+    description: text
+    button: string
+    url: string
+    image: string
+    status: boolean default:false
+
+  # Coupon:
+
+  Category:
+    name: string unique
+    slug: string unique
+    description: text
+    image: string
+    status: boolean default:false
+    relationships:
+      hasMany: Subcategory, Course, Tag
+
+  Subcategory:
+    category_id: id foreign:categories.id onDelete
+    name: string unique
+    slug: string unique
+    status: boolean default:false
+    relationships:
+      belongsTo: Category
+      hasMany: Course, Tag
+
+  Tag:
+    category_id: id foreign:categories.id nullable
+    subcategory_id: id foreign:subcategories.id nullable
+    name: string unique
+    slug: string unique
+    relationships:
+      belongsTo: Category, Subcategory
+      belongsToMany: Course
+
+  Course:
+    category_id: id foreign:categories.id onDelete
+    subcategory_id: id foreign:subcategories.id onDelete
+    section_id: id foreign:section.id onDelete nullable
+    thumbnail: string nullable
+    title: string unique
+    slug: string unique
+    course_description: text
+    project_description: text nullable
+    spread_by_section: boolean default:false
+    level: enum:beginner,intermediate,advanced,all_levels
+    relationships:
+      belongsTo: Category, Subcategory
+      hasMany: Section, Lesson, Resource, Project
+      belongsToMany: BlogContent, Tag
+
+  Section:
+    title: string
+    slug: string
+    relationships:
+      belongsTo: Course
+      hasMany: Lesson
+
+  Lesson:
+    section_id: id foreign:section.id onDelete nullable
+    course_id: id foreign:courses.id onDelete
+    title: string
+    slug: string
+    thumbnail: string nullable
+    video_path: string
+    description: text nullable
+    duration_seconds: int unsigned
+    relationships:
+      belongsTo: Course, Section
+      hasMany: Subtitle
+
+  Resource:
+    title: string
+    file_path: string
+    relationships:
+      belongsTo: Course
+
+  Project:
+    course_id: id foreign:courses.id onDelete
+    user_id: id foreign:users.id onDelete
+    title: string
+    thumbnail: string
+    submission: string
+    content: string
+    relationships:
+      belongsTo: Course, User
+
+  Subtitle:
+    lesson_id: id foreign:lessons.id onDelete
+    language: string
+    content: text
+    relationships:
+      belongsTo: Lesson
+
+  LearningPath:
+    creator: foreignId:users.id nullable
+    title: string unique
+    slug: string unique
+    description: text
+    materials: string
+    final_product: string,
+    level: enum:beginner,intermediate,advanced,all_levels
+    relationships:
+      belongsTo: User:creator
+
+  LearningPathCourse:
+    learning_path_id: foreignId:learning_paths.id onDelete
+    course_id: foreignId:courses.id onDelete
+    title: string
+    description: text
+    relationships:
+      hasMany: Course
+      belongsTo: LearningPath
+
+  # For Blogs
+  BlogCategory:
+    name: string unique
+    slug: string unique
+    description: text
+    status: boolean default:false
+    relationships:
+      hasMany: BlogContent
+
+  BlogContent:
+    category_id: id foreign:blog_categories.id onDelete
+    author_id: id foreign:users.id onDelete
+    title: string unique
+    slug: string unique
+    thumbnail: string
+    content: text
+    status: enum:draft,published default:draft
+    published_at: timestamp nullable
+    relationships:
+      belongsTo: BlogCategory, User:author
+      belongsToMany: Course
+
+seeders: Category, Subcategory, Course, Section, Lesson, Resource, Project, Subtitle, Tag, BlogCategory, BlogContent,
