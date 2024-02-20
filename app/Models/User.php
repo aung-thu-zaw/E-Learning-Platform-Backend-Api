@@ -62,7 +62,17 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? asset("storage/avatars/default-avatar-$this->id.png") : asset("storage/avatars/$value"),
+            get: function ($value) {
+                if(!$value) {
+                    return asset("storage/avatars/default-avatar-$this->id.png");
+
+                } elseif(!str_starts_with($value, 'https')) {
+                    return asset("storage/avatars/$value");
+
+                } elseif(str_starts_with($value, 'https')) {
+                    return $value;
+                }
+            }
         );
     }
 
