@@ -12,6 +12,10 @@ class BlogCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        BlogCategory::factory()->count(5)->create();
+        BlogCategory::factory()->create(["name" => "Tech Tips","status" => true]);
+        BlogCategory::factory()->create(["name" => "Study Hacks","status" => true]);
+        BlogCategory::factory()->create(["name" => "Subject Spotlights","status" => true]);
+        BlogCategory::factory()->create(["name" => "Career Boosters","status" => true]);
+        BlogCategory::factory()->create(["name" => "Success Stories","status" => true]);
     }
 }

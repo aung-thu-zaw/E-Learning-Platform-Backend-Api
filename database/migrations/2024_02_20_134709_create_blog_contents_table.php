@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,7 @@ return new class extends Migration
 
         Schema::create('blog_contents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('blog_categories')->cascadeOnDelete();
+            $table->foreignId('blog_category_id')->constrained('blog_categories')->cascadeOnDelete();
             $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->string('title')->unique();
             $table->string('slug')->unique();
@@ -23,7 +22,6 @@ return new class extends Migration
             $table->text('content');
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamp('published_at')->nullable();
-            $table->foreignId('blog_category_id');
             $table->timestamps();
         });
 

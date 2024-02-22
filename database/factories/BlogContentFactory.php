@@ -21,16 +21,17 @@ class BlogContentFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = BlogCategory::where("status", true)->pluck("id")->toArray();
+        $authors = User::where("role", "admin")->pluck("id")->toArray();
+
         return [
-            'category_id' => BlogCategory::factory(),
-            'author_id' => User::factory(),
-            'title' => $this->faker->sentence(4),
-            'slug' => $this->faker->slug(),
-            'thumbnail' => $this->faker->word(),
-            'content' => $this->faker->paragraphs(3, true),
-            'status' => $this->faker->randomElement(['draft', 'published']),
-            'published_at' => $this->faker->dateTime(),
-            'blog_category_id' => BlogCategory::factory(),
+            'blog_category_id' => fake()->randomElement($categories),
+            'author_id' => fake()->randomElement($authors),
+            'title' => fake()->sentence(),
+            'thumbnail' => fake()->imageUrl(),
+            'content' => fake()->paragraphs(3, true),
+            'status' => fake()->randomElement(['draft', 'published']),
+            'published_at' => fake()->dateTime(),
         ];
     }
 }

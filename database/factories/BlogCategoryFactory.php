@@ -20,10 +20,9 @@ class BlogCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
-            'description' => $this->faker->text(),
-            'status' => $this->faker->boolean(),
+            'name' => fake()->name(),
+            'description' => fake()->text(),
+            'status' => fake()->boolean(),
         ];
     }
 }

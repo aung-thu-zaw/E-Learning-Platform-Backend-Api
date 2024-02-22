@@ -26,5 +26,35 @@ class UserSeeder extends Seeder
         $role = Role::with('permissions')->find(1);
 
         $superAdmin->syncPermissions($role->permissions);
+
+        // Admin
+        User::factory()->create([
+            'display_name' => 'Admin',
+            'role' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'Password!',
+            'status' => 'active',
+        ]);
+
+        // Instructor
+        User::factory()->create([
+            'display_name' => 'Instructor',
+            'role' => 'instructor',
+            'email' => 'instructor@gmail.com',
+            'password' => 'Password!',
+            'status' => 'active',
+        ]);
+
+        // Student
+        User::factory()->create([
+            'display_name' => 'Student',
+            'role' => 'student',
+            'email' => 'student@gmail.com',
+            'password' => 'Password!',
+            'status' => 'active',
+        ]);
+
+
+        User::factory(30)->create(["role" => "admin","status" => "active"]);
     }
 }
