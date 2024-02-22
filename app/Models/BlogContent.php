@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -14,6 +16,7 @@ class BlogContent extends Model
 {
     use HasFactory;
     use HasSlug;
+    use Searchable;
 
     public function getSlugOptions(): SlugOptions
     {
@@ -25,6 +28,16 @@ class BlogContent extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
     }
 
     /**

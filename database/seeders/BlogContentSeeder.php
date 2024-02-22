@@ -12,6 +12,6 @@ class BlogContentSeeder extends Seeder
      */
     public function run(): void
     {
-        BlogContent::factory()->count(100)->create(["status" => "published"]);
+        BlogContent::factory(150)->create(["status" => "published"]);
     }
 }

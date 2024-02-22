@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\ELearning\Blogs;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Blogs\BlogContentResource;
 use App\Models\BlogContent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -13,11 +14,14 @@ class BlogContentController extends Controller
     public function index(): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $blogContent = BlogContent::with(["author","blogCategory"])
+            $blogContent = BlogContent::search(request('query'))
+            ->query(function (Builder $builder) {
+                $builder->with(["author","blogCategory"]);
+            })
             ->where('status', 'published')
             ->orderBy("id", "desc")
-            ->paginate(12)
-            ->withQueryString();
+            ->paginate(15)
+            ->appends(request()->all());
 
             return BlogContentResource::collection($blogContent);
 
@@ -34,7 +38,8 @@ class BlogContentController extends Controller
             $relatedBlogContents = BlogContent::with(["author","blogCategory"])
                 ->where('blog_category_id', $blogContent->blog_category_id)
                 ->where('slug', '!=', $blogContent->slug)
-                ->limit(10)
+                ->inRandomOrder()
+                ->limit(6)
                 ->get();
 
             $blogContentResource = new BlogContentResource($blogContent);

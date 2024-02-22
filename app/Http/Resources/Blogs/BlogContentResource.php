@@ -20,7 +20,7 @@ class BlogContentResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
-            'content' => $request->is('api/v1/contents/*') ? $this->content : str()->limit($this->content, 60, '...'),
+            'content' => $request->is('api/v1/contents/*') ? $this->content : str()->limit($this->content, 100, '...'),
             'published_at' => Carbon::parse($this->published_at)->format('d-F-Y'),
             'author' => [
                 'display_name' => $this->author->display_name,
