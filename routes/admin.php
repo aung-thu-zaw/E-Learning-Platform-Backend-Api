@@ -12,11 +12,19 @@ use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\ChangeBlogContentStatu
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\GetResourcesForBlogContentActionController;
 use App\Http\Controllers\Api\V1\Admin\Newsletter\SendNewsletterController;
 use App\Http\Controllers\Api\V1\Admin\Newsletter\SubscriberController;
+use App\Http\Controllers\Api\V1\Admin\SkillTags\GetResourcesForTagActionController;
+use App\Http\Controllers\Api\V1\Admin\SkillTags\TagController;
+use App\Http\Controllers\Api\V1\Admin\Sliders\ChangeSliderStatusController;
+use App\Http\Controllers\Api\V1\Admin\Sliders\SliderController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
     ->prefix('admin')
     ->group(function () {
+
+        // ========== Sliders ==========
+        Route::apiResource('sliders', SliderController::class);
+        Route::put('/sliders/{slider}/change-status', ChangeSliderStatusController::class);
 
         // ========== Catalogues ==========
         Route::apiResource('categories', CategoryController::class);
@@ -25,6 +33,10 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         Route::apiResource('subcategories', SubcategoryController::class);
         Route::put('/subcategories/{subcategory}/change-status', ChangeSubcategoryStatusController::class);
         Route::get('/subcategory-resources', GetResourcesForSubcategoryActionController::class);
+
+        // ========== Skill Tag ==========
+        Route::apiResource('tags', TagController::class);
+        Route::get('/tag-resources', GetResourcesForTagActionController::class);
 
         // ========== Newsletter ==========
         Route::apiResource('newsletter-subscribers', SubscriberController::class)->only(['index', 'destroy']);

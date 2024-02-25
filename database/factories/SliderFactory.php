@@ -20,12 +20,12 @@ class SliderFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(4),
-            'description' => $this->faker->text(),
-            'button' => $this->faker->word(),
-            'url' => $this->faker->url(),
-            'image' => $this->faker->word(),
-            'status' => $this->faker->boolean(),
+            'title' => fake()->sentence(4),
+            'description' => fake()->paragraph(),
+            'button' => fake()->word(),
+            'url' => fake()->url(),
+            'image' => fake()->imageUrl(),
+            'status' => fake()->boolean(),
         ];
     }
 }

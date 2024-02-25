@@ -12,15 +12,9 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Permission::create(['name' => 'sliders.view', 'group' => 'Slider']);
-        // Permission::create(['name' => 'sliders.create', 'group' => 'Slider']);
-        // Permission::create(['name' => 'sliders.edit', 'group' => 'Slider']);
-        // Permission::create(['name' => 'sliders.delete', 'group' => 'Slider']);
 
-        // Permission::create(['name' => 'coupons.view', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.create', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.edit', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.delete', 'group' => 'Coupon']);
+
+
 
         // Permission::create(['name' => 'categories.view', 'group' => 'Category']);
         // Permission::create(['name' => 'categories.create', 'group' => 'Category']);
@@ -47,6 +41,18 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'learning-paths.edit', 'group' => 'Learning Path']);
         // Permission::create(['name' => 'learning-paths.delete', 'group' => 'Learning Path']);
 
+        // ********** Sliders **********
+        Permission::create(['name' => 'sliders.view', 'group' => 'Slider']);
+        Permission::create(['name' => 'sliders.create', 'group' => 'Slider']);
+        Permission::create(['name' => 'sliders.edit', 'group' => 'Slider']);
+        Permission::create(['name' => 'sliders.delete', 'group' => 'Slider']);
+
+        // ********** Coupons **********
+        // Permission::create(['name' => 'coupons.view', 'group' => 'Coupon']);
+        // Permission::create(['name' => 'coupons.create', 'group' => 'Coupon']);
+        // Permission::create(['name' => 'coupons.edit', 'group' => 'Coupon']);
+        // Permission::create(['name' => 'coupons.delete', 'group' => 'Coupon']);
+
         // ********** Catalogues **********
         Permission::create(['name' => 'categories.view', 'group' => 'Catalogues']);
         Permission::create(['name' => 'categories.create', 'group' => 'Catalogues']);
@@ -57,6 +63,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'subcategories.create', 'group' => 'Catalogues']);
         Permission::create(['name' => 'subcategories.edit', 'group' => 'Catalogues']);
         Permission::create(['name' => 'subcategories.delete', 'group' => 'Catalogues']);
+
+        // ********** Skill Tag **********
+        Permission::create(['name' => 'tags.view', 'group' => 'Skill Tag']);
+        Permission::create(['name' => 'tags.create', 'group' => 'Skill Tag']);
+        Permission::create(['name' => 'tags.edit', 'group' => 'Skill Tag']);
+        Permission::create(['name' => 'tags.delete', 'group' => 'Skill Tag']);
 
         // ********** Newsletter **********
         Permission::create(['name' => 'subscribers.view', 'group' => 'Newsletter']);

@@ -21,11 +21,14 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = Category::pluck("id")->toArray();
+        $subcategories = Subcategory::pluck("id")->toArray();
+
         return [
-            'category_id' => Category::factory(),
-            'subcategory_id' => Subcategory::factory(),
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
+            'category_id' => fake()->randomElement($categories),
+            'subcategory_id' =>  fake()->randomElement($subcategories),
+            'name' => fake()->name(),
+            'slug' => fake()->slug(),
         ];
     }
 }
