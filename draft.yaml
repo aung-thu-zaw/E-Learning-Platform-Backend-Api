@@ -140,4 +140,7 @@ models:
       belongsTo: BlogCategory, User:author
       belongsToMany: Course
 
+  NewsletterSubscriber:
+    email: string unique
+
 seeders: Category, Subcategory, Course, Section, Lesson, Resource, Project, Subtitle, Tag, BlogCategory, BlogContent,

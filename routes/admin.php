@@ -5,11 +5,19 @@ use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\ChangeBlogCategorySt
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\BlogContentController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\ChangeBlogContentStatusController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\GetResourcesForBlogContentActionController;
+use App\Http\Controllers\Api\V1\Admin\Newsletter\SendNewsletterController;
+use App\Http\Controllers\Api\V1\Admin\Newsletter\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
     ->prefix('admin')
     ->group(function () {
+
+        // ========== Newsletter ==========
+        Route::apiResource('newsletter-subscribers', SubscriberController::class)->only(['index', 'destroy']);
+        Route::post('/send-newsletter', SendNewsletterController::class);
+
+        // ========== Blog ==========
         Route::apiResource('blog-categories', BlogCategoryController::class);
         Route::put('/blog-categories/{blog_category}/change-status', ChangeBlogCategoryStatusController::class);
 

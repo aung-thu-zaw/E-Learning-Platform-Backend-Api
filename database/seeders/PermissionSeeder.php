@@ -47,6 +47,11 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'learning-paths.edit', 'group' => 'Learning Path']);
         // Permission::create(['name' => 'learning-paths.delete', 'group' => 'Learning Path']);
 
+        // ********** Newsletter **********
+        Permission::create(['name' => 'subscribers.view', 'group' => 'Newsletter']);
+        Permission::create(['name' => 'subscribers.delete', 'group' => 'Newsletter']);
+        Permission::create(['name' => 'newsletter.send', 'group' => 'Newsletter']);
+
         // ********** Manage Blog **********
         Permission::create(['name' => 'blog-categories.view', 'group' => 'Blog Category']);
         Permission::create(['name' => 'blog-categories.create', 'group' => 'Blog Category']);
