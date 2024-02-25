@@ -20,11 +20,13 @@ class SubcategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = Category::where("status", true)->pluck("id")->toArray();
+
         return [
-            'category_id' => Category::factory(),
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
-            'status' => $this->faker->boolean(),
+            'category_id' => fake()->randomElement($categories),
+            'name' => fake()->name(),
+            'slug' => fake()->slug(),
+            'status' => fake()->boolean(),
         ];
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\ManageBlog;
+namespace App\Http\Requests\Admin\Catalogues;
 
 use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class BlogCategoryRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,26 @@ class BlogCategoryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255', Rule::unique('blog_categories', 'name')],
+            'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
             'description' => ['required'],
             'status' => ['required',Rule::in(['true','false',true,false])],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
 
         $route = $this->route();
 
         if ($route && in_array($this->method(), ['PUT', 'PATCH'])) {
-            $blogCategory = $route->parameter('blog_category');
-            $rules['name'] = ['required', 'string', 'max:255', Rule::unique('blog_categories', 'name')->ignore($blogCategory)];
+            $category = $route->parameter('category');
+            $rules['name'] = ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category)];
+
+            if ($this->hasFile('image')) {
+
+                $rules['image'] = ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'];
+            } else {
+
+                $rules['image'] = ['nullable'];
+            }
         }
 
         return $rules;

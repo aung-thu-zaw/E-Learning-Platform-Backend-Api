@@ -20,11 +20,11 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'slug' => $this->faker->slug(),
-            'description' => $this->faker->text(),
-            'image' => $this->faker->word(),
-            'status' => $this->faker->boolean(),
+            'name' => fake()->name(),
+            'slug' => fake()->slug(),
+            'description' => fake()->paragraph(),
+            'image' => fake()->imageUrl(),
+            'status' => fake()->boolean(),
         ];
     }
 }

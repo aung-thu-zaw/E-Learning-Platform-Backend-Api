@@ -7,6 +7,7 @@ use App\Http\Resources\Admin\BlogCategoryResource;
 use App\Models\BlogCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ChangeBlogCategoryStatusController extends Controller
 {
@@ -18,7 +19,10 @@ class ChangeBlogCategoryStatusController extends Controller
     public function __invoke(Request $request, BlogCategory $blogCategory): JsonResponse|BlogCategoryResource
     {
         try {
-            $request->validate(['status' => ['required', 'boolean']]);
+
+            $request->validate(['status' => ['required', Rule::in(["true","false",true,false])]]);
+
+            $blogCategory->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
 
             $blogCategory->update(['status' => $request->status ]);
 

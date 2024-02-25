@@ -40,7 +40,7 @@ class BlogCategoryController extends Controller
             $blogCategory = BlogCategory::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'status' => $request->status,
+           'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
             ]);
 
             return new BlogCategoryResource($blogCategory);
@@ -64,7 +64,7 @@ class BlogCategoryController extends Controller
             $blogCategory->update([
                 'name' => $request->name,
                 'description' => $request->description,
-                'status' => $request->status,
+           'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
             ]);
 
             return new BlogCategoryResource($blogCategory);
