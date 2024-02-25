@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\ChangeBlogCategorySt
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\BlogContentController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\ChangeBlogContentStatusController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\GetResourcesForBlogContentActionController;
+use App\Http\Controllers\Api\V1\Admin\NavBanners\ChangeNavBannerStatusController;
+use App\Http\Controllers\Api\V1\Admin\NavBanners\NavBannerController;
 use App\Http\Controllers\Api\V1\Admin\Newsletter\SendNewsletterController;
 use App\Http\Controllers\Api\V1\Admin\Newsletter\SubscriberController;
 use App\Http\Controllers\Api\V1\Admin\SkillTags\GetResourcesForTagActionController;
@@ -21,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
     ->prefix('admin')
     ->group(function () {
+
+        // ========== NavBanners ==========
+        Route::apiResource('nav-banners', NavBannerController::class);
+        Route::put('/nav-banners/{nav_banner}/change-status', ChangeNavBannerStatusController::class);
 
         // ========== Sliders ==========
         Route::apiResource('sliders', SliderController::class);

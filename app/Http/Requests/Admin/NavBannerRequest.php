@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsletterRequest extends FormRequest
+class NavBannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,12 @@ class NewsletterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'url'],
+            'button' => ['required', 'string', 'max:255'],
+            'countdown' => ['nullable', 'date'],
+            'start_date_time' => ['required', 'date'],
+            'end_date_time' => ['required', 'date'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
     }

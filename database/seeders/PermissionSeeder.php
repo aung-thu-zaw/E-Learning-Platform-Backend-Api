@@ -41,6 +41,12 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'learning-paths.edit', 'group' => 'Learning Path']);
         // Permission::create(['name' => 'learning-paths.delete', 'group' => 'Learning Path']);
 
+        // ********** NavBanner **********
+        Permission::create(['name' => 'nav-banners.view', 'group' => 'NavBanner']);
+        Permission::create(['name' => 'nav-banners.create', 'group' => 'NavBanner']);
+        Permission::create(['name' => 'nav-banners.edit', 'group' => 'NavBanner']);
+        Permission::create(['name' => 'nav-banners.delete', 'group' => 'NavBanner']);
+
         // ********** Sliders **********
         Permission::create(['name' => 'sliders.view', 'group' => 'Slider']);
         Permission::create(['name' => 'sliders.create', 'group' => 'Slider']);
