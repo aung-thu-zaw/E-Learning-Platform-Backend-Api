@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\GetResourcesForSu
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\SubcategoryController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\ChangeCouponStatusController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\CouponController;
+use App\Http\Controllers\Api\V1\Admin\DatabaseBackupController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\PermissionController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\RoleController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\BlogCategoryController;
@@ -72,4 +73,16 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         // Route::get('/assign-role-permissions', [AssignRolePermissionController::class, 'index']);
         // Route::get('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'show']);
         // Route::patch('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'update']);
+
+
+        // ========== Backup ==========
+        Route::controller(DatabaseBackupController::class)
+        ->prefix('/database-backups')
+        ->name('admin.database-backups.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'backup')->name('backup');
+            Route::delete('/{file}', 'destroy')->name('destroy');
+            Route::get('/{file}/download', 'download')->name('download');
+        });
     });
