@@ -54,10 +54,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'sliders.delete', 'group' => 'Slider']);
 
         // ********** Coupons **********
-        // Permission::create(['name' => 'coupons.view', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.create', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.edit', 'group' => 'Coupon']);
-        // Permission::create(['name' => 'coupons.delete', 'group' => 'Coupon']);
+        Permission::create(['name' => 'coupons.view', 'group' => 'Coupon']);
+        Permission::create(['name' => 'coupons.create', 'group' => 'Coupon']);
+        Permission::create(['name' => 'coupons.edit', 'group' => 'Coupon']);
+        Permission::create(['name' => 'coupons.delete', 'group' => 'Coupon']);
 
         // ********** Catalogues **********
         Permission::create(['name' => 'categories.view', 'group' => 'Catalogues']);

@@ -19,16 +19,14 @@ class ChangeSliderStatusController extends Controller
     public function __invoke(Request $request, Slider $slider): JsonResponse|SliderResource
     {
         try {
-
             $request->validate(['status' => ['required', Rule::in(['true', 'false', true, false])]]);
 
             $slider->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
 
-            $slider->update(['status' => $request->status]);
-
             return new SliderResource($slider);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
+
 }

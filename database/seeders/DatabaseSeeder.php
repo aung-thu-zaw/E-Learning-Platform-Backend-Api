@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             NavBannerSeeder::class,
             SliderSeeder::class,
+            CouponSeeder::class,
             CategorySeeder::class,
             SubcategorySeeder::class,
             TagSeeder::class,

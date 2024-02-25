@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\V1\Admin\Catalogues\Categories\ChangeCategoryStatus
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\ChangeSubcategoryStatusController;
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\GetResourcesForSubcategoryActionController;
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\SubcategoryController;
+use App\Http\Controllers\Api\V1\Admin\Coupons\ChangeCouponStatusController;
+use App\Http\Controllers\Api\V1\Admin\Coupons\CouponController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\BlogCategoryController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\ChangeBlogCategoryStatusController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\BlogContentController;
@@ -31,6 +33,10 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         // ========== Sliders ==========
         Route::apiResource('sliders', SliderController::class);
         Route::put('/sliders/{slider}/change-status', ChangeSliderStatusController::class);
+
+        // ========== Coupons ==========
+        Route::apiResource('coupons', CouponController::class);
+        Route::put('/coupons/{coupon}/change-status', ChangeCouponStatusController::class);
 
         // ========== Catalogues ==========
         Route::apiResource('categories', CategoryController::class);
