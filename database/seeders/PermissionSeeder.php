@@ -92,5 +92,16 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blog-contents.edit', 'group' => 'Blog Content']);
         Permission::create(['name' => 'blog-contents.delete', 'group' => 'Blog Content']);
 
+        // ********** Manage Authority **********
+        Permission::create(['name' => 'permissions.view', 'group' => 'Manage Authority']);
+
+        Permission::create(['name' => 'roles.view', 'group' => 'Manage Authority']);
+        Permission::create(['name' => 'roles.create', 'group' => 'Manage Authority']);
+        Permission::create(['name' => 'roles.edit', 'group' => 'Manage Authority']);
+        Permission::create(['name' => 'roles.delete', 'group' => 'Manage Authority']);
+
+        Permission::create(['name' => 'assign-role-permissions.view', 'group' => 'Manage Authority']);
+        Permission::create(['name' => 'assign-role-permissions.edit', 'group' => 'Manage Authority']);
+
     }
 }

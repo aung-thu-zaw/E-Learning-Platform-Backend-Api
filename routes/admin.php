@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\GetResourcesForSu
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\SubcategoryController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\ChangeCouponStatusController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\CouponController;
+use App\Http\Controllers\Api\V1\Admin\ManageAuthority\PermissionController;
+use App\Http\Controllers\Api\V1\Admin\ManageAuthority\RoleController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\BlogCategoryController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\ChangeBlogCategoryStatusController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\BlogContentController;
@@ -61,4 +63,13 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         Route::apiResource('blog-contents', BlogContentController::class);
         Route::put('/blog-contents/{blog_content}/change-status', ChangeBlogContentStatusController::class);
         Route::get('/blog-content-resources', GetResourcesForBlogContentActionController::class);
+
+        // ========== Manage Authority ==========
+        Route::get('/permissions', [PermissionController::class, 'index']);
+
+        Route::apiResource('roles', RoleController::class);
+
+        // Route::get('/assign-role-permissions', [AssignRolePermissionController::class, 'index']);
+        // Route::get('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'show']);
+        // Route::patch('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'update']);
     });
