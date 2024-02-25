@@ -20,7 +20,7 @@ class SubcategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = Category::where("status", true)->pluck("id")->toArray();
+        $categories = Category::where('status', true)->pluck('id')->toArray();
 
         return [
             'category_id' => fake()->randomElement($categories),

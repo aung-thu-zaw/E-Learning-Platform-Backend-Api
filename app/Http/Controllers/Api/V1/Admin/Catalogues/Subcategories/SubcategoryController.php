@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Catalogues\SubcategoryRequest;
 use App\Http\Resources\Admin\SubcategoryResource;
 use App\Models\Subcategory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -25,8 +23,8 @@ class SubcategoryController extends Controller
     public function index(): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $subcategories = Subcategory::filterSearch(request('search'))->with(["category"])
-            ->orderBy(request('sort', 'id'), request('direction', 'desc'))->paginate(request('per_page', 5))->appends(request()->all());
+            $subcategories = Subcategory::filterSearch(request('search'))->with(['category'])
+                ->orderBy(request('sort', 'id'), request('direction', 'desc'))->paginate(request('per_page', 5))->appends(request()->all());
 
             return SubcategoryResource::collection($subcategories);
         } catch (\Exception $e) {
@@ -40,7 +38,7 @@ class SubcategoryController extends Controller
             $subcategory = Subcategory::create([
                 'category_id' => $request->category_id,
                 'name' => $request->name,
-               'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new SubcategoryResource($subcategory);
@@ -61,10 +59,10 @@ class SubcategoryController extends Controller
     public function update(SubcategoryRequest $request, Subcategory $subcategory): JsonResponse|SubcategoryResource
     {
         try {
-            $subcategory = $subcategory->update([
+            $subcategory->update([
                 'category_id' => $request->category_id,
                 'name' => $request->name,
-               'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new SubcategoryResource($subcategory);

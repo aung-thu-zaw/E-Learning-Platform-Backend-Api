@@ -25,8 +25,8 @@ class CreateBlogContentAction
             'thumbnail' => $thumbnail,
         ]);
 
-        if($data["status"] === 'published') {
-            $blogContent->update(["published_at" => now()]);
+        if ($data['status'] === 'published') {
+            $blogContent->update(['published_at' => now()]);
         }
 
         return $blogContent;

@@ -19,7 +19,7 @@ class ChangeCategoryStatusController extends Controller
     public function __invoke(Request $request, Category $category): JsonResponse|CategoryResource
     {
         try {
-            $request->validate(['status' => ['required', Rule::in(["true","false",true,false])]]);
+            $request->validate(['status' => ['required', Rule::in(['true', 'false', true, false])]]);
 
             $category->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
 

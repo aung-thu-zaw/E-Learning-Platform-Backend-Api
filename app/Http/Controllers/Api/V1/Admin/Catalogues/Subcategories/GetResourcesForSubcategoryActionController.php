@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class GetResourcesForSubcategoryActionController extends Controller
 {
@@ -18,7 +17,7 @@ class GetResourcesForSubcategoryActionController extends Controller
     public function __invoke(): JsonResponse
     {
         try {
-            $categories = Category::select("id", 'name')->where("status", true)->get();
+            $categories = Category::select('id', 'name')->where('status', true)->get();
 
             return response()->json($categories);
         } catch (\Exception $e) {

@@ -21,8 +21,8 @@ class BlogContentFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = BlogCategory::where("status", true)->pluck("id")->toArray();
-        $authors = User::where("role", "admin")->pluck("id")->toArray();
+        $categories = BlogCategory::where('status', true)->pluck('id')->toArray();
+        $authors = User::where('role', 'admin')->pluck('id')->toArray();
 
         return [
             'blog_category_id' => fake()->randomElement($categories),

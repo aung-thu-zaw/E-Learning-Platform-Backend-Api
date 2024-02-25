@@ -13,8 +13,8 @@ use Spatie\Sluggable\SlugOptions;
 class Subcategory extends Model
 {
     use HasFactory;
-    use Searchable;
     use HasSlug;
+    use Searchable;
 
     /**
      * The attributes that should be cast to native types.
@@ -70,7 +70,7 @@ class Subcategory extends Model
             $query->whereHas('category', function ($subquery) use ($searchTerm) {
                 $subquery->where('name', 'like', "%{$searchTerm}%");
             })
-            ->orWhere('name', 'like', "%{$searchTerm}%");
+                ->orWhere('name', 'like', "%{$searchTerm}%");
         });
     }
 }

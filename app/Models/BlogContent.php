@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -82,18 +81,16 @@ class BlogContent extends Model
         return $this->belongsToMany(Course::class);
     }
 
-
     public function scopeFilterSearch($query, $searchTerm)
     {
         return $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('author', function ($subquery) use ($searchTerm) {
                 $subquery->where('display_name', 'like', "%{$searchTerm}%");
             })
-            ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
-                $subquery->where('name', 'like', "%{$searchTerm}%");
-            })
-            ->orWhere('title', 'like', "%{$searchTerm}%");
+                ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
+                    $subquery->where('name', 'like', "%{$searchTerm}%");
+                })
+                ->orWhere('title', 'like', "%{$searchTerm}%");
         });
     }
-
 }

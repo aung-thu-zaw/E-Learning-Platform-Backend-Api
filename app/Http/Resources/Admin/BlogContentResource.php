@@ -15,15 +15,15 @@ class BlogContentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "author_id" => $this->author_id,
-            "blog_category_id" => $this->blog_category_id,
-            "thumbnail" => $this->thumbnail,
-            "title" => $this->title,
-            "slug" => $this->slug,
-            'content' => $request->is('api/v1/admin/blog-contents/*') && $request->method() !== "PUT" ? $this->content : str()->limit($this->content, 60, '...'),
-            "status" => $this->status,
-            "published_at" => $this->published_at,
+            'id' => $this->id,
+            'author_id' => $this->author_id,
+            'blog_category_id' => $this->blog_category_id,
+            'thumbnail' => $this->thumbnail,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $request->is('api/v1/admin/blog-contents/*') && $request->method() !== 'PUT' ? $this->content : str()->limit($this->content, 60, '...'),
+            'status' => $this->status,
+            'published_at' => $this->published_at,
             'author' => [
                 'display_name' => $this->author->display_name,
                 'avatar' => $this->author->avatar,

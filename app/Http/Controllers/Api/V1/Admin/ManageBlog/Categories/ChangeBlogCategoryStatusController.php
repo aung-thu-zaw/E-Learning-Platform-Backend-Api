@@ -20,11 +20,11 @@ class ChangeBlogCategoryStatusController extends Controller
     {
         try {
 
-            $request->validate(['status' => ['required', Rule::in(["true","false",true,false])]]);
+            $request->validate(['status' => ['required', Rule::in(['true', 'false', true, false])]]);
 
             $blogCategory->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
 
-            $blogCategory->update(['status' => $request->status ]);
+            $blogCategory->update(['status' => $request->status]);
 
             return new BlogCategoryResource($blogCategory);
         } catch (\Exception $e) {

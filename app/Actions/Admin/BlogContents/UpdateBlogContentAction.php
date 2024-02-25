@@ -22,7 +22,7 @@ class UpdateBlogContentAction
             'title' => $data['title'],
             'content' => $data['content'],
             'status' => $data['status'],
-            'published_at' => $data["status"] === 'published' && $blogContent->published_at === null ? now() : $blogContent->published_at,
+            'published_at' => $data['status'] === 'published' && $blogContent->published_at === null ? now() : $blogContent->published_at,
             'thumbnail' => $thumbnail,
         ]);
 

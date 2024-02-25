@@ -13,10 +13,8 @@ use Spatie\Sluggable\SlugOptions;
 class Category extends Model
 {
     use HasFactory;
-    use Searchable;
     use HasSlug;
-
-
+    use Searchable;
 
     public function getSlugOptions(): SlugOptions
     {

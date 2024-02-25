@@ -26,9 +26,9 @@ class CategoryController extends Controller
     {
         try {
             $categories = Category::search(request('search'))
-            ->orderBy(request('sort', 'id'), request('direction', 'desc'))
-            ->paginate(request('per_page', 5))
-            ->appends(request()->all());
+                ->orderBy(request('sort', 'id'), request('direction', 'desc'))
+                ->paginate(request('per_page', 5))
+                ->appends(request()->all());
 
             return CategoryResource::collection($categories);
         } catch (\Exception $e) {

@@ -24,9 +24,9 @@ class BlogCategoryController extends Controller
     {
         try {
             $blogCategories = BlogCategory::search(request('search'))
-            ->orderBy(request('sort', 'id'), request('direction', 'desc'))
-            ->paginate(request('per_page', 5))
-            ->appends(request()->all());
+                ->orderBy(request('sort', 'id'), request('direction', 'desc'))
+                ->paginate(request('per_page', 5))
+                ->appends(request()->all());
 
             return BlogCategoryResource::collection($blogCategories);
         } catch (\Exception $e) {
@@ -40,7 +40,7 @@ class BlogCategoryController extends Controller
             $blogCategory = BlogCategory::create([
                 'name' => $request->name,
                 'description' => $request->description,
-           'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new BlogCategoryResource($blogCategory);
@@ -64,7 +64,7 @@ class BlogCategoryController extends Controller
             $blogCategory->update([
                 'name' => $request->name,
                 'description' => $request->description,
-           'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new BlogCategoryResource($blogCategory);

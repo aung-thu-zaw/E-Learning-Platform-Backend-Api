@@ -26,10 +26,10 @@ class BlogContentController extends Controller
     {
         try {
             $blogContents = BlogContent::filterSearch(request('search'))
-            ->with(["author","blogCategory"])
-            ->orderBy(request('sort', 'id'), request('direction', 'desc'))
-            ->paginate(request('per_page', 5))
-            ->appends(request()->all());
+                ->with(['author', 'blogCategory'])
+                ->orderBy(request('sort', 'id'), request('direction', 'desc'))
+                ->paginate(request('per_page', 5))
+                ->appends(request()->all());
 
             return BlogContentResource::collection($blogContents);
         } catch (\Exception $e) {

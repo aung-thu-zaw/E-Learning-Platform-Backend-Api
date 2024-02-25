@@ -7,7 +7,6 @@ use App\Http\Requests\Admin\NewsletterRequest;
 use App\Mail\NewsletterMail;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class SendNewsletterController extends Controller

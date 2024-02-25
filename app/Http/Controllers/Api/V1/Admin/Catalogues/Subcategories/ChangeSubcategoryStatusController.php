@@ -20,11 +20,11 @@ class ChangeSubcategoryStatusController extends Controller
     {
         try {
 
-            $request->validate(['status' => ['required', Rule::in(["true","false",true,false])]]);
+            $request->validate(['status' => ['required', Rule::in(['true', 'false', true, false])]]);
 
             $subcategory->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
 
-            $subcategory->update(['status' => $request->status ]);
+            $subcategory->update(['status' => $request->status]);
 
             return new SubcategoryResource($subcategory);
         } catch (\Exception $e) {

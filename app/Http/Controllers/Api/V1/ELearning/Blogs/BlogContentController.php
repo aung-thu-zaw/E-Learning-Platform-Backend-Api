@@ -15,13 +15,13 @@ class BlogContentController extends Controller
     {
         try {
             $blogContent = BlogContent::search(request('query'))
-            ->query(function (Builder $builder) {
-                $builder->with(["author","blogCategory"]);
-            })
-            ->where('status', 'published')
-            ->orderBy("id", "desc")
-            ->paginate(15)
-            ->appends(request()->all());
+                ->query(function (Builder $builder) {
+                    $builder->with(['author', 'blogCategory']);
+                })
+                ->where('status', 'published')
+                ->orderBy('id', 'desc')
+                ->paginate(15)
+                ->appends(request()->all());
 
             return BlogContentResource::collection($blogContent);
 
@@ -33,9 +33,9 @@ class BlogContentController extends Controller
     public function show(BlogContent $blogContent): JsonResponse
     {
         try {
-            $blogContent->load(["author","blogCategory"]);
+            $blogContent->load(['author', 'blogCategory']);
 
-            $relatedBlogContents = BlogContent::with(["author","blogCategory"])
+            $relatedBlogContents = BlogContent::with(['author', 'blogCategory'])
                 ->where('blog_category_id', $blogContent->blog_category_id)
                 ->where('slug', '!=', $blogContent->slug)
                 ->inRandomOrder()
@@ -45,10 +45,9 @@ class BlogContentController extends Controller
             $blogContentResource = new BlogContentResource($blogContent);
             $relatedBlogContentResource = BlogContentResource::collection($relatedBlogContents);
 
-
             return response()->json([
-                "content" => $blogContentResource,
-                "relatedContents" => $relatedBlogContentResource,
+                'content' => $blogContentResource,
+                'relatedContents' => $relatedBlogContentResource,
             ], 200);
 
         } catch (\Exception $e) {

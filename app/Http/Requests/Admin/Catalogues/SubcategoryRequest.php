@@ -26,7 +26,7 @@ class SubcategoryRequest extends FormRequest
         $rules = [
             'category_id' => ['required', 'numeric', Rule::exists('categories', 'id')],
             'name' => ['required', 'string', 'max:255', Rule::unique('subcategories', 'name')],
-            'status' => ['required',Rule::in(['true','false',true,false])],
+            'status' => ['required', Rule::in(['true', 'false', true, false])],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
 
@@ -34,7 +34,7 @@ class SubcategoryRequest extends FormRequest
 
         if ($route && in_array($this->method(), ['PUT', 'PATCH'])) {
             $subcategory = $route->parameter('subcategory');
-            $rules['name'] = ['required', 'string', 'max:255', Rule::unique('subcategories', 'title')->ignore($subcategory)];
+            $rules['name'] = ['required', 'string', 'max:255', Rule::unique('subcategories', 'name')->ignore($subcategory)];
         }
 
         return $rules;

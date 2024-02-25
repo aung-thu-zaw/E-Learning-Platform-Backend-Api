@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
             'description' => ['required'],
-            'status' => ['required',Rule::in(['true','false',true,false])],
+            'status' => ['required', Rule::in(['true', 'false', true, false])],
             'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];

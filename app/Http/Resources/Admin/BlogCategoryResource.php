@@ -18,7 +18,7 @@ class BlogCategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => $request->is('api/v1/admin/blog-categories/*') && $request->method() !== "PUT" ? $this->description : str()->limit($this->description, 60, '...'),
+            'description' => $request->is('api/v1/admin/blog-categories/*') && $request->method() !== 'PUT' ? $this->description : str()->limit($this->description, 60, '...'),
             'status' => $this->status,
         ];
     }

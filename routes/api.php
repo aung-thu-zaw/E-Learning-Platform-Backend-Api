@@ -16,8 +16,7 @@ Route::get('/user/abilities', AbilityController::class);
 // ********** For Blog Page **********
 Route::get('/content/resources', GetResourcesForBlogPageController::class);
 Route::get('/categories/{blog_category}/contents', CategoryBlogContentController::class);
-Route::get('/contents', [BlogContentController::class,"index"]);
-Route::get('/contents/{blog_content}', [BlogContentController::class,"show"]);
-
+Route::get('/contents', [BlogContentController::class, 'index']);
+Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
 
 require __DIR__.'/admin.php';

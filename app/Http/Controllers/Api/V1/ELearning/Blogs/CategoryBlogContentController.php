@@ -14,12 +14,12 @@ class CategoryBlogContentController extends Controller
     public function __invoke(BlogCategory $blogCategory): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $blogContent = BlogContent::with(["author","blogCategory"])
-            ->where("blog_category_id", $blogCategory->id)
-            ->where('status', 'published')
-            ->orderBy("id", "desc")
-            ->paginate(12)
-            ->withQueryString();
+            $blogContent = BlogContent::with(['author', 'blogCategory'])
+                ->where('blog_category_id', $blogCategory->id)
+                ->where('status', 'published')
+                ->orderBy('id', 'desc')
+                ->paginate(12)
+                ->withQueryString();
 
             return CategoryBlogContentResource::collection($blogContent);
 
