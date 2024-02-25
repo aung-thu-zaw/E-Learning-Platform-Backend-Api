@@ -25,7 +25,7 @@ class BlogCategoryRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('blog_categories', 'name')],
-            'description' => ['required', 'string'],
+            'description' => ['required'],
             'status' => ['required','boolean'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];

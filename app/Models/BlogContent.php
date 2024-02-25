@@ -40,6 +40,13 @@ class BlogContent extends Model
         ];
     }
 
+    protected function publishedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? date('F j, Y', strtotime($value)) : null,
+        );
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -67,11 +74,26 @@ class BlogContent extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
     }
+
+
+    public function scopeFilterSearch($query, $searchTerm)
+    {
+        return $query->where(function ($query) use ($searchTerm) {
+            $query->whereHas('author', function ($subquery) use ($searchTerm) {
+                $subquery->where('display_name', 'like', "%{$searchTerm}%");
+            })
+            ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
+                $subquery->where('name', 'like', "%{$searchTerm}%");
+            })
+            ->orWhere('title', 'like', "%{$searchTerm}%");
+        });
+    }
+
 }

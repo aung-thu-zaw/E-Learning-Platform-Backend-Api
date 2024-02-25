@@ -53,10 +53,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blog-categories.edit', 'group' => 'Blog Category']);
         Permission::create(['name' => 'blog-categories.delete', 'group' => 'Blog Category']);
 
-        // Permission::create(['name' => 'blog-contents.view', 'group' => 'Blog Content']);
-        // Permission::create(['name' => 'blog-contents.create', 'group' => 'Blog Content']);
-        // Permission::create(['name' => 'blog-contents.edit', 'group' => 'Blog Content']);
-        // Permission::create(['name' => 'blog-contents.delete', 'group' => 'Blog Content']);
+        Permission::create(['name' => 'blog-contents.view', 'group' => 'Blog Content']);
+        Permission::create(['name' => 'blog-contents.create', 'group' => 'Blog Content']);
+        Permission::create(['name' => 'blog-contents.edit', 'group' => 'Blog Content']);
+        Permission::create(['name' => 'blog-contents.delete', 'group' => 'Blog Content']);
 
     }
 }

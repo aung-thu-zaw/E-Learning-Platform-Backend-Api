@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin\ManageBlog;
 
+use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BlogContentRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class BlogContentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +23,30 @@ class BlogContentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'blog_category_id' => ['required', 'numeric', Rule::exists('blog_categories', 'id')],
+            'title' => ['required', 'string', 'max:255', Rule::unique('blog_contents', 'title')],
+            'status' => ['required', 'string', Rule::in(['draft', 'published', 'hidden'])],
+            'thumbnail' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
+            'content' => ['required'],
+            'captcha_token' => ['required', new RecaptchaRule()],
         ];
+
+        $route = $this->route();
+
+        if ($route && in_array($this->method(), ['PUT', 'PATCH'])) {
+            $blogContent = $route->parameter('blog_content');
+            $rules['title'] = ['required', 'string', 'max:255', Rule::unique('blog_contents', 'title')->ignore($blogContent)];
+
+            if ($this->hasFile('thumbnail')) {
+
+                $rules['thumbnail'] = ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'];
+            } else {
+
+                $rules['thumbnail'] = ['nullable'];
+            }
+        }
+
+        return $rules;
     }
 }
