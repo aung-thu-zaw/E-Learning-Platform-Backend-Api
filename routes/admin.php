@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\V1\Admin\Courses\GetResourcesForCourseActionControl
 use App\Http\Controllers\Api\V1\Admin\DatabaseBackupController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\PermissionController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\RoleController;
+use App\Http\Controllers\Api\V1\Admin\ManageAuthority\AssignRolePermissions\AssignRolePermissionsController;
+use App\Http\Controllers\Api\V1\Admin\ManageAuthority\AssignRolePermissions\GetResourcesForAssignRolePermissionsActionController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\BlogCategoryController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Categories\ChangeBlogCategoryStatusController;
 use App\Http\Controllers\Api\V1\Admin\ManageBlog\Contents\BlogContentController;
@@ -78,9 +80,10 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
 
         Route::apiResource('roles', RoleController::class);
 
-        // Route::get('/assign-role-permissions', [AssignRolePermissionController::class, 'index']);
-        // Route::get('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'show']);
-        // Route::patch('/assign-role-permissions/{role}', [AssignRolePermissionController::class, 'update']);
+        Route::get('/assign-role-permissions', [AssignRolePermissionsController::class, 'index']);
+        Route::get('/assign-role-permissions/{role}', [AssignRolePermissionsController::class, 'show']);
+        Route::patch('/assign-role-permissions/{role}', [AssignRolePermissionsController::class, 'update']);
+        Route::get('/assign-role-permissions-resources', GetResourcesForAssignRolePermissionsActionController::class);
 
 
         // ========== Backup ==========

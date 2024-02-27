@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\ManageAuthority;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAssignRolePermissionsRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateAssignRolePermissionsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,8 @@ class UpdateAssignRolePermissionsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role_id' => ['required', 'numeric', Rule::exists('roles', 'id')],
+            'permission_id' => ['nullable', 'array', Rule::exists('permissions', 'id')],
         ];
     }
 }
