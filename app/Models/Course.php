@@ -2,16 +2,43 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Course extends Model
 {
     use HasFactory;
+    use HasSlug;
+    use Searchable;
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
     /**
      * The attributes that should be cast to native types.
      *
@@ -25,6 +52,13 @@ class Course extends Model
         'spread_by_section' => 'boolean',
     ];
 
+    protected function thumbnail(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/courses/$value"),
+        );
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -35,19 +69,14 @@ class Course extends Model
         return $this->belongsTo(Subcategory::class);
     }
 
-    public function section(): BelongsTo
-    {
-        return $this->belongsTo(Section::class);
-    }
-
-    public function sections(): HasMany
-    {
-        return $this->hasMany(Section::class);
-    }
-
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function instructor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "instructor_id");
     }
 
     public function resources(): HasMany
@@ -68,5 +97,21 @@ class Course extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function scopeFilterSearch($query, $searchTerm)
+    {
+        return $query->where(function ($query) use ($searchTerm) {
+            $query->whereHas('instructor', function ($subquery) use ($searchTerm) {
+                $subquery->where('display_name', 'like', "%{$searchTerm}%");
+            })
+                ->orWhereHas('category', function ($subquery) use ($searchTerm) {
+                    $subquery->where('name', 'like', "%{$searchTerm}%");
+                })
+                ->orWhereHas('subcategory', function ($subquery) use ($searchTerm) {
+                    $subquery->where('name', 'like', "%{$searchTerm}%");
+                })
+                ->orWhere('title', 'like', "%{$searchTerm}%");
+        });
     }
 }

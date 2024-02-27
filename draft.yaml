@@ -42,28 +42,18 @@ models:
   Course:
     category_id: id foreign:categories.id onDelete
     subcategory_id: id foreign:subcategories.id onDelete
-    section_id: id foreign:section.id onDelete nullable
     thumbnail: string nullable
     title: string unique
     slug: string unique
     course_description: text
     project_description: text nullable
-    spread_by_section: boolean default:false
     level: enum:beginner,intermediate,advanced,all_levels
     relationships:
       belongsTo: Category, Subcategory
-      hasMany: Section, Lesson, Resource, Project
+      hasMany: Lesson, Resource, Project
       belongsToMany: BlogContent, Tag
 
-  Section:
-    title: string
-    slug: string
-    relationships:
-      belongsTo: Course
-      hasMany: Lesson
-
   Lesson:
-    section_id: id foreign:section.id onDelete nullable
     course_id: id foreign:courses.id onDelete
     title: string
     slug: string
@@ -72,7 +62,7 @@ models:
     description: text nullable
     duration_seconds: int unsigned
     relationships:
-      belongsTo: Course, Section
+      belongsTo: Course,
       hasMany: Subtitle
 
   Resource:
@@ -143,4 +133,4 @@ models:
   NewsletterSubscriber:
     email: string unique
 
-seeders: Category, Subcategory, Course, Section, Lesson, Resource, Project, Subtitle, Tag, BlogCategory, BlogContent,
+seeders: Category, Subcategory, Course, Lesson, Resource, Project, Subtitle, Tag, BlogCategory, BlogContent,

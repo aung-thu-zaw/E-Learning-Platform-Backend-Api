@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Section;
 use App\Models\Subcategory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
@@ -22,17 +23,22 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+
+        $categories = Category::pluck("id")->toArray();
+        $subcategories = Subcategory::pluck("id")->toArray();
+        $instructors = User::where("role", "instructor")->pluck("id")->toArray();
+
         return [
-            'category_id' => Category::factory(),
-            'subcategory_id' => Subcategory::factory(),
-            'section_id' => Section::factory(),
-            'thumbnail' => $this->faker->word(),
-            'title' => $this->faker->sentence(4),
-            'slug' => $this->faker->slug(),
-            'course_description' => $this->faker->text(),
-            'project_description' => $this->faker->text(),
-            'spread_by_section' => $this->faker->boolean(),
-            'level' => $this->faker->randomElement(['beginner', 'intermediate', 'advanced', 'all_levels']),
+            'category_id' => fake()->randomElement($categories),
+            'subcategory_id' => fake()->randomElement($subcategories),
+            'instructor_id' => fake()->randomElement($instructors),
+            'thumbnail' => fake()->imageUrl(),
+            'title' => fake()->sentence(4),
+            'slug' => fake()->slug(),
+            'course_description' => fake()->paragraph(),
+            'project_description' => fake()->paragraph(),
+            'level' => fake()->randomElement(['beginner', 'intermediate', 'advanced', 'all_levels']),
+            'status' => fake()->randomElement(['draft', 'pending','published','rejected']),
         ];
     }
 }

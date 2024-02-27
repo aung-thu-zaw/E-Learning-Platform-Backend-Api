@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SubcategorySeeder::class,
             TagSeeder::class,
+            CourseSeeder::class,
             NewsletterSubscriberSeeder::class,
             BlogCategorySeeder::class,
             BlogContentSeeder::class,

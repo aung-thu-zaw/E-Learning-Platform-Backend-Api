@@ -7,6 +7,9 @@ use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\GetResourcesForSu
 use App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories\SubcategoryController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\ChangeCouponStatusController;
 use App\Http\Controllers\Api\V1\Admin\Coupons\CouponController;
+use App\Http\Controllers\Api\V1\Admin\Courses\ChangeCourseStatusController;
+use App\Http\Controllers\Api\V1\Admin\Courses\CourseController;
+use App\Http\Controllers\Api\V1\Admin\Courses\GetResourcesForCourseActionController;
 use App\Http\Controllers\Api\V1\Admin\DatabaseBackupController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\PermissionController;
 use App\Http\Controllers\Api\V1\Admin\ManageAuthority\RoleController;
@@ -53,6 +56,11 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         Route::apiResource('tags', TagController::class);
         Route::get('/tag-resources', GetResourcesForTagActionController::class);
 
+        // ========== Course ==========
+        Route::apiResource('blog-contents', BlogContentController::class);
+        Route::put('/blog-contents/{blog_content}/change-status', ChangeBlogContentStatusController::class);
+        Route::get('/blog-content-resources', GetResourcesForBlogContentActionController::class);
+
         // ========== Newsletter ==========
         Route::apiResource('newsletter-subscribers', SubscriberController::class)->only(['index', 'destroy']);
         Route::post('/send-newsletter', SendNewsletterController::class);
@@ -61,9 +69,9 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         Route::apiResource('blog-categories', BlogCategoryController::class);
         Route::put('/blog-categories/{blog_category}/change-status', ChangeBlogCategoryStatusController::class);
 
-        Route::apiResource('blog-contents', BlogContentController::class);
-        Route::put('/blog-contents/{blog_content}/change-status', ChangeBlogContentStatusController::class);
-        Route::get('/blog-content-resources', GetResourcesForBlogContentActionController::class);
+        Route::apiResource('courses', CourseController::class);
+        Route::put('/courses/{course}/change-status', ChangeCourseStatusController::class);
+        Route::get('/course-resources', GetResourcesForCourseActionController::class);
 
         // ========== Manage Authority ==========
         Route::get('/permissions', [PermissionController::class, 'index']);

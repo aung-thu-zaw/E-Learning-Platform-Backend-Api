@@ -27,11 +27,6 @@ class Lesson extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function section(): BelongsTo
-    {
-        return $this->belongsTo(Section::class);
-    }
-
     public function subtitles(): HasMany
     {
         return $this->hasMany(Subtitle::class);
