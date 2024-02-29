@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AbilityController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\BlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\CategoryBlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\GetResourcesForBlogPageController;
+use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ Route::get('/content/resources', GetResourcesForBlogPageController::class);
 Route::get('/categories/{blog_category}/contents', CategoryBlogContentController::class);
 Route::get('/contents', [BlogContentController::class, 'index']);
 Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
+
+// ********** For Banner **********
+Route::get('/nav-banner', GetNavTopBannerController::class);
+
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';
