@@ -27,7 +27,7 @@ class Course extends Model
 
     public function getRouteKeyName()
     {
-        return 'slug';
+        return 'uuid';
     }
 
     /**

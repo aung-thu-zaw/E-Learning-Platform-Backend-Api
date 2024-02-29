@@ -20,3 +20,4 @@ Route::get('/contents', [BlogContentController::class, 'index']);
 Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
 
 require __DIR__.'/admin.php';
+require __DIR__.'/instructor.php';

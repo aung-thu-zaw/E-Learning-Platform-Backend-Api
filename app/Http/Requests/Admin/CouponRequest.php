@@ -32,7 +32,7 @@ class CouponRequest extends FormRequest
             'expiry_date' => ['nullable', 'date'],
             'free_trial_days' => ['nullable',"numeric"],
             'is_redeemable' => ['required', Rule::in(['true', 'false',true,false])],
-            'captcha_token' => [new RecaptchaRule()],
+            'captcha_token' => ["required",new RecaptchaRule()],
         ];
 
         $route = $this->route();

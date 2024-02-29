@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Admin\Courses;
+namespace App\Actions\Instructor\Courses;
 
 use App\Http\Traits\ImageUpload;
 use App\Models\Course;

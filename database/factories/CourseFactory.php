@@ -29,6 +29,7 @@ class CourseFactory extends Factory
         $instructors = User::where("role", "instructor")->pluck("id")->toArray();
 
         return [
+            'uuid' => fake()->uuid(),
             'category_id' => fake()->randomElement($categories),
             'subcategory_id' => fake()->randomElement($subcategories),
             'instructor_id' => fake()->randomElement($instructors),
