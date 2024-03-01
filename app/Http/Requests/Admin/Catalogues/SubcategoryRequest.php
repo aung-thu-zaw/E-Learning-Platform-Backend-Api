@@ -26,6 +26,8 @@ class SubcategoryRequest extends FormRequest
         $rules = [
             'category_id' => ['required', 'numeric', Rule::exists('categories', 'id')],
             'name' => ['required', 'string', 'max:255', Rule::unique('subcategories', 'name')],
+            'description' => ['required',"string"],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'status' => ['required', Rule::in(['true', 'false', true, false])],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
@@ -35,6 +37,14 @@ class SubcategoryRequest extends FormRequest
         if ($route && in_array($this->method(), ['PUT', 'PATCH'])) {
             $subcategory = $route->parameter('subcategory');
             $rules['name'] = ['required', 'string', 'max:255', Rule::unique('subcategories', 'name')->ignore($subcategory)];
+
+            if ($this->hasFile('image')) {
+
+                $rules['image'] = ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'];
+            } else {
+
+                $rules['image'] = ['nullable'];
+            }
         }
 
         return $rules;

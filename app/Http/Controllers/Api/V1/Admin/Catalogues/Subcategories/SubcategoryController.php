@@ -9,6 +9,8 @@ use App\Models\Subcategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use App\Actions\Admin\Subcategories\CreateSubcategoryAction;
+use App\Actions\Admin\Subcategories\UpdateSubcategoryAction;
 
 class SubcategoryController extends Controller
 {
@@ -35,11 +37,7 @@ class SubcategoryController extends Controller
     public function store(SubcategoryRequest $request): JsonResponse|SubcategoryResource
     {
         try {
-            $subcategory = Subcategory::create([
-                'category_id' => $request->category_id,
-                'name' => $request->name,
-                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
-            ]);
+            $subcategory = (new CreateSubcategoryAction())->handle($request->validated());
 
             return new SubcategoryResource($subcategory);
         } catch (\Exception $e) {
@@ -59,11 +57,8 @@ class SubcategoryController extends Controller
     public function update(SubcategoryRequest $request, Subcategory $subcategory): JsonResponse|SubcategoryResource
     {
         try {
-            $subcategory->update([
-                'category_id' => $request->category_id,
-                'name' => $request->name,
-                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
-            ]);
+
+            $subcategory = (new UpdateSubcategoryAction())->handle($request->validated(), $subcategory);
 
             return new SubcategoryResource($subcategory);
         } catch (\Exception $e) {

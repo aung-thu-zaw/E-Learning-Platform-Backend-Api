@@ -25,9 +25,7 @@ class CategoryRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
-            'description' => ['required'],
             'status' => ['required', Rule::in(['true', 'false', true, false])],
-            'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
 
@@ -36,14 +34,6 @@ class CategoryRequest extends FormRequest
         if ($route && in_array($this->method(), ['PUT', 'PATCH'])) {
             $category = $route->parameter('category');
             $rules['name'] = ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category)];
-
-            if ($this->hasFile('image')) {
-
-                $rules['image'] = ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'];
-            } else {
-
-                $rules['image'] = ['nullable'];
-            }
         }
 
         return $rules;

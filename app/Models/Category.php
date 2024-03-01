@@ -48,12 +48,6 @@ class Category extends Model
         ];
     }
 
-    protected function image(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/categories/$value"),
-        );
-    }
 
     public function subcategories(): HasMany
     {

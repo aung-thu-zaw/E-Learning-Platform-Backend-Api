@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\Admin\Catalogues\Categories;
 
-use App\Actions\Admin\Categories\CreateCategoryAction;
-use App\Actions\Admin\Categories\UpdateCategoryAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Catalogues\CategoryRequest;
 use App\Http\Resources\Admin\CategoryResource;
@@ -39,7 +37,12 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): JsonResponse|CategoryResource
     {
         try {
-            $category = (new CreateCategoryAction())->handle($request->validated());
+
+
+            $category = Category::create([
+                'name' => $request->name,
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
+            ]);
 
             return new CategoryResource($category);
         } catch (\Exception $e) {
@@ -59,7 +62,12 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category): JsonResponse|CategoryResource
     {
         try {
-            $category = (new UpdateCategoryAction())->handle($request->validated(), $category);
+
+            $category->update([
+                'name' => $request->name,
+                'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
+            ]);
+
 
             return new CategoryResource($category);
         } catch (\Exception $e) {
