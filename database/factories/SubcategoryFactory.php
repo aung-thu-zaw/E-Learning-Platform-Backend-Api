@@ -25,7 +25,6 @@ class SubcategoryFactory extends Factory
         return [
             'category_id' => fake()->randomElement($categories),
             'name' => fake()->name(),
-            'slug' => fake()->slug(),
             'description' => fake()->paragraph(),
             'image' => fake()->imageUrl(),
             'status' => fake()->boolean(),

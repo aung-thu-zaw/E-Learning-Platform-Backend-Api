@@ -114,4 +114,35 @@ class Course extends Model
                 ->orWhere('title', 'like', "%{$searchTerm}%");
         });
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when(
+            $filters['search'] ?? null,
+            function ($query, $keyword) {
+                $query->where('title', 'LIKE', '%'.$keyword.'%');
+            }
+        );
+
+        $query->when($filters['tag'] ?? null, function ($query, $tagSlug) {
+            $query->whereHas('tags', function ($query) use ($tagSlug) {
+                $query->where('slug', $tagSlug);
+            });
+        });
+
+        $query->when(isset($filters['level']) && $filters['level'] !== 'none', function ($query) use ($filters) {
+            $query->where('level', $filters['level']);
+        });
+
+        $query->when(isset($filters['duration']) && is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
+            if ($filters['duration'] === 'short') {
+                $query->where('duration_seconds', '<', 3600);
+            } elseif ($filters['duration'] === 'medium') {
+                $query->whereBetween('duration_seconds', [3600, 10800]);
+            } elseif ($filters['duration'] === 'long') {
+                $query->where('duration_seconds', '>', 10800);
+            }
+        });
+
+    }
 }

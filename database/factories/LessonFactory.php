@@ -21,15 +21,14 @@ class LessonFactory extends Factory
      */
     public function definition(): array
     {
+        $courseIds = Course::pluck("id")->toArray();
+
         return [
-            'section_id' => Section::factory(),
-            'course_id' => Course::factory(),
+            'course_id' => fake()->randomElement($courseIds),
             'title' => $this->faker->sentence(4),
             'slug' => $this->faker->slug(),
-            'thumbnail' => $this->faker->word(),
             'video_path' => $this->faker->word(),
-            'description' => $this->faker->text(),
-            'duration_seconds' => $this->faker->word(),
+            'duration_seconds' => fake()->randomNumber(),
         ];
     }
 }

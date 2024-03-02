@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AbilityController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\BlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\CategoryBlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\GetResourcesForBlogPageController;
+use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
@@ -29,6 +30,8 @@ Route::get('/nav-banner', GetNavTopBannerController::class);
 Route::get('/sliders', GetSliderController::class);
 
 Route::get('/resources-for-browsing-course', GetResourcesForBrowsingCourseController::class);
+
+Route::get('/browse/{subcategory_id}/courses', [BrowseCourseController::class,"index"]);
 
 
 require __DIR__.'/admin.php';

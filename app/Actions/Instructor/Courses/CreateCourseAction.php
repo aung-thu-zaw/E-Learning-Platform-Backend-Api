@@ -56,6 +56,7 @@ class CreateCourseAction
 
         }
 
+        $totalDuration = 0;
         if (isset($data['videos'])) {
 
             foreach($data['videos'] as $video) {
@@ -67,9 +68,13 @@ class CreateCourseAction
                     "video_path" => $videoPath,
                     'duration_seconds' => $video["duration_seconds"],
                 ]);
+
+                $totalDuration += $video["duration_seconds"];
             }
 
         }
+
+        $course->update(["duration_seconds" => $totalDuration]);
 
         return $course;
     }

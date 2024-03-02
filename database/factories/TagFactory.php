@@ -28,7 +28,6 @@ class TagFactory extends Factory
             'category_id' => fake()->randomElement($categories),
             'subcategory_id' =>  fake()->randomElement($subcategories),
             'name' => fake()->name(),
-            'slug' => fake()->slug(),
         ];
     }
 }

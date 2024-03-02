@@ -26,6 +26,7 @@ return new class () extends Migration {
             $table->enum('level', ['beginner', 'intermediate', 'advanced', 'all_levels']);
             $table->enum('status', ['draft', 'pending','published','rejected'])->default('draft');
             $table->enum('language', ['english', 'myanmar','arabic','spanish','french'])->default('English');
+            $table->unsignedBigInteger('duration_seconds');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

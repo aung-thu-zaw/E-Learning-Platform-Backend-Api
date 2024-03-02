@@ -14,8 +14,8 @@ class GetResourcesForBrowsingCourseController extends Controller
     public function __invoke(): JsonResponse
     {
         try {
-            $categories = Category::select('id', 'name', 'slug', 'description', 'image')->where('status', true)->get();
-            $subcategories = Subcategory::select('id', 'category_id', 'name', 'slug')->where('status', true)->get();
+            $categories = Category::select('id', 'name', 'slug')->where('status', true)->get();
+            $subcategories = Subcategory::select('id', 'category_id', 'name', 'slug', 'description', 'image')->where('status', true)->get();
             $tags = Tag::select('id', 'category_id', 'subcategory_id', 'name', 'slug')->get();
 
             return response()->json([
