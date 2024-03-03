@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,15 @@ return new class extends Migration
 
         Schema::create('learning_paths', function (Blueprint $table) {
             $table->id();
-            $table->string('creator')->nullable();
+            $table->string('image');
+            $table->foreignId('creator_id')->constrained('users');
             $table->string('title')->unique();
             $table->string('slug')->unique();
             $table->text('description');
             $table->string('materials');
             $table->string('final_product');
             $table->enum('level', ['beginner', 'intermediate', 'advanced', 'all_levels']);
-            $table->foreignId('creator_id');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
 

@@ -25,11 +25,11 @@ class SliderRequest extends FormRequest
     {
         $rules = [
             'title' => ['required', 'string', 'max:255', Rule::unique('sliders', 'title')],
-            'description' => ['required',"string"],
+            'description' => ['required', 'string'],
             'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'status' => ['required', Rule::in(['true', 'false', true, false])],
-            'button' => ['required',"string"],
-            'url' => ['required',"url"],
+            'button' => ['required', 'string'],
+            'url' => ['required', 'url'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
 

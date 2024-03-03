@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1\Admin\Catalogues\Subcategories;
 
+use App\Actions\Admin\Subcategories\CreateSubcategoryAction;
+use App\Actions\Admin\Subcategories\UpdateSubcategoryAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Catalogues\SubcategoryRequest;
 use App\Http\Resources\Admin\SubcategoryResource;
@@ -9,8 +11,6 @@ use App\Models\Subcategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use App\Actions\Admin\Subcategories\CreateSubcategoryAction;
-use App\Actions\Admin\Subcategories\UpdateSubcategoryAction;
 
 class SubcategoryController extends Controller
 {

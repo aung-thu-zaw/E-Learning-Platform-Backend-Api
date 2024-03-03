@@ -28,5 +28,4 @@ class ChangeSliderStatusController extends Controller
             return $this->apiExceptionResponse($e);
         }
     }
-
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
+use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +32,10 @@ Route::get('/sliders', GetSliderController::class);
 
 Route::get('/resources-for-browsing-course', GetResourcesForBrowsingCourseController::class);
 
-Route::get('/browse/{subcategory_id}/courses', [BrowseCourseController::class,"index"]);
+Route::get('/browse/{subcategory_id}/courses', [BrowseCourseController::class, 'index']);
 
+Route::get('/learning-paths', [LearningPathController::class, 'index']);
+Route::get('/learning-paths/{learning_path}', [LearningPathController::class, 'show']);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

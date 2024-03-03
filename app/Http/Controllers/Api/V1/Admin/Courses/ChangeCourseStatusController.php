@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\Admin\Courses;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\BlogContentResource;
-use App\Models\BlogContent;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class ChangeCourseStatusController extends Controller
     public function __invoke(Request $request, Course $course): JsonResponse|BlogContentResource
     {
         try {
-            $request->validate(['status' => ['required', Rule::in(['draft', 'pending','published','rejected'])]]);
+            $request->validate(['status' => ['required', Rule::in(['draft', 'pending', 'published', 'rejected'])]]);
 
             if ($request->status === 'published') {
 

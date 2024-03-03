@@ -39,6 +39,7 @@ class Course extends Model
             'title' => $this->title,
         ];
     }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -76,7 +77,7 @@ class Course extends Model
 
     public function instructor(): BelongsTo
     {
-        return $this->belongsTo(User::class, "instructor_id");
+        return $this->belongsTo(User::class, 'instructor_id');
     }
 
     public function resources(): HasMany
@@ -92,6 +93,11 @@ class Course extends Model
     public function blogContents(): BelongsToMany
     {
         return $this->belongsToMany(BlogContent::class);
+    }
+
+    public function learningPaths(): BelongsToMany
+    {
+        return $this->belongsToMany(LearningPath::class);
     }
 
     public function tags(): BelongsToMany

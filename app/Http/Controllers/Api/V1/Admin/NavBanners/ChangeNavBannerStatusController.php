@@ -21,13 +21,13 @@ class ChangeNavBannerStatusController extends Controller
         try {
             $request->validate(['is_active' => ['required', Rule::in(['true', 'false', true, false])]]);
 
-            $activeNavBanners = NavBanner::where("is_active", true)->where("id", "!=", $navBanner->id)->get();
+            $activeNavBanners = NavBanner::where('is_active', true)->where('id', '!=', $navBanner->id)->get();
 
             $activeNavBanners->each(function ($activeNavBanner) {
-                $activeNavBanner->update(["is_active" => false]);
+                $activeNavBanner->update(['is_active' => false]);
             });
 
-            $navBanner->update(['is_active' => filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN),'is_manually_set' => true]);
+            $navBanner->update(['is_active' => filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN), 'is_manually_set' => true]);
 
             return new NavBannerResource($navBanner);
         } catch (\Exception $e) {

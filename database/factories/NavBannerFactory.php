@@ -17,13 +17,13 @@ class NavBannerFactory extends Factory
     public function definition(): array
     {
         return [
-            "description" => fake()->sentence(),
-            "url" => fake()->url(),
-            "button" => fake()->word(),
-            "countdown" => null,
-            "start_date_time" => fake()->dateTime(now()),
-            "end_date_time" => fake()->dateTime(now()),
-            "is_active" => fake()->boolean()
+            'description' => fake()->sentence(),
+            'url' => fake()->url(),
+            'button' => fake()->word(),
+            'countdown' => null,
+            'start_date_time' => fake()->dateTime(now()),
+            'end_date_time' => fake()->dateTime(now()),
+            'is_active' => fake()->boolean(),
         ];
     }
 }

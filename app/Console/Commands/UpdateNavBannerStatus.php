@@ -28,7 +28,7 @@ class UpdateNavBannerStatus extends Command
     {
         NavBanner::chunk(100, function ($banners) {
             foreach ($banners as $banner) {
-                if (!$banner->is_manually_set) {
+                if (! $banner->is_manually_set) {
                     $now = now();
                     if ($banner->start_date_time <= $now && $now <= $banner->end_date_time) {
                         $banner->update(['is_active' => true]);

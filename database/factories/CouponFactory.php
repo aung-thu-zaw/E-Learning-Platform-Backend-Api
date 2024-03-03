@@ -17,14 +17,14 @@ class CouponFactory extends Factory
     public function definition(): array
     {
         return [
-            "code" => fake()->word(),
-            "description" => fake()->sentence(),
-            "type" => fake()->randomElement(['percentage', 'fixed_amount']),
-            "value" => fake()->numberBetween(1, 50),
-            "max_uses" => fake()->numberBetween(50, 500),
-            "expiry_date" => fake()->dateTimeBetween(now(), '+5 days'),
-            "is_redeemable" => fake()->boolean(),
-            "free_trial_days" => fake()->numberBetween(30, 360),
+            'code' => fake()->word(),
+            'description' => fake()->sentence(),
+            'type' => fake()->randomElement(['percentage', 'fixed_amount']),
+            'value' => fake()->numberBetween(1, 50),
+            'max_uses' => fake()->numberBetween(50, 500),
+            'expiry_date' => fake()->dateTimeBetween(now(), '+5 days'),
+            'is_redeemable' => fake()->boolean(),
+            'free_trial_days' => fake()->numberBetween(30, 360),
         ];
     }
 }

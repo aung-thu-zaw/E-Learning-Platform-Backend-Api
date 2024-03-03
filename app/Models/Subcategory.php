@@ -50,7 +50,6 @@ class Subcategory extends Model
         ];
     }
 
-
     protected function image(): Attribute
     {
         return Attribute::make(

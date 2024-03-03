@@ -33,7 +33,6 @@ class CreateCourseAction
             'thumbnail' => $thumbnail,
         ]);
 
-
         if (isset($data['tags'])) {
 
             $course->tags()->attach($data['tags']);
@@ -42,15 +41,15 @@ class CreateCourseAction
 
         if (isset($data['resources'])) {
 
-            foreach($data['resources'] as $key => $value) {
-                $filePath =  $this->createImage($value, 'resources');
+            foreach ($data['resources'] as $key => $value) {
+                $filePath = $this->createImage($value, 'resources');
 
                 $originalTitle = $value->getClientOriginalName();
 
                 Resource::create([
-                    "course_id" => $course->id,
-                    "title" => $originalTitle,
-                    "file_path" => $filePath,
+                    'course_id' => $course->id,
+                    'title' => $originalTitle,
+                    'file_path' => $filePath,
                 ]);
             }
 
@@ -59,22 +58,22 @@ class CreateCourseAction
         $totalDuration = 0;
         if (isset($data['videos'])) {
 
-            foreach($data['videos'] as $video) {
-                $videoPath =  $this->createImage($video['video_file'], 'lessons');
+            foreach ($data['videos'] as $video) {
+                $videoPath = $this->createImage($video['video_file'], 'lessons');
 
                 Lesson::create([
-                    "course_id" => $course->id,
-                    "title" => $video["title"],
-                    "video_path" => $videoPath,
-                    'duration_seconds' => $video["duration_seconds"],
+                    'course_id' => $course->id,
+                    'title' => $video['title'],
+                    'video_path' => $videoPath,
+                    'duration_seconds' => $video['duration_seconds'],
                 ]);
 
-                $totalDuration += $video["duration_seconds"];
+                $totalDuration += $video['duration_seconds'];
             }
 
         }
 
-        $course->update(["duration_seconds" => $totalDuration]);
+        $course->update(['duration_seconds' => $totalDuration]);
 
         return $course;
     }

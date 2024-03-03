@@ -26,7 +26,7 @@ class SubcategoryRequest extends FormRequest
         $rules = [
             'category_id' => ['required', 'numeric', Rule::exists('categories', 'id')],
             'name' => ['required', 'string', 'max:255', Rule::unique('subcategories', 'name')],
-            'description' => ['required',"string"],
+            'description' => ['required', 'string'],
             'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:1500'],
             'status' => ['required', Rule::in(['true', 'false', true, false])],
             'captcha_token' => ['required', new RecaptchaRule()],

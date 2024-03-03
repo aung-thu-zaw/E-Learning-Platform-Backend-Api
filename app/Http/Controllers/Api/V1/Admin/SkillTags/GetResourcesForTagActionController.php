@@ -22,9 +22,9 @@ class GetResourcesForTagActionController extends Controller
             $subcategories = Subcategory::select('id', 'category_id', 'name')->where('status', true)->get();
 
             return response()->json([
-                "categories" => $categories,
-                "subcategories" => $subcategories
-        ]);
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+            ]);
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
         }

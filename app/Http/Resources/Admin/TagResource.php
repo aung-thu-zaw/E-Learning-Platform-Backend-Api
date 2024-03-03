@@ -21,11 +21,11 @@ class TagResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'category' => [
-                "name" => $this->category->name
+                'name' => $this->category->name,
             ],
             'subcategory' => [
-                "name" => $this->subcategory->name
-            ]
+                'name' => $this->subcategory->name,
+            ],
         ];
     }
 }

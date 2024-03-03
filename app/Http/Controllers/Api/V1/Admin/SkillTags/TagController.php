@@ -7,7 +7,6 @@ use App\Http\Requests\Admin\TagRequest;
 use App\Http\Resources\Admin\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -64,10 +63,10 @@ class TagController extends Controller
     {
         try {
             $tag->update([
-                 'category_id' => $request->category_id,
-                 'subcategory_id' => $request->subcategory_id,
-                 'name' => $request->name,
-             ]);
+                'category_id' => $request->category_id,
+                'subcategory_id' => $request->subcategory_id,
+                'name' => $request->name,
+            ]);
 
             return new TagResource($tag);
         } catch (\Exception $e) {

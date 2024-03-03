@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             CourseSeeder::class,
             LessonSeeder::class,
+            LearningPathSeeder::class,
             NewsletterSubscriberSeeder::class,
             BlogCategorySeeder::class,
             BlogContentSeeder::class,

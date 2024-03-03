@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class GetResourcesForBrowsingCourseController extends Controller
 {
@@ -19,9 +18,9 @@ class GetResourcesForBrowsingCourseController extends Controller
             $tags = Tag::select('id', 'category_id', 'subcategory_id', 'name', 'slug')->get();
 
             return response()->json([
-                "categories" => $categories,
-                "subcategories" => $subcategories,
-                "tags" => $tags
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'tags' => $tags,
             ]);
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);

@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Course;
-use App\Models\Section;
 use App\Models\Subcategory;
 use App\Models\Tag;
 use App\Models\User;
@@ -24,11 +23,10 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = Category::pluck("id")->toArray();
+        $categories = Category::pluck('id')->toArray();
         $category_id = fake()->randomElement($categories);
-        $subcategories = Subcategory::where('category_id', $category_id)->pluck("id")->toArray();
-        $instructors = User::where("role", "instructor")->pluck("id")->toArray();
-
+        $subcategories = Subcategory::where('category_id', $category_id)->pluck('id')->toArray();
+        $instructors = User::where('role', 'instructor')->pluck('id')->toArray();
 
         return [
             'uuid' => fake()->uuid(),
@@ -42,7 +40,7 @@ class CourseFactory extends Factory
             'project_description' => fake()->paragraph(),
             'duration_seconds' => fake()->numberBetween(3600, 36000),
             'level' => fake()->randomElement(['beginner', 'intermediate', 'advanced', 'all_levels']),
-            'status' => fake()->randomElement(['draft', 'pending','published','rejected']),
+            'status' => fake()->randomElement(['draft', 'pending', 'published', 'rejected']),
         ];
     }
 

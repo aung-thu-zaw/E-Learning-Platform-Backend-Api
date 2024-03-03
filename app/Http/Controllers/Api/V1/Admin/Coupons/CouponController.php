@@ -7,7 +7,6 @@ use App\Http\Requests\Admin\CouponRequest;
 use App\Http\Resources\Admin\CouponResource;
 use App\Models\Coupon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -43,7 +42,7 @@ class CouponController extends Controller
                 'max_uses' => $request->max_uses,
                 'expiry_date' => $request->expiry_date,
                 'free_trial_days' => $request->free_trial_days,
-                'is_redeemable' => filter_var($request->is_redeemable, FILTER_VALIDATE_BOOLEAN)
+                'is_redeemable' => filter_var($request->is_redeemable, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new CouponResource($coupon);
@@ -72,7 +71,7 @@ class CouponController extends Controller
                 'max_uses' => $request->max_uses,
                 'expiry_date' => $request->expiry_date,
                 'free_trial_days' => $request->free_trial_days,
-                'is_redeemable' => filter_var($request->is_redeemable, FILTER_VALIDATE_BOOLEAN)
+                'is_redeemable' => filter_var($request->is_redeemable, FILTER_VALIDATE_BOOLEAN),
             ]);
 
             return new CouponResource($coupon);

@@ -13,12 +13,6 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
 
-
-
-
-
-
-
         // Permission::create(['name' => 'learning-paths.view', 'group' => 'Learning Path']);
         // Permission::create(['name' => 'learning-paths.create', 'group' => 'Learning Path']);
         // Permission::create(['name' => 'learning-paths.edit', 'group' => 'Learning Path']);

@@ -25,14 +25,14 @@ class CouponRequest extends FormRequest
     {
         $rules = [
             'code' => ['required', 'string', 'max:255', Rule::unique('coupons', 'code')],
-            "description" => ["required","string","max:255"],
+            'description' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', Rule::in(['percentage', 'fixed_amount'])],
             'value' => ['required'],
-            'max_uses' => ['nullable',"numeric"],
+            'max_uses' => ['nullable', 'numeric'],
             'expiry_date' => ['nullable', 'date'],
-            'free_trial_days' => ['nullable',"numeric"],
-            'is_redeemable' => ['required', Rule::in(['true', 'false',true,false])],
-            'captcha_token' => ["required",new RecaptchaRule()],
+            'free_trial_days' => ['nullable', 'numeric'],
+            'is_redeemable' => ['required', Rule::in(['true', 'false', true, false])],
+            'captcha_token' => ['required', new RecaptchaRule()],
         ];
 
         $route = $this->route();

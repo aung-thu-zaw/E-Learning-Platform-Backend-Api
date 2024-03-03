@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Coupon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CouponSeeder extends Seeder
@@ -20,7 +19,7 @@ class CouponSeeder extends Seeder
             'value' => 20,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -31,7 +30,7 @@ class CouponSeeder extends Seeder
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
             'is_redeemable' => true,
-            'free_trial_days' => 7
+            'free_trial_days' => 7,
         ]);
 
         Coupon::factory()->create([
@@ -41,7 +40,7 @@ class CouponSeeder extends Seeder
             'value' => 50,
             'max_uses' => 100, // Example maximum uses
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -51,7 +50,7 @@ class CouponSeeder extends Seeder
             'value' => 0,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -61,7 +60,7 @@ class CouponSeeder extends Seeder
             'value' => 0,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -71,7 +70,7 @@ class CouponSeeder extends Seeder
             'value' => 25,
             'max_uses' => 200, // Example maximum uses
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -81,7 +80,7 @@ class CouponSeeder extends Seeder
             'value' => 15,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -91,7 +90,7 @@ class CouponSeeder extends Seeder
             'value' => 30,
             'max_uses' => null,
             'expiry_date' => '2024-04-30',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -101,7 +100,7 @@ class CouponSeeder extends Seeder
             'value' => 20,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
         Coupon::factory()->create([
@@ -111,7 +110,7 @@ class CouponSeeder extends Seeder
             'value' => 10,
             'max_uses' => null,
             'expiry_date' => '2024-12-31',
-            'is_redeemable' => true
+            'is_redeemable' => true,
         ]);
 
     }

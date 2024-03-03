@@ -31,5 +31,4 @@ class Coupon extends Model
         'is_redeemable' => 'boolean',
 
     ];
-
 }

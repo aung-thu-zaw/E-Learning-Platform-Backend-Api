@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\DatabaseBackupResource;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Artisan;
@@ -24,13 +22,11 @@ class DatabaseBackupController extends Controller
         $this->middleware('permission:database-backups.delete', ['only' => ['destroy']]);
     }
 
-
-
     public function index(): JsonResponse
     {
         try {
             // Get backup files
-            $backupFiles = Storage::disk('local')->allFiles(env("APP_NAME"));
+            $backupFiles = Storage::disk('local')->allFiles(env('APP_NAME'));
 
             $backups = collect($backupFiles)->map(function ($file) {
                 return [
@@ -76,16 +72,14 @@ class DatabaseBackupController extends Controller
             );
 
             return response()->json([
-                "backups" => $backupsPaginated,
-                "overallInformation" => $overallInformation
+                'backups' => $backupsPaginated,
+                'overallInformation' => $overallInformation,
             ], 200);
 
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
         }
     }
-
-
 
     private function checkDiskHealth(string $disk): string
     {
@@ -107,7 +101,7 @@ class DatabaseBackupController extends Controller
     public function destroy(string $file): Response
     {
         try {
-            $filePath = env("APP_NAME").'/'.$file;
+            $filePath = env('APP_NAME').'/'.$file;
 
             Storage::disk('local')->delete($filePath);
 
@@ -122,7 +116,7 @@ class DatabaseBackupController extends Controller
         try {
             Artisan::call('backup:run');
 
-            return response()->json(["message" => "Backup completed successfully"], 200);
+            return response()->json(['message' => 'Backup completed successfully'], 200);
 
         } catch (\Exception $e) {
             $this->apiExceptionResponse($e);
@@ -131,7 +125,7 @@ class DatabaseBackupController extends Controller
 
     public function download(string $file): JsonResponse|BinaryFileResponse
     {
-        $filePath = env("APP_NAME").'/'.$file;
+        $filePath = env('APP_NAME').'/'.$file;
 
         try {
             if (Storage::disk('local')->exists($filePath)) {
@@ -140,7 +134,7 @@ class DatabaseBackupController extends Controller
                     'Content-Disposition' => 'attachment; filename='.$file,
                 ]);
             } else {
-                return response()->json(["message" => "Backup File not found!"], 500);
+                return response()->json(['message' => 'Backup File not found!'], 500);
             }
         } catch (\Exception $e) {
             $this->apiExceptionResponse($e);

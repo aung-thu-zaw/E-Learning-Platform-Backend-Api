@@ -18,15 +18,15 @@ class GetResourcesForAssignRolePermissionsActionController extends Controller
     {
         try {
             $permissionGroups = DB::table('permissions')
-            ->select('group')
-            ->groupBy('group')
-            ->get();
+                ->select('group')
+                ->groupBy('group')
+                ->get();
 
             $permissions = Permission::get();
 
             return response()->json([
-                "permissions" => $permissions,
-                "permissionGroups" => $permissionGroups
+                'permissions' => $permissions,
+                'permissionGroups' => $permissionGroups,
             ], 200);
 
         } catch (\Exception $e) {

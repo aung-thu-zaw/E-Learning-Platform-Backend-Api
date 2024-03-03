@@ -28,5 +28,4 @@ class ChangeCouponStatusController extends Controller
             return $this->apiExceptionResponse($e);
         }
     }
-
 }

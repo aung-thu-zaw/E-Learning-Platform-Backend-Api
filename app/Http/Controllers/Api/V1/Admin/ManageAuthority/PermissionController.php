@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1\Admin\ManageAuthority;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\PermissionResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
 

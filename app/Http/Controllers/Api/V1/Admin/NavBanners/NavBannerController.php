@@ -7,7 +7,6 @@ use App\Http\Requests\Admin\NavBannerRequest;
 use App\Http\Resources\Admin\NavBannerResource;
 use App\Models\NavBanner;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 

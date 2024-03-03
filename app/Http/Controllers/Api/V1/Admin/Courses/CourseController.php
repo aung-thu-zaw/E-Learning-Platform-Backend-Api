@@ -26,8 +26,8 @@ class CourseController extends Controller
     {
         try {
             $courses = Course::filterSearch(request('search'))
-            ->with(["category","subcategory","instructor",'tags'])
-            ->where("status", "!=", "draft")
+                ->with(['category', 'subcategory', 'instructor', 'tags'])
+                ->where('status', '!=', 'draft')
                 ->orderBy(request('sort', 'id'), request('direction', 'desc'))
                 ->paginate(request('per_page', 5))
                 ->withQueryString();

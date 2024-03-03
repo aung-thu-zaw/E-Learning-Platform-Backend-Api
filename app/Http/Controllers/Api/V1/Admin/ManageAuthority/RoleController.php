@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ManageAuthority\RoleRequest;
 use App\Http\Resources\Admin\RoleResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
@@ -47,7 +46,7 @@ class RoleController extends Controller
     public function store(RoleRequest $request): JsonResponse|RoleResource
     {
         try {
-            $role = Role::create(['name' => $request->name,'guard_name' => 'web']);
+            $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
 
             return new RoleResource($role);
 
@@ -59,7 +58,7 @@ class RoleController extends Controller
     public function update(RoleRequest $request, Role $role): JsonResponse|RoleResource
     {
         try {
-            $role->update(["name" => $request->name]);
+            $role->update(['name' => $request->name]);
 
             return new RoleResource($role);
         } catch (\Exception $e) {

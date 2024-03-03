@@ -38,7 +38,6 @@ class CategoryController extends Controller
     {
         try {
 
-
             $category = Category::create([
                 'name' => $request->name,
                 'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
@@ -67,7 +66,6 @@ class CategoryController extends Controller
                 'name' => $request->name,
                 'status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN),
             ]);
-
 
             return new CategoryResource($category);
         } catch (\Exception $e) {
