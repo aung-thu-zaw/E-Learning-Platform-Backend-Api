@@ -11,6 +11,9 @@ class NewsletterSubscriber extends Model
     use HasFactory;
     use Searchable;
 
+    /**
+     * @return array<string>
+     */
     public function toSearchableArray(): array
     {
         return [

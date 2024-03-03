@@ -15,16 +15,16 @@ class TagResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'category_id' => $this->category_id,
-            'subcategory_id' => $this->subcategory_id,
-            'name' => $this->name,
-            'slug' => $this->slug,
+            'id' => $this->resource->id,
+            'category_id' => $this->resource->category_id,
+            'subcategory_id' => $this->resource->subcategory_id,
+            'name' => $this->resource->name,
+            'slug' => $this->resource->slug,
             'category' => [
-                'name' => $this->category->name,
+                'name' => $this->resource->category->name,
             ],
             'subcategory' => [
-                'name' => $this->subcategory->name,
+                'name' => $this->resource->subcategory->name,
             ],
         ];
     }

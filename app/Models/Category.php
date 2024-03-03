@@ -15,22 +15,10 @@ class Category extends Model
     use HasSlug;
     use Searchable;
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
@@ -47,16 +35,37 @@ class Category extends Model
         ];
     }
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Subcategory>
+    */
     public function subcategories(): HasMany
     {
         return $this->hasMany(Subcategory::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+    */
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
+    */
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);

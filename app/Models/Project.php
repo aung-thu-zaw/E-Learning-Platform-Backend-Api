@@ -13,7 +13,7 @@ class Project extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
@@ -21,11 +21,17 @@ class Project extends Model
         'user_id' => 'integer',
     ];
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Project>
+    */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Project>
+    */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

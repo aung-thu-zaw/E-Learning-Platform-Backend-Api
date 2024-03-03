@@ -16,20 +16,20 @@ class CategoryBlogContentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'thumbnail' => $this->thumbnail,
-            'content' => $request->is('api/v1/contents/*') ? $this->content : str()->limit($this->content, 100, '...'),
-            'published_at' => Carbon::parse($this->published_at)->format('d-F-Y'),
+            'id' => $this->resource->id,
+            'title' => $this->resource->title,
+            'slug' => $this->resource->slug,
+            'thumbnail' => $this->resource->thumbnail,
+            'content' => $request->is('api/v1/contents/*') ? $this->resource->content : str()->limit($this->resource->content, 100, '...'),
+            'published_at' => Carbon::parse($this->resource->published_at)->format('d-F-Y'),
             'author' => [
-                'display_name' => $this->author->display_name,
-                'avatar' => $this->author->avatar,
+                'display_name' => $this->resource->author->display_name,
+                'avatar' => $this->resource->author->avatar,
             ],
             'category' => [
-                'name' => $this->blogCategory->name,
-                'slug' => $this->blogCategory->slug,
-                'description' => $this->blogCategory->description,
+                'name' => $this->resource->blogCategory->name,
+                'slug' => $this->resource->blogCategory->slug,
+                'description' => $this->resource->blogCategory->description,
             ],
         ];
     }

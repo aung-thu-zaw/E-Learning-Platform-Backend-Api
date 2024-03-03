@@ -19,7 +19,6 @@ class ChangeBlogCategoryStatusController extends Controller
     public function __invoke(Request $request, BlogCategory $blogCategory): JsonResponse|BlogCategoryResource
     {
         try {
-
             $request->validate(['status' => ['required', Rule::in(['true', 'false', true, false])]]);
 
             $blogCategory->update(['status' => filter_var($request->status, FILTER_VALIDATE_BOOLEAN)]);
@@ -28,7 +27,7 @@ class ChangeBlogCategoryStatusController extends Controller
 
             return new BlogCategoryResource($blogCategory);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

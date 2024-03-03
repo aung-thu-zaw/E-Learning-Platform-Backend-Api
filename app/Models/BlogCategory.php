@@ -15,6 +15,26 @@ class BlogCategory extends Model
     use HasSlug;
     use Searchable;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'status' => 'boolean',
+    ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -28,25 +48,8 @@ class BlogCategory extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'status' => 'boolean',
-    ];
-
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<BlogContent>
+    */
     public function blogContents(): HasMany
     {
         return $this->hasMany(BlogContent::class);

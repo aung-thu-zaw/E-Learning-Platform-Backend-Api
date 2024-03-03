@@ -30,7 +30,7 @@ class RoleController extends Controller
 
             return RoleResource::collection($roles);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -39,7 +39,7 @@ class RoleController extends Controller
         try {
             return new RoleResource($role);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -51,7 +51,7 @@ class RoleController extends Controller
             return new RoleResource($role);
 
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -62,7 +62,7 @@ class RoleController extends Controller
 
             return new RoleResource($role);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -73,7 +73,7 @@ class RoleController extends Controller
 
             return response()->noContent();
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

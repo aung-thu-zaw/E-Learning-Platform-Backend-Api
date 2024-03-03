@@ -16,6 +16,27 @@ class LearningPath extends Model
     use HasSlug;
     use Searchable;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'creator_id' => 'integer',
+        'status' => 'boolean',
+    ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -29,31 +50,16 @@ class LearningPath extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-        ];
-    }
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'creator_id' => 'integer',
-        'status' => 'boolean',
-    ];
-
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,LearningPath>
+    */
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creator_id');
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+    */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);

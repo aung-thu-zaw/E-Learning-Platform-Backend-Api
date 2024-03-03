@@ -32,7 +32,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
     ->prefix('admin')
     ->group(function () {
-
         // ========== NavBanners ==========
         Route::apiResource('nav-banners', NavBannerController::class);
         Route::put('/nav-banners/{nav_banner}/change-status', ChangeNavBannerStatusController::class);
@@ -48,7 +47,6 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         // ========== Catalogues ==========
         Route::apiResource('categories', CategoryController::class);
         Route::put('/categories/{category}/change-status', ChangeCategoryStatusController::class);
-
         Route::apiResource('subcategories', SubcategoryController::class);
         Route::put('/subcategories/{subcategory}/change-status', ChangeSubcategoryStatusController::class);
         Route::get('/subcategory-resources', GetResourcesForSubcategoryActionController::class);
@@ -68,20 +66,21 @@ Route::middleware(['auth:sanctum', 'verified', 'user.role:admin'])
         // ========== Manage Blog ==========
         Route::apiResource('blog-categories', BlogCategoryController::class);
         Route::put('/blog-categories/{blog_category}/change-status', ChangeBlogCategoryStatusController::class);
-
         Route::apiResource('blog-contents', BlogContentController::class);
         Route::put('/blog-contents/{blog_content}/change-status', ChangeBlogContentStatusController::class);
         Route::get('/blog-content-resources', GetResourcesForBlogContentActionController::class);
 
         // ========== Manage Authority ==========
         Route::get('/permissions', [PermissionController::class, 'index']);
-
         Route::apiResource('roles', RoleController::class);
-
-        Route::get('/assign-role-permissions', [AssignRolePermissionsController::class, 'index']);
-        Route::get('/assign-role-permissions/{role}', [AssignRolePermissionsController::class, 'show']);
-        Route::patch('/assign-role-permissions/{role}', [AssignRolePermissionsController::class, 'update']);
         Route::get('/assign-role-permissions-resources', GetResourcesForAssignRolePermissionsActionController::class);
+        Route::controller(AssignRolePermissionsController::class)
+            ->prefix('/assign-role-permissions')
+            ->group(function () {
+                Route::get('/', 'index');
+                Route::get('/{role}', 'show');
+                Route::patch('/{role}', 'update');
+            });
 
         // ========== Backup ==========
         Route::controller(DatabaseBackupController::class)

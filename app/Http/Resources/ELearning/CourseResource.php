@@ -16,26 +16,27 @@ class CourseResource extends JsonResource
     {
 
         return [
-            'id' => $this->id,
-            'uuid' => $this->uuid,
-            'instructor_id' => $this->instructor_id,
-            'category_id' => $this->category_id,
-            'subcategory_id' => $this->subcategory_id,
-            'thumbnail' => $this->thumbnail,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'course_description' => $this->course_description,
-            'project_description' => $this->project_description,
-            'level' => $this->level,
-            'status' => $this->status,
-            'language' => $this->language,
-            'published_at' => $this->published_at,
-            'duration' => sprintf('%02d hours %02d minutes', floor($this->duration_seconds / 3600), floor(($this->duration_seconds % 3600) / 60)),
+            'id' => $this->resource->id,
+            'uuid' => $this->resource->uuid,
+            'instructor_id' => $this->resource->instructor_id,
+            'category_id' => $this->resource->category_id,
+            'subcategory_id' => $this->resource->subcategory_id,
+            'thumbnail' => $this->resource->thumbnail,
+            'title' => $this->resource->title,
+            'slug' => $this->resource->slug,
+            'course_description' => $this->resource->course_description,
+            'project_description' => $this->resource->project_description,
+            'level' => $this->resource->level,
+            'status' => $this->resource->status,
+            'language' => $this->resource->language,
+            'published_at' => $this->resource->published_at,
+            'total_lesson' => $this->resource->lessons->count(),
+            'duration' => sprintf('%02d hours %02d minutes', floor($this->resource->duration_seconds / 3600), floor(($this->resource->duration_seconds % 3600) / 60)),
             'instructor' => [
-                'name' => $this->instructor->display_name,
-                'avatar' => $this->instructor->avatar,
+                'name' => $this->resource->instructor->display_name,
+                'avatar' => $this->resource->instructor->avatar,
             ],
-            'total_lesson' => $this->lessons->count(),
+
         ];
     }
 }

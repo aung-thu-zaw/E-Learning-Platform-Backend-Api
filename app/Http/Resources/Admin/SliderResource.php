@@ -15,14 +15,14 @@ class SliderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'description' => $request->is('api/v1/admin/sliders/*') && $request->method() !== 'PUT' ? $this->description : str()->limit($this->description, 50, '...'),
-            'button' => $this->button,
-            'url' => $this->url,
-            'status' => $this->status,
-            'image' => $this->image,
+            'id' => $this->resource->id,
+            'title' => $this->resource->title,
+            'slug' => $this->resource->slug,
+            'description' => $request->is('api/v1/admin/sliders/*') && $request->method() !== 'PUT' ? $this->resource->description : str()->limit($this->resource->description, 50, '...'),
+            'button' => $this->resource->button,
+            'url' => $this->resource->url,
+            'status' => $this->resource->status,
+            'image' => $this->resource->image,
         ];
     }
 }

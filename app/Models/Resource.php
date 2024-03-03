@@ -13,13 +13,16 @@ class Resource extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
         'course_id' => 'integer',
     ];
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Resource>
+    */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

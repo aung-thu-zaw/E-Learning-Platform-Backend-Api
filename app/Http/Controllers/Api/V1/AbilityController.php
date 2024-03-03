@@ -9,7 +9,7 @@ class AbilityController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $abilities = auth()->user()->permissions->pluck('name')->all();
+        $abilities = auth()->user() ? auth()->user()->permissions->pluck('name')->all() : [];
 
         return response()->json($abilities);
     }

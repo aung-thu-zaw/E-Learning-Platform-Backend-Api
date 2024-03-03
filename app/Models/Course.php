@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,29 @@ class Course extends Model
     use HasSlug;
     use Searchable;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'category_id' => 'integer',
+        'subcategory_id' => 'integer',
+        'section_id' => 'integer',
+        'spread_by_section' => 'boolean',
+    ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -31,28 +55,8 @@ class Course extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-        ];
-    }
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'category_id' => 'integer',
-        'subcategory_id' => 'integer',
-        'section_id' => 'integer',
-        'spread_by_section' => 'boolean',
-    ];
-
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+    */
     protected function thumbnail(): Attribute
     {
         return Attribute::make(
@@ -60,54 +64,84 @@ class Course extends Model
         );
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Course>
+    */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Subcategory,Course>
+    */
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Subcategory::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Lesson>
+    */
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Course>
+    */
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Resource>
+    */
     public function resources(): HasMany
     {
         return $this->hasMany(Resource::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Project>
+    */
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<BlogContent>
+    */
     public function blogContents(): BelongsToMany
     {
         return $this->belongsToMany(BlogContent::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
+    */
     public function learningPaths(): BelongsToMany
     {
         return $this->belongsToMany(LearningPath::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
+    */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function scopeFilterSearch($query, $searchTerm)
+    /**
+    * @param Builder<Course> $query
+    */
+    public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
-        return $query->where(function ($query) use ($searchTerm) {
+        $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('instructor', function ($subquery) use ($searchTerm) {
                 $subquery->where('display_name', 'like', "%{$searchTerm}%");
             })
@@ -121,7 +155,11 @@ class Course extends Model
         });
     }
 
-    public function scopeFilter($query, array $filters)
+    /**
+    * @param array<string> $filters
+    * @param Builder<Course> $query
+    */
+    public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when(
             $filters['search'] ?? null,
@@ -140,7 +178,7 @@ class Course extends Model
             $query->where('level', $filters['level']);
         });
 
-        $query->when(isset($filters['duration']) && is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
+        $query->when(is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
             if ($filters['duration'] === 'short') {
                 $query->where('duration_seconds', '<', 3600);
             } elseif ($filters['duration'] === 'medium') {

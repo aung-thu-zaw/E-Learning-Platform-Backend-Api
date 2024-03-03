@@ -24,7 +24,7 @@ class UpdateNavBannerStatus extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         NavBanner::chunk(100, function ($banners) {
             foreach ($banners as $banner) {

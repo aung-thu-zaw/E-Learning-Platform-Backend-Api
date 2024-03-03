@@ -15,16 +15,16 @@ class SubcategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'category_id' => $this->category_id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'description' => $request->is('api/v1/admin/subcategories/*') && $request->method() !== 'PUT' ? $this->description : str()->limit($this->description, 60, '...'),
-            'image' => $this->image,
-            'status' => $this->status,
+            'id' => $this->resource->id,
+            'category_id' => $this->resource->category_id,
+            'name' => $this->resource->name,
+            'slug' => $this->resource->slug,
+            'description' => $request->is('api/v1/admin/subcategories/*') && $request->method() !== 'PUT' ? $this->resource->description : str()->limit($this->resource->description, 60, '...'),
+            'image' => $this->resource->image,
+            'status' => $this->resource->status,
             'category' => [
-                'name' => $this->category->name,
-                'count' => $this->category->count(),
+                'name' => $this->resource->category->name,
+                'count' => $this->resource->category->count(),
             ],
         ];
     }

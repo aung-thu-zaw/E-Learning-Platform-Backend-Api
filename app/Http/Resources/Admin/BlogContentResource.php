@@ -15,23 +15,23 @@ class BlogContentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'author_id' => $this->author_id,
-            'blog_category_id' => $this->blog_category_id,
-            'thumbnail' => $this->thumbnail,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'content' => $request->is('api/v1/admin/blog-contents/*') && $request->method() !== 'PUT' ? $this->content : str()->limit($this->content, 60, '...'),
-            'status' => $this->status,
-            'published_at' => $this->published_at,
+            'id' => $this->resource->id,
+            'author_id' => $this->resource->author_id,
+            'blog_category_id' => $this->resource->blog_category_id,
+            'thumbnail' => $this->resource->thumbnail,
+            'title' => $this->resource->title,
+            'slug' => $this->resource->slug,
+            'content' => $request->is('api/v1/admin/blog-contents/*') && $request->method() !== 'PUT' ? $this->resource->content : str()->limit($this->resource->content, 60, '...'),
+            'status' => $this->resource->status,
+            'published_at' => $this->resource->published_at,
             'author' => [
-                'display_name' => $this->author->display_name,
-                'avatar' => $this->author->avatar,
+                'display_name' => $this->resource->author->display_name,
+                'avatar' => $this->resource->author->avatar,
             ],
             'category' => [
-                'name' => $this->blogCategory->name,
-                'slug' => $this->blogCategory->slug,
-                'count' => $this->blogCategory->count(),
+                'name' => $this->resource->blogCategory->name,
+                'slug' => $this->resource->blogCategory->slug,
+                'count' => $this->resource->blogCategory->count(),
             ],
         ];
     }

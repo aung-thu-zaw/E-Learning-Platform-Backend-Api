@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Notifications\Auth\ResetPasswordQueued;
 use App\Notifications\Auth\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -26,16 +24,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
@@ -45,6 +33,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -52,6 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
             ->saveSlugsTo('username');
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
+    */
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -59,6 +60,9 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
+    */
     protected function avatar(): Attribute
     {
         return Attribute::make(

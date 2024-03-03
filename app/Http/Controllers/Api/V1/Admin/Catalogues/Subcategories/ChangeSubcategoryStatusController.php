@@ -28,7 +28,7 @@ class ChangeSubcategoryStatusController extends Controller
 
             return new SubcategoryResource($subcategory);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

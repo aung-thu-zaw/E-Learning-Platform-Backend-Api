@@ -13,13 +13,16 @@ class Subtitle extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
         'lesson_id' => 'integer',
     ];
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,Subtitle>
+    */
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);

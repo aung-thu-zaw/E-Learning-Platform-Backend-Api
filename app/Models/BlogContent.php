@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,29 @@ class BlogContent extends Model
     use HasSlug;
     use Searchable;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'category_id' => 'integer',
+        'author_id' => 'integer',
+        'published_at' => 'timestamp',
+        'blog_category_id' => 'integer',
+    ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -30,15 +54,8 @@ class BlogContent extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-        ];
-    }
-
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
+    */
     protected function publishedAt(): Attribute
     {
         return Attribute::make(
@@ -47,18 +64,8 @@ class BlogContent extends Model
     }
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'category_id' => 'integer',
-        'author_id' => 'integer',
-        'published_at' => 'timestamp',
-        'blog_category_id' => 'integer',
-    ];
-
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
+    */
     protected function thumbnail(): Attribute
     {
         return Attribute::make(
@@ -66,31 +73,43 @@ class BlogContent extends Model
         );
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<BlogCategory,BlogContent>
+    */
     public function blogCategory(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,BlogContent>
+    */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+    */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
     }
 
-    public function scopeFilterSearch($query, $searchTerm)
+    /**
+    * @param Builder<BlogContent> $query
+    */
+    public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
-        return $query->where(function ($query) use ($searchTerm) {
+        $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('author', function ($subquery) use ($searchTerm) {
                 $subquery->where('display_name', 'like', "%{$searchTerm}%");
             })
-                ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
-                    $subquery->where('name', 'like', "%{$searchTerm}%");
-                })
-                ->orWhere('title', 'like', "%{$searchTerm}%");
+            ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
+                $subquery->where('name', 'like', "%{$searchTerm}%");
+            })
+            ->orWhere('title', 'like', "%{$searchTerm}%");
         });
     }
 }

@@ -98,7 +98,7 @@ class DatabaseBackupController extends Controller
         return 'Not Reachable';
     }
 
-    public function destroy(string $file): Response
+    public function destroy(string $file): Response|JsonResponse
     {
         try {
             $filePath = env('APP_NAME').'/'.$file;
@@ -107,7 +107,7 @@ class DatabaseBackupController extends Controller
 
             return response()->noContent();
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -119,7 +119,7 @@ class DatabaseBackupController extends Controller
             return response()->json(['message' => 'Backup completed successfully'], 200);
 
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 
@@ -137,7 +137,7 @@ class DatabaseBackupController extends Controller
                 return response()->json(['message' => 'Backup File not found!'], 500);
             }
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

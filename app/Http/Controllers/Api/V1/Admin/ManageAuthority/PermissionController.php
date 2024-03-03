@@ -25,7 +25,7 @@ class PermissionController extends Controller
 
             return PermissionResource::collection($permissions);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

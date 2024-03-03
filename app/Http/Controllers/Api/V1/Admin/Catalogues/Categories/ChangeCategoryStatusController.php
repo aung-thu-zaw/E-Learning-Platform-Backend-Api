@@ -25,7 +25,7 @@ class ChangeCategoryStatusController extends Controller
 
             return new CategoryResource($category);
         } catch (\Exception $e) {
-            $this->apiExceptionResponse($e);
+            return $this->apiExceptionResponse($e);
         }
     }
 }

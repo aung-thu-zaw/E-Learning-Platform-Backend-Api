@@ -22,61 +22,61 @@ class CourseController extends Controller
         $this->middleware('permission:courses.delete', ['only' => ['destroy']]);
     }
 
-    public function index(): JsonResponse|AnonymousResourceCollection
-    {
-        try {
-            $courses = Course::filterSearch(request('search'))
-                ->with(['category', 'subcategory', 'instructor', 'tags'])
-                ->where('status', '!=', 'draft')
-                ->orderBy(request('sort', 'id'), request('direction', 'desc'))
-                ->paginate(request('per_page', 5))
-                ->withQueryString();
+    // public function index(): JsonResponse|AnonymousResourceCollection
+    // {
+    //     try {
+    //         $courses = Course::filterSearch(request('search'))
+    //             ->with(['category', 'subcategory', 'instructor', 'tags'])
+    //             ->where('status', '!=', 'draft')
+    //             ->orderBy(request('sort', 'id'), request('direction', 'desc'))
+    //             ->paginate(request('per_page', 5))
+    //             ->withQueryString();
 
-            return CourseResource::collection($courses);
-        } catch (\Exception $e) {
-            return $this->apiExceptionResponse($e);
-        }
-    }
+    //         return CourseResource::collection($courses);
+    //     } catch (\Exception $e) {
+    //         return $this->apiExceptionResponse($e);
+    //     }
+    // }
 
-    public function store(CourseRequest $request): JsonResponse|CourseResource
-    {
-        try {
-            $course = (new CreateCourseAction())->handle($request->validated());
+    // public function store(CourseRequest $request): JsonResponse|CourseResource
+    // {
+    //     try {
+    //         $course = (new CreateCourseAction())->handle($request->validated());
 
-            return new CourseResource($course);
-        } catch (\Exception $e) {
-            return $this->apiExceptionResponse($e);
-        }
-    }
+    //         return new CourseResource($course);
+    //     } catch (\Exception $e) {
+    //         return $this->apiExceptionResponse($e);
+    //     }
+    // }
 
-    public function show(Course $course): JsonResponse|CourseResource
-    {
-        try {
-            return new CourseResource($course);
-        } catch (\Exception $e) {
-            return $this->apiExceptionResponse($e);
-        }
-    }
+    // public function show(Course $course): JsonResponse|CourseResource
+    // {
+    //     try {
+    //         return new CourseResource($course);
+    //     } catch (\Exception $e) {
+    //         return $this->apiExceptionResponse($e);
+    //     }
+    // }
 
-    public function update(CourseRequest $request, Course $course): JsonResponse|CourseResource
-    {
-        try {
-            $course = (new UpdateCourseAction())->handle($request->validated(), $course);
+    // public function update(CourseRequest $request, Course $course): JsonResponse|CourseResource
+    // {
+    //     try {
+    //         $course = (new UpdateCourseAction())->handle($request->validated(), $course);
 
-            return new CourseResource($course);
-        } catch (\Exception $e) {
-            return $this->apiExceptionResponse($e);
-        }
-    }
+    //         return new CourseResource($course);
+    //     } catch (\Exception $e) {
+    //         return $this->apiExceptionResponse($e);
+    //     }
+    // }
 
-    public function destroy(Course $course): Response|JsonResponse
-    {
-        try {
-            $course->delete();
+    // public function destroy(Course $course): Response|JsonResponse
+    // {
+    //     try {
+    //         $course->delete();
 
-            return response()->noContent();
-        } catch (\Exception $e) {
-            return $this->apiExceptionResponse($e);
-        }
-    }
+    //         return response()->noContent();
+    //     } catch (\Exception $e) {
+    //         return $this->apiExceptionResponse($e);
+    //     }
+    // }
 }

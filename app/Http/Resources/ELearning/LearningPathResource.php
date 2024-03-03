@@ -14,28 +14,24 @@ class LearningPathResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $totalDuration = $this->courses->sum('duration_seconds');
-
-        $hours = floor($totalDuration / 3600);
-        $minutes = floor(($totalDuration % 3600) / 60);
-        $totalDurationFormatted = sprintf('%02d hours %02d minutes', $hours, $minutes);
+        $totalDuration = $this->resource->courses->sum('duration_seconds');
 
         return [
-            'id' => $this->id,
-            'image' => $this->image,
+            'id' => $this->resource->id,
+            'image' => $this->resource->image,
+            'title' => $this->resource->title,
+            'slug' => $this->resource->slug,
+            'description' => $this->resource->description,
+            'materials' => $this->resource->materials,
+            'final_product' => $this->resource->final_product,
+            'level' => $this->resource->level,
+            'creator_id' => $this->resource->creator_id,
+            'total_course' => $this->resource->courses->count(),
+            'total_duration' => sprintf('%02d hours %02d minutes', floor($totalDuration / 3600), floor(($totalDuration % 3600) / 60)),
             'creator' => [
-                'name' => $this->creator->display_name,
-                'avatar' => $this->creator->avatar,
+                'name' => $this->resource->creator->display_name,
+                'avatar' => $this->resource->creator->avatar,
             ],
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'description' => $this->description,
-            'materials' => $this->materials,
-            'final_product' => $this->final_product,
-            'level' => $this->level,
-            'creator_id' => $this->creator_id,
-            'total_course' => $this->courses->count(),
-            'total_duration' => $totalDurationFormatted,
         ];
     }
 }

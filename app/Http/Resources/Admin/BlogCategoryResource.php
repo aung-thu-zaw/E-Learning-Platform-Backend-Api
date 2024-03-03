@@ -15,11 +15,11 @@ class BlogCategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'description' => $request->is('api/v1/admin/blog-categories/*') && $request->method() !== 'PUT' ? $this->description : str()->limit($this->description, 60, '...'),
-            'status' => $this->status,
+            'id' => $this->resource->id,
+            'name' => $this->resource->name,
+            'slug' => $this->resource->slug,
+            'description' => $request->is('api/v1/admin/blog-categories/*') && $request->method() !== 'PUT' ? $this->resource->description : str()->limit($this->resource->description, 60, '...'),
+            'status' => $this->resource->status,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,13 +20,23 @@ class Tag extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
         'category_id' => 'integer',
         'subcategory_id' => 'integer',
     ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -40,40 +51,42 @@ class Tag extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Tag>
+    */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Subcategory,Tag>
+    */
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Subcategory::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+    */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
     }
 
-    public function scopeFilterSearch($query, $searchTerm)
+    /**
+    * @param Builder<Tag> $query
+    */
+    public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
-        return $query->where(function ($query) use ($searchTerm) {
+        $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('category', function ($subquery) use ($searchTerm) {
                 $subquery->where('name', 'like', "%{$searchTerm}%");
             })
-                ->orWhereHas('subcategory', function ($subquery) use ($searchTerm) {
-                    $subquery->where('name', 'like', "%{$searchTerm}%");
-                })
-                ->orWhere('name', 'like', "%{$searchTerm}%");
+            ->orWhereHas('subcategory', function ($subquery) use ($searchTerm) {
+                $subquery->where('name', 'like', "%{$searchTerm}%");
+            })
+            ->orWhere('name', 'like', "%{$searchTerm}%");
         });
     }
 }

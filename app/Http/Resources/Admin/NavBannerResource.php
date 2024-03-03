@@ -15,14 +15,14 @@ class NavBannerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'description' => $this->description,
-            'url' => $this->url,
-            'button' => $this->button,
-            'countdown' => $this->countdown,
-            'start_date_time' => $this->start_date_time,
-            'end_date_time' => $this->end_date_time,
-            'is_active' => $this->is_active,
+            'id' => $this->resource->id,
+            'description' => $this->resource->description,
+            'url' => $this->resource->url,
+            'button' => $this->resource->button,
+            'countdown' => $this->resource->countdown,
+            'start_date_time' => $this->resource->start_date_time,
+            'end_date_time' => $this->resource->end_date_time,
+            'is_active' => $this->resource->is_active,
         ];
     }
 }

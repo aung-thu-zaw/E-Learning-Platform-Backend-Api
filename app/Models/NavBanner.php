@@ -11,6 +11,11 @@ class NavBanner extends Model
     use HasFactory;
     use Searchable;
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string,string>
+     */
     protected $casts = [
         'id' => 'integer',
         'is_active' => 'boolean',

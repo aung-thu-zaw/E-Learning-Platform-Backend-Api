@@ -11,6 +11,9 @@ trait ApiResponses
         return response()->json(['message' => $e->getMessage(), 'status' => 500], 500);
     }
 
+    /**
+    * @param array<string> $data
+    */
     protected function responseWithResult(string $result, string $message, int $status, ?array $data = []): JsonResponse
     {
         return response()->json([

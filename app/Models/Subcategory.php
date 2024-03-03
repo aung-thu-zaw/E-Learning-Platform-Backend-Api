@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,13 +21,23 @@ class Subcategory extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
         'category_id' => 'integer',
         'status' => 'boolean',
     ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -41,15 +52,8 @@ class Subcategory extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Subcategory, never>
+    */
     protected function image(): Attribute
     {
         return Attribute::make(
@@ -57,28 +61,40 @@ class Subcategory extends Model
         );
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Subcategory>
+    */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+    */
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
+    */
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
     }
 
-    public function scopeFilterSearch($query, $searchTerm)
+    /**
+    * @param Builder<Subcategory> $query
+    */
+    public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
-        return $query->where(function ($query) use ($searchTerm) {
+        $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('category', function ($subquery) use ($searchTerm) {
                 $subquery->where('name', 'like', "%{$searchTerm}%");
             })
-                ->orWhere('name', 'like', "%{$searchTerm}%");
+            ->orWhere('name', 'like', "%{$searchTerm}%");
         });
     }
 }

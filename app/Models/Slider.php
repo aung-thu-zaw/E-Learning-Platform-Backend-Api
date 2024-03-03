@@ -18,12 +18,22 @@ class Slider extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $casts = [
         'id' => 'integer',
         'status' => 'boolean',
     ];
+
+    /**
+     * @return array<string>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -38,15 +48,8 @@ class Slider extends Model
     }
 
     /**
-     * @return array<string>
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-        ];
-    }
-
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Slider, never>
+    */
     protected function image(): Attribute
     {
         return Attribute::make(
