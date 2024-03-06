@@ -7,6 +7,7 @@ use App\Notifications\Auth\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -78,6 +79,14 @@ class User extends Authenticatable implements MustVerifyEmail
                 }
             }
         );
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
+    */
+    public function interests(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'user_interest', 'user_id', 'tag_id')->withTimestamps();
     }
 
     public function sendEmailVerificationNotification()

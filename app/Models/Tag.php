@@ -75,6 +75,14 @@ class Tag extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+    */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_interest', 'tag_id', 'user_id')->withTimestamps();
+    }
+
+    /**
     * @param Builder<Tag> $query
     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void
