@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetInterestTagBeginnerCourseController
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetNewAndPopularCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetRecommendedCourseForUserInterest;
+use App\Http\Controllers\Api\V1\ELearning\GetRecommendedLearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
@@ -28,6 +29,7 @@ Route::get('/user/abilities', AbilityController::class);
 Route::get('/courses/interests', GetCoursesBasedOnUserInterest::class)->middleware("auth");
 Route::get('/courses/interests/{tag_id}/beginner', GetInterestTagBeginnerCourseController::class)->middleware("auth");
 Route::get('/courses/recommended-for-user-interest', GetRecommendedCourseForUserInterest::class)->middleware("auth");
+Route::get('/learning-paths/recommended', GetRecommendedLearningPathController::class)->middleware("auth");
 Route::get('/courses/new-and-popular', GetNewAndPopularCourseController::class);
 
 // ========== For User Interest Tag ==========

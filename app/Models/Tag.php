@@ -83,6 +83,14 @@ class Tag extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
+    */
+    public function learningPaths(): BelongsToMany
+    {
+        return $this->belongsToMany(LearningPath::class, 'learning_path_tag', 'learning_path_id', 'tag_id');
+    }
+
+    /**
     * @param Builder<Tag> $query
     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void

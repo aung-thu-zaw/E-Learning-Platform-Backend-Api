@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Course;
 use App\Models\LearningPath;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -38,7 +39,10 @@ class LearningPathFactory extends Factory
     {
         return $this->afterCreating(function (LearningPath $learningPath) {
             $courses = Course::inRandomOrder()->limit(rand(4, 8))->get();
+            $tags = Tag::inRandomOrder()->limit(rand(2, 4))->get();
+
             $learningPath->courses()->attach($courses);
+            $learningPath->tags()->attach($tags);
         });
     }
 }

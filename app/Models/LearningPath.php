@@ -64,4 +64,12 @@ class LearningPath extends Model
     {
         return $this->belongsToMany(Course::class);
     }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
+    */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'learning_path_tag', 'learning_path_id', 'tag_id');
+    }
 }
