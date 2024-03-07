@@ -7,8 +7,10 @@ use App\Http\Controllers\Api\V1\ELearning\Blogs\GetResourcesForBlogPageControlle
 use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
+use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,13 @@ Route::get('/content/resources', GetResourcesForBlogPageController::class);
 Route::get('/categories/{blog_category}/contents', CategoryBlogContentController::class);
 Route::get('/contents', [BlogContentController::class, 'index']);
 Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
+
+// ========== For User Interest Tag ==========
+Route::get('/skill-tags', GetSkillTagController::class);
+
+Route::get('/followed-tags', [UserInterestTagController::class, 'index'])->middleware("auth");
+Route::post('/follow-tag', [UserInterestTagController::class, 'followTag'])->middleware("auth");
+Route::post('/unfollow-tag', [UserInterestTagController::class, 'unFollowTag'])->middleware("auth");
 
 // ========== For Nav Banner ==========
 Route::get('/nav-banner', GetNavTopBannerController::class);

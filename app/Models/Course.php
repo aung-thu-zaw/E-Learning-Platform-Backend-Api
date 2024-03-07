@@ -178,7 +178,7 @@ class Course extends Model
             $query->where('level', $filters['level']);
         });
 
-        $query->when(is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
+        $query->when(isset($filters["duration"]) && is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
             if ($filters['duration'] === 'short') {
                 $query->where('duration_seconds', '<', 3600);
             } elseif ($filters['duration'] === 'medium') {
