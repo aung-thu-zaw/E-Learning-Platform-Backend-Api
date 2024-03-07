@@ -35,8 +35,7 @@ class CourseResource extends JsonResource
             'instructor' => [
                 'name' => $this->resource->instructor->display_name,
                 'avatar' => $this->resource->instructor->avatar,
-            ],
-
+            ]
         ];
     }
 }

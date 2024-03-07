@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\ELearning\Blogs\BlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\CategoryBlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\GetResourcesForBlogPageController;
 use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetCoursesBasedOnUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
@@ -20,18 +21,20 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('/user/abilities', AbilityController::class);
 
-// ========== For Blog Page ==========
-Route::get('/content/resources', GetResourcesForBlogPageController::class);
-Route::get('/categories/{blog_category}/contents', CategoryBlogContentController::class);
-Route::get('/contents', [BlogContentController::class, 'index']);
-Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
-
 // ========== For User Interest Tag ==========
 Route::get('/skill-tags', GetSkillTagController::class);
 
 Route::get('/followed-tags', [UserInterestTagController::class, 'index'])->middleware("auth");
 Route::post('/follow-tag', [UserInterestTagController::class, 'followTag'])->middleware("auth");
 Route::post('/unfollow-tag', [UserInterestTagController::class, 'unFollowTag'])->middleware("auth");
+
+Route::get('/courses/interests', GetCoursesBasedOnUserInterest::class)->middleware("auth");
+
+// ========== For Blog Page ==========
+Route::get('/content/resources', GetResourcesForBlogPageController::class);
+Route::get('/categories/{blog_category}/contents', CategoryBlogContentController::class);
+Route::get('/contents', [BlogContentController::class, 'index']);
+Route::get('/contents/{blog_content}', [BlogContentController::class, 'show']);
 
 // ========== For Nav Banner ==========
 Route::get('/nav-banner', GetNavTopBannerController::class);
