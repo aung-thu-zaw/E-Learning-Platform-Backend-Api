@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetCoursesBasedOnUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetNewAndPopularCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetRecommendedCourseForUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
@@ -24,6 +25,7 @@ Route::get('/user/abilities', AbilityController::class);
 
 // ========== Courses ==========
 Route::get('/courses/interests', GetCoursesBasedOnUserInterest::class)->middleware("auth");
+Route::get('/courses/recommended-for-user-interest', GetRecommendedCourseForUserInterest::class)->middleware("auth");
 Route::get('/courses/new-and-popular', GetNewAndPopularCourseController::class);
 
 // ========== For User Interest Tag ==========

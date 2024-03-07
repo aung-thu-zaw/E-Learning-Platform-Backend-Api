@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
-class GetCoursesBasedOnUserInterest extends Controller
+class GetRecommendedCourseForUserInterest extends Controller
 {
     public function __invoke(): JsonResponse|AnonymousResourceCollection
     {
@@ -19,9 +19,13 @@ class GetCoursesBasedOnUserInterest extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $courses = Course::with(['instructor','lessons'])->whereHas('tags', function ($query) use ($userInterestIds) {
+            $courses = Course::with(['instructor', 'lessons'])
+            ->whereHas('tags', function ($query) use ($userInterestIds) {
                 $query->whereIn('id', $userInterestIds);
-            })->paginate(9);
+            })
+            ->orderBy(DB::raw('(SELECT COALESCE(SUM(views), 0) + COALESCE(SUM(enrollments), 0) FROM course_metrics WHERE course_metrics.course_id = courses.id)'), 'desc')
+            ->take(10)
+            ->get();
 
             return CourseResource::collection($courses);
 
