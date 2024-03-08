@@ -20,6 +20,7 @@ class GetInterestTagBeginnerCourseController extends Controller
             ->whereHas('tags', function ($query) use ($tagId) {
                 $query->where('id', $tagId)->where("level", "beginner");
             })
+            ->where('status', 'published')
             ->orderBy(DB::raw('(SELECT COALESCE(SUM(views), 0) + COALESCE(SUM(enrollments), 0) FROM course_metrics WHERE course_metrics.course_id = courses.id)'), 'desc')
             ->take(3)
             ->get();

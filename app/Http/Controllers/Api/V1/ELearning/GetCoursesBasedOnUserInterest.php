@@ -21,7 +21,9 @@ class GetCoursesBasedOnUserInterest extends Controller
 
             $courses = Course::with(['instructor','lessons'])->whereHas('tags', function ($query) use ($userInterestIds) {
                 $query->whereIn('id', $userInterestIds);
-            })->paginate(9);
+            })
+            ->where('status', 'published')
+            ->paginate(9);
 
             return CourseResource::collection($courses);
 
