@@ -145,6 +145,14 @@ class Course extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+    */
+    public function savedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_saved_courses', 'course_id', 'user_id');
+    }
+
+    /**
     * @param Builder<Course> $query
     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void

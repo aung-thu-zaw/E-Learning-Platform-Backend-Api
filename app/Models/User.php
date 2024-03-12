@@ -89,6 +89,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Tag::class, 'user_interest', 'user_id', 'tag_id')->withTimestamps();
     }
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+    */
+    public function savedCourses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'user_saved_courses', 'user_id', 'course_id');
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
+    */
+    public function savedLearningPaths(): BelongsToMany
+    {
+        return $this->belongsToMany(LearningPath::class, 'user_saved_learning_paths', 'user_id', 'learning_path_id');
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailQueued());

@@ -13,6 +13,6 @@ class CourseMetricSeeder extends Seeder
      */
     public function run(): void
     {
-        CourseMetric::factory(50)->create();
+        CourseMetric::factory(20)->create();
     }
 }

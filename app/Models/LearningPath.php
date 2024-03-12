@@ -72,4 +72,12 @@ class LearningPath extends Model
     {
         return $this->belongsToMany(Tag::class, 'learning_path_tag', 'learning_path_id', 'tag_id');
     }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+    */
+    public function savedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_saved_learning_paths', 'learning_path_id', 'user_id');
+    }
 }

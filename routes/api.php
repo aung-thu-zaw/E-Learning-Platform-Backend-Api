@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
+use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
+use App\Http\Controllers\Api\V1\ELearning\UserSavedLearningPathController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,19 +29,19 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/user/abilities', AbilityController::class);
 
 // ========== Courses ==========
-Route::get('/courses/interests', GetCoursesBasedOnUserInterest::class)->middleware("auth");
-Route::get('/courses/interests/{tag_id}/beginner', GetInterestTagBeginnerCourseController::class)->middleware("auth");
-Route::get('/courses/recommended-for-user-interest', GetRecommendedCourseForUserInterest::class)->middleware("auth");
-Route::get('/learning-paths/recommended', GetRecommendedLearningPathController::class)->middleware("auth");
+Route::get('/courses/interests', GetCoursesBasedOnUserInterest::class)->middleware('auth:sanctum');
+Route::get('/courses/interests/{tag_id}/beginner', GetInterestTagBeginnerCourseController::class)->middleware('auth:sanctum');
+Route::get('/courses/recommended-for-user-interest', GetRecommendedCourseForUserInterest::class)->middleware('auth:sanctum');
+Route::get('/learning-paths/recommended', GetRecommendedLearningPathController::class)->middleware('auth:sanctum');
 Route::get('/courses/new-and-popular', GetNewAndPopularCourseController::class);
 Route::get('/search', GetSearchResultController::class);
 
 // ========== For User Interest Tag ==========
 Route::get('/skill-tags', GetSkillTagController::class);
 
-Route::get('/followed-tags', [UserInterestTagController::class, 'index'])->middleware("auth");
-Route::post('/follow-tag', [UserInterestTagController::class, 'followTag'])->middleware("auth");
-Route::post('/unfollow-tag', [UserInterestTagController::class, 'unFollowTag'])->middleware("auth");
+Route::get('/followed-tags', [UserInterestTagController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/follow-tag', [UserInterestTagController::class, 'followTag'])->middleware('auth:sanctum');
+Route::post('/unfollow-tag', [UserInterestTagController::class, 'unFollowTag'])->middleware('auth:sanctum');
 
 // ========== For Blog Page ==========
 Route::get('/content/resources', GetResourcesForBlogPageController::class);
@@ -61,5 +63,13 @@ Route::get('/browse/{subcategory_id}/courses', [BrowseCourseController::class, '
 Route::get('/learning-paths', [LearningPathController::class, 'index']);
 Route::get('/learning-paths/{learning_path}', [LearningPathController::class, 'show']);
 
+// ========== For Saved List ==========
+Route::post('/courses/{course}/save', [UserSavedCourseController::class, 'saveCourse'])->middleware('auth:sanctum');
+Route::delete('/courses/{course}/remove', [UserSavedCourseController::class, 'removeSavedCourse'])->middleware('auth:sanctum');
+Route::post('/learning-paths/{learning_path}/save', [UserSavedLearningPathController::class, 'saveLearningPath'])->middleware('auth:sanctum');
+Route::delete('/learning-paths/{learning_path}/remove', [UserSavedLearningPathController::class, 'removeSavedLearningPath'])->middleware('auth:sanctum');
+
+
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';
+require __DIR__.'/user.php';
