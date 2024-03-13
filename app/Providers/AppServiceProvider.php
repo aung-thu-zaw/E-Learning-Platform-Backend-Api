@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Exceptions\CustomExceptionHandler;
+use App\Models\User;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
 
         JsonResource::withoutWrapping();
+
+        Cashier::useCustomerModel(User::class);
     }
 }

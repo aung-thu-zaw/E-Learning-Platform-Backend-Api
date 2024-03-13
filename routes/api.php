@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetSearchResultController;
 use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
+use App\Http\Controllers\Api\V1\ELearning\StripeSubscriptionController;
 use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedLearningPathController;
@@ -69,6 +70,9 @@ Route::delete('/courses/{course}/remove', [UserSavedCourseController::class, 're
 Route::post('/learning-paths/{learning_path}/save', [UserSavedLearningPathController::class, 'saveLearningPath'])->middleware('auth:sanctum');
 Route::delete('/learning-paths/{learning_path}/remove', [UserSavedLearningPathController::class, 'removeSavedLearningPath'])->middleware('auth:sanctum');
 
+// ========== Subscription Plan ==========
+Route::get('/user/stripe-intent', [StripeSubscriptionController::class,"getUserSetupIntent"])->middleware('auth');
+Route::post('/subscribe', [StripeSubscriptionController::class,"subscribe"])->middleware('auth');
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

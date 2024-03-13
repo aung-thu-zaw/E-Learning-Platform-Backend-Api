@@ -34,7 +34,7 @@ class CourseFactory extends Factory
             'subcategory_id' => fake()->randomElement($subcategories),
             'instructor_id' => fake()->randomElement($instructors),
             'thumbnail' => fake()->imageUrl(),
-            'title' => fake()->sentence(4),
+            'title' => fake()->sentence(),
             'slug' => fake()->slug(),
             'course_description' => fake()->paragraph(),
             'project_description' => fake()->paragraph(),

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use HasSlug;
     use Notifiable;
+    use Billable;
 
     /**
      * The attributes that should be cast.
