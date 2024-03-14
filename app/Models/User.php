@@ -8,6 +8,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -105,6 +107,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function savedLearningPaths(): BelongsToMany
     {
         return $this->belongsToMany(LearningPath::class, 'user_saved_learning_paths', 'user_id', 'learning_path_id');
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne<ReferralCode>
+    */
+    public function referralCode(): HasOne
+    {
+        return $this->hasOne(ReferralCode::class);
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<User>
+    */
+    public function referredUsers(): HasMany
+    {
+        return $this->hasMany(User::class, 'referrer_id');
     }
 
     public function sendEmailVerificationNotification()
