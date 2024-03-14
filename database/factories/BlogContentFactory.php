@@ -29,7 +29,7 @@ class BlogContentFactory extends Factory
             'author_id' => fake()->randomElement($authors),
             'title' => fake()->sentence(),
             'thumbnail' => fake()->imageUrl(),
-            'content' => fake()->paragraphs(3, true),
+            'content' => fake()->paragraphs(50, true),
             'status' => fake()->randomElement(['draft', 'published']),
             'published_at' => fake()->dateTime(),
         ];
