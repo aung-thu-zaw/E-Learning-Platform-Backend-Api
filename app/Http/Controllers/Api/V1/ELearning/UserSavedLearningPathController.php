@@ -17,7 +17,7 @@ class UserSavedLearningPathController extends Controller
 
             $user->savedLearningPaths()->attach($learningPath->id);
 
-            return response()->json(['message' => 'Learning path saved to list successfully'], 200);
+            return response()->json(['message' => 'Learning path saved to list successfully!'], 200);
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
         }

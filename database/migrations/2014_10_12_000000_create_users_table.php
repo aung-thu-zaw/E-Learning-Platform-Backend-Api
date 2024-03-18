@@ -32,6 +32,8 @@ return new class () extends Migration {
             $table->string('github_url')->nullable();
             $table->string('personal_website_url')->nullable();
             $table->foreignId("referrer_id")->nullable()->constrained('users')->nullOnDelete();
+            $table->boolean('profile_private')->default(false);
+            $table->boolean('remove_from_search')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

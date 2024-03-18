@@ -36,6 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'profile_private' => 'boolean',
+        'remove_from_search' => 'boolean'
     ];
 
     /**
@@ -75,10 +77,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 if (! $value) {
                     return asset("storage/avatars/default-avatar-$this->id.png");
 
-                } elseif (! str_starts_with($value, 'https')) {
+                } elseif (! str_starts_with($value, 'http') && ! str_starts_with($value, 'https')) {
                     return asset("storage/avatars/$value");
 
-                } elseif (str_starts_with($value, 'https')) {
+                } elseif (str_starts_with($value, 'http') || str_starts_with($value, 'https')) {
                     return $value;
                 }
             }
@@ -123,6 +125,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function referredUsers(): HasMany
     {
         return $this->hasMany(User::class, 'referrer_id');
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<EmailNotification>
+    */
+    public function emailNotifications(): BelongsToMany
+    {
+        return $this->belongsToMany(EmailNotification::class, 'user_notification_preferences')
+        ->using(UserNotificationPreference::class)
+        ->withPivot('enabled');
     }
 
     public function sendEmailVerificationNotification()

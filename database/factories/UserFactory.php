@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\EmailNotification;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -49,6 +50,8 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(function (User $user) {
             $user->referralCode()->create(['code' => substr(md5(uniqid('', true)), 0, 8)]);
+
+            $user->emailNotifications()->attach(EmailNotification::pluck('id'));
         });
     }
 }

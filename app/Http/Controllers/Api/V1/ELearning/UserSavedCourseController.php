@@ -16,7 +16,7 @@ class UserSavedCourseController extends Controller
 
             $user->savedCourses()->attach($course->id);
 
-            return response()->json(['message' => 'Course saved to list successfully'], 200);
+            return response()->json(['message' => 'Course saved to list successfully!'], 200);
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
         }

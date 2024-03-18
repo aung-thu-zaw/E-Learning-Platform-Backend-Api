@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmailNotification;
 use App\Models\User;
 use App\Rules\RecaptchaRule;
 use Illuminate\Auth\Events\Registered;
@@ -36,6 +37,8 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->referralCode()->create(['code' => substr(md5(uniqid('', true)), 0, 8)]);
+
+        $user->emailNotifications()->attach(EmailNotification::pluck('id'));
 
         $colors = ['#f44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFC107', '#FF9800', '#FF5722'];
 
