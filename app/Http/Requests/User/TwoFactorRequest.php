@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class ChangePasswordRequest extends FormRequest
+class TwoFactorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => ['required', 'current_password', Rule::exists("users", "password")],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'enabled_two_factor' => ['required', 'boolean'],
+            'current_password' => ['required', 'current_password'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
     }

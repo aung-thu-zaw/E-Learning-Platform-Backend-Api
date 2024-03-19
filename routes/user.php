@@ -8,10 +8,11 @@ use App\Http\Controllers\Api\V1\User\GetUserSavedCourseController;
 use App\Http\Controllers\Api\V1\User\GetUserSavedLearningPathController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileInformationController;
+use App\Http\Controllers\Api\V1\User\UpdateTwoFactorAuthenticationController;
 use App\Http\Controllers\Api\V1\User\UpdateUserEmailNotificationPreferencesController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])
+Route::middleware(['auth:sanctum','auth.two_factor'])
     ->prefix('user')
     ->group(function () {
 
@@ -29,5 +30,6 @@ Route::middleware(['auth:sanctum'])
         Route::put('/change-email', ChangeEmailAddressController::class);
         Route::put('/profile', UpdateProfileController::class)->middleware('verified');
         Route::put('/profile-information', UpdateProfileInformationController::class)->middleware('verified');
+        Route::put('/two-factor-authentication', UpdateTwoFactorAuthenticationController::class)->middleware('verified');
 
     });

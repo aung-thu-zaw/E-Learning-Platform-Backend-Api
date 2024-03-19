@@ -34,6 +34,9 @@ return new class () extends Migration {
             $table->foreignId("referrer_id")->nullable()->constrained('users')->nullOnDelete();
             $table->boolean('profile_private')->default(false);
             $table->boolean('remove_from_search')->default(false);
+            $table->boolean("enabled_two_factor")->default(false);
+            $table->string('two_factor_code')->nullable();
+            $table->dateTime('two_factor_expires_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

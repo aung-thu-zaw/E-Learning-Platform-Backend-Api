@@ -35,9 +35,12 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'two_factor_expires_at' => 'datetime',
         'password' => 'hashed',
         'profile_private' => 'boolean',
-        'remove_from_search' => 'boolean'
+        'remove_from_search' => 'boolean',
+        'enabled_two_factor' => 'boolean',
+        'two_factor_code' => 'string'
     ];
 
     /**
@@ -145,5 +148,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordQueued($token));
+    }
+
+    public function generateTwoFactorCode(): void
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = (string) rand(100000, 999999);
+        $this->two_factor_expires_at = now()->addMinute();
+        $this->save();
+    }
+
+    public function resetTwoFactorCode(): void
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
     }
 }
