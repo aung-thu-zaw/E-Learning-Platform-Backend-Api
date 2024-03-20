@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\StripeSubscriptionController;
+use App\Http\Controllers\Api\V1\ELearning\UserFollowController;
 use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedLearningPathController;
@@ -75,7 +76,10 @@ Route::delete('/learning-paths/{learning_path}/remove', [UserSavedLearningPathCo
 Route::get('/user/stripe-intent', [StripeSubscriptionController::class,"getUserSetupIntent"])->middleware(['auth:sanctum','auth.two_factor']);
 Route::post('/subscribe', [StripeSubscriptionController::class,"subscribe"])->middleware(['auth:sanctum','auth.two_factor']);
 
-Route::get('/users/{user:username}/information', GetUserInformationController::class);
+Route::get('/user/{user:username}/information', GetUserInformationController::class);
+
+Route::post('/user/{user:id}/follow', [UserFollowController::class, 'follow']);
+Route::post('/user/{user:id}/unfollow', [UserFollowController::class, 'unfollow']);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

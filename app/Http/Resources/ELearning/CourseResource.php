@@ -33,6 +33,7 @@ class CourseResource extends JsonResource
             'total_lesson' => $this->resource->lessons->count(),
             'duration' => sprintf('%02d hours %02d minutes', floor($this->resource->duration_seconds / 3600), floor(($this->resource->duration_seconds % 3600) / 60)),
             'instructor' => [
+                'username' => $this->resource->instructor->username,
                 'name' => $this->resource->instructor->display_name,
                 'avatar' => $this->resource->instructor->avatar,
             ]

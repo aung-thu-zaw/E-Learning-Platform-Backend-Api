@@ -37,8 +37,9 @@ class UserInformationResource extends JsonResource
             'referrer_id' => $this->resource->referrer_id,
             'profile_private' => $this->resource->profile_private,
             'remove_from_search' => $this->resource->remove_from_search,
-            'students_count' => 'ok',
-            'reviews_count' => 'ok',
+            'students_count' => 'Fake Students Count',
+            'reviews_count' => 'Fake Reviews Count',
+            'is_followed' => $this->resource->followers->contains(auth()->id()),
             'followers_count' => number_format($this->resource->followers->count()),
             'following_count' => number_format($this->resource->followings->count()),
             'courses' => CourseResource::collection($this->resource->courses)
