@@ -15,6 +15,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -26,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use HasSlug;
     use Notifiable;
+    use Follower;
+    use Followable;
     use Billable;
 
     /**
@@ -88,6 +92,14 @@ class User extends Authenticatable implements MustVerifyEmail
                 }
             }
         );
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+    */
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class, 'instructor_id');
     }
 
     /**

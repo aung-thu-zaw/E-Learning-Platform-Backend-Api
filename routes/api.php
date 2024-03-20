@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetCoursesBasedOnUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetInterestTagBeginnerCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetNewAndPopularCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetUserInformationController;
 use App\Http\Controllers\Api\V1\ELearning\GetRecommendedCourseForUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetRecommendedLearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\GetResourcesForBrowsingCourseController;
@@ -73,6 +74,8 @@ Route::delete('/learning-paths/{learning_path}/remove', [UserSavedLearningPathCo
 // ========== Subscription Plan ==========
 Route::get('/user/stripe-intent', [StripeSubscriptionController::class,"getUserSetupIntent"])->middleware(['auth:sanctum','auth.two_factor']);
 Route::post('/subscribe', [StripeSubscriptionController::class,"subscribe"])->middleware(['auth:sanctum','auth.two_factor']);
+
+Route::get('/users/{user:username}/information', GetUserInformationController::class);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';
