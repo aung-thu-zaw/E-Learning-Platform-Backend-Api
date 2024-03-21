@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CourseMetricSeeder::class,
             LessonSeeder::class,
+            EnrollmentSeeder::class,
             LearningPathSeeder::class,
             NewsletterSubscriberSeeder::class,
             BlogCategorySeeder::class,

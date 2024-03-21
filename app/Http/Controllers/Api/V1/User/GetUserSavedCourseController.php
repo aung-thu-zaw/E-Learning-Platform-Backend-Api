@@ -17,7 +17,7 @@ class GetUserSavedCourseController extends Controller
         try {
             $user = User::findOrFail(auth()->id());
 
-            $savedCourses = $user->savedCourses()->with(['instructor', 'lessons'])->paginate(10);
+            $savedCourses = $user->savedCourses()->with(['instructor', 'lessons'])->paginate(15);
 
             return CourseResource::collection($savedCourses);
 

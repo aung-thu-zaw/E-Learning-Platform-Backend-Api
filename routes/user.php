@@ -3,9 +3,11 @@
 use App\Http\Controllers\Api\V1\User\ChangeEmailAddressController;
 use App\Http\Controllers\Api\V1\User\ChangePasswordController;
 use App\Http\Controllers\Api\V1\User\GetEmailNotificationController;
+use App\Http\Controllers\Api\V1\User\GetResourcesForReminderController;
 use App\Http\Controllers\Api\V1\User\GetUserReferralCodeController;
 use App\Http\Controllers\Api\V1\User\GetUserSavedCourseController;
 use App\Http\Controllers\Api\V1\User\GetUserSavedLearningPathController;
+use App\Http\Controllers\Api\V1\User\ReminderController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileInformationController;
 use App\Http\Controllers\Api\V1\User\UpdateTwoFactorAuthenticationController;
@@ -31,5 +33,10 @@ Route::middleware(['auth:sanctum','auth.two_factor'])
         Route::put('/profile', UpdateProfileController::class)->middleware('verified');
         Route::put('/profile-information', UpdateProfileInformationController::class)->middleware('verified');
         Route::put('/two-factor-authentication', UpdateTwoFactorAuthenticationController::class)->middleware('verified');
+
+        Route::apiResource('/reminders', ReminderController::class);
+        Route::apiResource('/reminders', ReminderController::class);
+
+        Route::get('/reminder/resources', GetResourcesForReminderController::class);
 
     });

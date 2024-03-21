@@ -17,7 +17,7 @@ class GetUserSavedLearningPathController extends Controller
         try {
             $user = User::findOrFail(auth()->id());
 
-            $savedLearningPaths = $user->savedLearningPaths()->with(['creator', 'courses'])->paginate(10);
+            $savedLearningPaths = $user->savedLearningPaths()->with(['creator', 'courses'])->paginate(15);
 
             return LearningPathResource::collection($savedLearningPaths);
 

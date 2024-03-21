@@ -153,6 +153,30 @@ class Course extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
+    */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(Reminder::class);
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
+    */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+    */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'enrollments');
+    }
+
+    /**
     * @param Builder<Course> $query
     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void

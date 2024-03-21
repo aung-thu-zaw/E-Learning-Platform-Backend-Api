@@ -42,7 +42,7 @@ class UserInformationResource extends JsonResource
             'is_followed' => $this->resource->followers->contains(auth()->id()),
             'followers_count' => number_format($this->resource->followers->count()),
             'following_count' => number_format($this->resource->followings->count()),
-            'courses' => CourseResource::collection($this->resource->courses)
+            'courses' => CourseResource::collection($this->resource->instructorCourses)
         ];
     }
 }

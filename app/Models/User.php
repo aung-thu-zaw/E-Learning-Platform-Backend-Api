@@ -97,7 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
     */
-    public function courses(): HasMany
+    public function instructorCourses(): HasMany
     {
         return $this->hasMany(Course::class, 'instructor_id');
     }
@@ -143,6 +143,22 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
+    */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+    */
+    public function enrolledCourses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'enrollments');
+    }
+
+    /**
     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<EmailNotification>
     */
     public function emailNotifications(): BelongsToMany
@@ -150,6 +166,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(EmailNotification::class, 'user_notification_preferences')
         ->using(UserNotificationPreference::class)
         ->withPivot('enabled');
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
+    */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(Reminder::class);
     }
 
     public function sendEmailVerificationNotification()
