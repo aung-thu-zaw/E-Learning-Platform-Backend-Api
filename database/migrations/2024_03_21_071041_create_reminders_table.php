@@ -21,7 +21,6 @@ return new class () extends Migration {
             $table->boolean("google_calendar_synced")->default(false);
             $table->timestamps();
         });
-
     }
 
     /**

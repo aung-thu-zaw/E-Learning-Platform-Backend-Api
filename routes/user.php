@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\User\GetUserReferralCodeController;
 use App\Http\Controllers\Api\V1\User\GetUserSavedCourseController;
 use App\Http\Controllers\Api\V1\User\GetUserSavedLearningPathController;
 use App\Http\Controllers\Api\V1\User\ReminderController;
+use App\Http\Controllers\Api\V1\User\SyncReminderToGoogleCalendarController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileController;
 use App\Http\Controllers\Api\V1\User\UpdateProfileInformationController;
 use App\Http\Controllers\Api\V1\User\UpdateTwoFactorAuthenticationController;
@@ -38,5 +39,7 @@ Route::middleware(['auth:sanctum','auth.two_factor'])
         Route::apiResource('/reminders', ReminderController::class);
 
         Route::get('/reminder/resources', GetResourcesForReminderController::class);
+
+        Route::post('/sync/reminders/{reminder}/google-calendar', SyncReminderToGoogleCalendarController::class)->name("reminder.sync");
 
     });

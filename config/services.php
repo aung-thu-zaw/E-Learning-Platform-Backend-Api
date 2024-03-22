@@ -45,6 +45,12 @@ return [
         'redirect' => env('GOOGLE_CALLBACK'),
     ],
 
+    'calendar' => [
+        'client_id' => env('GOOGLE_CALENDAR_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CALENDAR_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_CALENDAR_CALLBACK'),
+    ],
+
     'google_recaptcha' => [
         'url' => 'https://www.google.com/recaptcha/api/siteverify',
         'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),

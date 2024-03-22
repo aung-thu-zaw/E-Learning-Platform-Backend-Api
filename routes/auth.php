@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\GoogleAuthForCalendarController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -44,5 +45,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
 Route::get('/auth/redirect/{service}', [SocialAuthController::class, 'redirect']);
-
 Route::get('/auth/callback/{service}', [SocialAuthController::class, 'callback']);
+
+Route::get('/google/authenticate', [GoogleAuthForCalendarController::class,"authenticate"])->name('calendar.authenticate');
+Route::get('/google/calendar/callback', [GoogleAuthForCalendarController::class,"callback"]);
