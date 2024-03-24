@@ -19,7 +19,7 @@ class GetSearchResultController extends Controller
         try {
             $searchResultCourses = Course::search(request('query'))
                 ->query(function (Builder $builder) {
-                    $builder->with(['instructor', 'lessons']);
+                    $builder->with(['instructor', 'lessons','enrollments','savedByUsers']);
                 })
                 ->where('status', 'published')
                 ->orderBy('id', 'desc')
@@ -28,7 +28,7 @@ class GetSearchResultController extends Controller
 
             $searchResultLearningPaths = LearningPath::search(request('query'))
                 ->query(function (Builder $builder) {
-                    $builder->with(['creator', 'courses']);
+                    $builder->with(['creator', 'courses','savedByUsers']);
                 })
                 ->where('status', true)
                 ->orderBy('id', 'desc')

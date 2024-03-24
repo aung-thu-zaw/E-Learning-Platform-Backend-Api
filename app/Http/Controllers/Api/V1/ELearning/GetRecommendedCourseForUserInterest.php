@@ -19,7 +19,7 @@ class GetRecommendedCourseForUserInterest extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $courses = Course::with(['instructor', 'lessons'])
+            $courses = Course::with(['instructor', 'lessons','enrollments','savedByUsers'])
             ->whereHas('tags', function ($query) use ($userInterestIds) {
                 $query->whereIn('id', $userInterestIds);
             })

@@ -13,7 +13,7 @@ class GetUserInformationController extends Controller
     public function __invoke(User $user): JsonResponse|UserInformationResource
     {
         try {
-            $user->load(['instructorCourses.instructor','instructorCourses.lessons','followers','followings']);
+            $user->load(['instructorCourses.instructor','instructorCourses.lessons','instructorCourses.enrollments','followers','followings']);
 
             return new UserInformationResource($user);
 

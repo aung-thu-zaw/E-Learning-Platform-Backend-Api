@@ -14,7 +14,7 @@ class BrowseCourseController extends Controller
     {
         try {
             $courses = Course::filter(request(['search', 'tag', 'sort', 'level', 'duration']))
-                ->with(['instructor', 'lessons', 'tags'])
+                ->with(['instructor', 'lessons','enrollments', 'tags','savedByUsers'])
                 ->where('subcategory_id', $subcategoryId)
                 ->where('status', 'published')
                 ->orderBy('id', 'desc')

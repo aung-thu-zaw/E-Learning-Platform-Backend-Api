@@ -27,7 +27,8 @@ class LearningPathResource extends JsonResource
             'level' => $this->resource->level,
             'creator_id' => $this->resource->creator_id,
             'total_course' => $this->resource->courses->count(),
-            'total_duration' => sprintf('%02d hours %02d minutes', floor($totalDuration / 3600), floor(($totalDuration % 3600) / 60)),
+            'total_duration' => sprintf('%02d h %02d min', floor($totalDuration / 3600), floor(($totalDuration % 3600) / 60)),
+            'is_saved' => $this->resource->savedByUsers->contains(auth()->id()),
             'creator' => [
                 'name' => $this->resource->creator->display_name,
                 'avatar' => $this->resource->creator->avatar,

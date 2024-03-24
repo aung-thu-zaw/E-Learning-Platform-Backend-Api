@@ -19,7 +19,7 @@ class GetRecommendedLearningPathController extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $learningPaths = LearningPath::with(['creator', 'courses'])
+            $learningPaths = LearningPath::with(['creator', 'courses','savedByUsers'])
                 ->whereHas('tags', function ($query) use ($userInterestIds) {
                     $query->whereIn('id', $userInterestIds);
                 })

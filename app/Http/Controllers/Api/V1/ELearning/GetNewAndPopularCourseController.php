@@ -16,7 +16,7 @@ class GetNewAndPopularCourseController extends Controller
     {
         try {
             $courses = Course::select('courses.*')
-            ->with(['instructor', 'lessons'])
+            ->with(['instructor', 'lessons','enrollments','savedByUsers'])
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->orderBy(DB::raw('(SELECT COALESCE(SUM(views), 0) + COALESCE(SUM(enrollments), 0) FROM course_metrics WHERE course_metrics.course_id = courses.id)'), 'desc')
