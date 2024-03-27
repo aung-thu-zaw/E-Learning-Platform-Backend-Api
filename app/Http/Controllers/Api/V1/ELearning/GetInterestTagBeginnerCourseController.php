@@ -16,7 +16,7 @@ class GetInterestTagBeginnerCourseController extends Controller
     public function __invoke(int $tagId): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $courses = Course::with(['instructor', 'lessons','enrollments','savedByUsers'])
+            $courses = Course::with(['instructor', 'sections.lessons','enrollments','savedByUsers'])
             ->whereHas('tags', function ($query) use ($tagId) {
                 $query->where('id', $tagId)->where("level", "beginner");
             })

@@ -16,7 +16,7 @@ class GetEnrolledCourseController extends Controller
         try {
             $user = User::findOrFail(auth()->id());
 
-            $enrolledCourses = $user->enrolledCourses()->with(['instructor', 'lessons','enrollments','savedByUsers'])->paginate(15);
+            $enrolledCourses = $user->enrolledCourses()->with(['instructor', 'sections.lessons','enrollments','savedByUsers'])->paginate(15);
 
             return CourseResource::collection($enrolledCourses);
 

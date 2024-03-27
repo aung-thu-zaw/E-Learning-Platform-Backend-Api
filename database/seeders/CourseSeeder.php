@@ -13,6 +13,6 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-        Course::factory(500)->has(Lesson::factory(10))->create(['status' => 'published']);
+        Course::factory(100)->create(['status' => 'published','published_at' => now()]);
     }
 }

@@ -16,6 +16,12 @@ class CourseResource extends JsonResource
     {
         $enrollment = $this->resource->enrollments->where('user_id', auth()->id())->first();
 
+        $totalLessonCount = 0;
+        foreach ($this->resource->sections as $section) {
+            $totalLessonCount += $section->lessons->count();
+        }
+
+
         return [
             'id' => $this->resource->id,
             'uuid' => $this->resource->uuid,
@@ -31,14 +37,41 @@ class CourseResource extends JsonResource
             'status' => $this->resource->status,
             'language' => $this->resource->language,
             'published_at' => $this->resource->published_at,
-            'total_lesson' => $this->resource->lessons->count(),
+            'total_lesson' => $totalLessonCount,
             'duration' => sprintf('%02d h %02d min', floor($this->resource->duration_seconds / 3600), floor(($this->resource->duration_seconds % 3600) / 60)),
             'is_saved' => $this->resource->savedByUsers->contains(auth()->id()),
+            'is_enrolled' => $enrollment ? true : false,
+            'total_student' => $this->resource->enrollments->count(),
             'instructor' => [
                 'username' => $this->resource->instructor->username,
                 'name' => $this->resource->instructor->display_name,
                 'avatar' => $this->resource->instructor->avatar,
             ],
+            'sections' => $this->resource->sections->map(function ($section) {
+                return [
+                    'title' => $section->title,
+                    'slug' => $section->slug,
+                    'lessons' => $section->lessons->map(function ($lesson) {
+                        $hours = floor($lesson->duration_seconds / 3600);
+                        $minutes = floor(($lesson->duration_seconds % 3600) / 60);
+
+                        if ($hours > 0) {
+                            $duration = sprintf('%02d h %02d min', $hours, $minutes);
+                        } else {
+                            $duration = sprintf('%02d min', $minutes);
+                        }
+
+                        return [
+                            'title' => $lesson->title,
+                            'slug' => $lesson->slug,
+                            'video_path' => $lesson->video_path,
+                            'duration' => $duration,
+                            'description' => $lesson->description,
+                            'is_completed' => $lesson->is_completed,
+                        ];
+                    }),
+                ];
+            }),
             'enrollment' => $enrollment ? [
                 'id' => $enrollment->id,
                 'enrolled_at' => $enrollment->enrolled_at,

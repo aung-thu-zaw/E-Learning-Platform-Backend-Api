@@ -6,24 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Lesson extends Model
+class Section extends Model
 {
     use HasFactory;
     use HasSlug;
+    use Searchable;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string,string>
+     * @return array<string>
      */
-    protected $casts = [
-        'id' => 'integer',
-        'section_id' => 'integer',
-        'course_id' => 'integer',
-    ];
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -37,19 +38,20 @@ class Lesson extends Model
         return 'slug';
     }
 
+
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Section,Lesson>
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Section>
     */
-    public function section(): BelongsTo
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Subtitle>
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Lesson>
     */
-    public function subtitles(): HasMany
+    public function lessons(): HasMany
     {
-        return $this->hasMany(Subtitle::class);
+        return $this->hasMany(Lesson::class);
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\ELearning\Blogs\BlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\CategoryBlogContentController;
 use App\Http\Controllers\Api\V1\ELearning\Blogs\GetResourcesForBlogPageController;
 use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetCoursesBasedOnUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetInterestTagBeginnerCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\StripeSubscriptionController;
+use App\Http\Controllers\Api\V1\ELearning\UserEnrollCourseController;
 use App\Http\Controllers\Api\V1\ELearning\UserFollowController;
 use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
@@ -80,6 +82,10 @@ Route::get('/user/{user:username}/information', GetUserInformationController::cl
 
 Route::post('/user/{user:id}/follow', [UserFollowController::class, 'follow']);
 Route::post('/user/{user:id}/unfollow', [UserFollowController::class, 'unfollow']);
+
+
+Route::get('/courses/{course:slug}', GetCourseController::class);
+Route::post('/courses/{course:slug}/enroll', UserEnrollCourseController::class)->middleware("auth");
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

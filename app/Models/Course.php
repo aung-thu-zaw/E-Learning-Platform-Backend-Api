@@ -65,6 +65,16 @@ class Course extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+    */
+    protected function publishedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? date('F j, Y', strtotime($value)) : null,
+        );
+    }
+
+    /**
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Course>
     */
     public function category(): BelongsTo
@@ -81,11 +91,11 @@ class Course extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Lesson>
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Section>
     */
-    public function lessons(): HasMany
+    public function sections(): HasMany
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Section::class);
     }
 
     /**
