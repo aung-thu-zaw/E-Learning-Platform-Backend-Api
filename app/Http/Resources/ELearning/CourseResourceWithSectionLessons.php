@@ -7,14 +7,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
-class CourseResource extends JsonResource
+class CourseResourceWithSectionLessons extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
+     * @param  Request  $request
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
         $enrollment = $this->resource->enrollments->where('user_id', auth()->id())->first();
 
@@ -29,6 +30,7 @@ class CourseResource extends JsonResource
             'instructor_id' => $this->resource->instructor_id,
             'category_id' => $this->resource->category_id,
             'subcategory_id' => $this->resource->subcategory_id,
+            'intro_video_name' => $this->resource->courseIntroVideo->video_file_name,
             'thumbnail' => $this->resource->thumbnail,
             'title' => $this->resource->title,
             'slug' => $this->resource->slug,
@@ -56,6 +58,43 @@ class CourseResource extends JsonResource
                     'progress' => $enrollment->progress,
                 ]
                 : null,
+            'sections' => $this->resource->sections->map(function ($section) {
+                $sectionDurationSeconds = $section->lessons->sum('duration_seconds');
+                $sectionHours = floor($sectionDurationSeconds / 3600);
+                $sectionMinutes = floor(($sectionDurationSeconds % 3600) / 60);
+
+                if ($sectionHours > 0) {
+                    $sectionDuration = sprintf('%02d h %02d min', $sectionHours, $sectionMinutes);
+                } else {
+                    $sectionDuration = sprintf('%02d min', $sectionMinutes);
+                }
+
+                return [
+                    'title' => $section->title,
+                    'slug' => $section->slug,
+                    'duration' => $sectionDuration,
+                    'total_completed_lessons_count' => $section->lessons->where('is_completed', true)->count(),
+                    'lessons' => $section->lessons->map(function ($lesson) {
+                        $hours = floor($lesson->duration_seconds / 3600);
+                        $minutes = floor(($lesson->duration_seconds % 3600) / 60);
+
+                        if ($hours > 0) {
+                            $duration = sprintf('%02d h %02d min', $hours, $minutes);
+                        } else {
+                            $duration = sprintf('%02d min', $minutes);
+                        }
+
+                        return [
+                            'title' => $lesson->title,
+                            'slug' => $lesson->slug,
+                            'video_path' => $lesson->video_path,
+                            'duration' => $duration,
+                            'description' => $lesson->description,
+                            'is_completed' => $lesson->is_completed,
+                        ];
+                    }),
+                ];
+            }),
         ];
     }
 }

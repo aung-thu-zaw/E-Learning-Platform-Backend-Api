@@ -18,7 +18,7 @@ class GetSearchResultController extends Controller
         try {
             $searchResultCourses = Course::search(request('query'))
                 ->query(function (Builder $builder) {
-                    $builder->with(['instructor', 'lessons', 'enrollments', 'savedByUsers']);
+                    $builder->with(['instructor', 'sections.lessons','enrollments', 'savedByUsers']);
                 })
                 ->where('status', 'published')
                 ->orderBy('id', 'desc')
