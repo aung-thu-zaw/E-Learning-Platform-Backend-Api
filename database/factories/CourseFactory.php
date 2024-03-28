@@ -78,10 +78,14 @@ class CourseFactory extends Factory
      */
     private function createSections(Course $course): void
     {
-        Section::factory()
-            ->count($this->faker->numberBetween(3, 8))
-            ->has(Lesson::factory()->count(rand(5, 20)))
-            ->create(['course_id' => $course->id]);
+        $sectionsCount = $this->faker->numberBetween(3, 8);
+        for ($i = 1; $i <= $sectionsCount; $i++) {
+            Section::factory()
+                ->create([
+                    'slug' => 'section-' . $i,
+                    'course_id' => $course->id
+                ]);
+        }
     }
 
     /**

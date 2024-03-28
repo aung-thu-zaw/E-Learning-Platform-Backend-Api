@@ -54,6 +54,7 @@ class CourseResource extends JsonResource
                     'enrolled_at' => $enrollment->enrolled_at,
                     'completed_at' => $enrollment->completed_at,
                     'progress' => $enrollment->progress,
+                    'last_watched_lesson_uuid' => $enrollment->last_watched_lesson_uuid,
                 ]
                 : null,
         ];

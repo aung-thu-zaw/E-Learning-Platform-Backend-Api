@@ -12,7 +12,6 @@ use Spatie\Sluggable\SlugOptions;
 class Lesson extends Model
 {
     use HasFactory;
-    use HasSlug;
 
     /**
      * The attributes that should be cast to native types.
@@ -25,16 +24,9 @@ class Lesson extends Model
         'course_id' => 'integer',
     ];
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
-    }
-
     public function getRouteKeyName()
     {
-        return 'slug';
+        return 'uuid';
     }
 
     /**

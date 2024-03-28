@@ -26,7 +26,6 @@ class SectionFactory extends Factory
             'title' => fake()->sentence(),
         ];
     }
-
     public function configure()
     {
         return $this->afterCreating(function (Section $section) {

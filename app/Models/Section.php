@@ -13,7 +13,6 @@ use Spatie\Sluggable\SlugOptions;
 class Section extends Model
 {
     use HasFactory;
-    use HasSlug;
     use Searchable;
 
     /**
@@ -24,13 +23,6 @@ class Section extends Model
         return [
             'title' => $this->title,
         ];
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
     }
 
     public function getRouteKeyName()

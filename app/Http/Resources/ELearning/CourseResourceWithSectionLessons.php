@@ -56,6 +56,7 @@ class CourseResourceWithSectionLessons extends JsonResource
                     'enrolled_at' => $enrollment->enrolled_at,
                     'completed_at' => $enrollment->completed_at,
                     'progress' => $enrollment->progress,
+                    'last_watched_lesson_uuid' => $enrollment->last_watched_lesson_uuid,
                 ]
                 : null,
             'sections' => $this->resource->sections->map(function ($section) {
@@ -70,6 +71,7 @@ class CourseResourceWithSectionLessons extends JsonResource
                 }
 
                 return [
+                    'id' => $section->id,
                     'title' => $section->title,
                     'slug' => $section->slug,
                     'duration' => $sectionDuration,
@@ -85,9 +87,10 @@ class CourseResourceWithSectionLessons extends JsonResource
                         }
 
                         return [
+                            'section_id' => $lesson->section_id,
                             'title' => $lesson->title,
-                            'slug' => $lesson->slug,
-                            'video_path' => $lesson->video_path,
+                            'uuid' => $lesson->uuid,
+                            'video_file_name' => $lesson->video_file_name,
                             'duration' => $duration,
                             'description' => $lesson->description,
                             'is_completed' => $lesson->is_completed,

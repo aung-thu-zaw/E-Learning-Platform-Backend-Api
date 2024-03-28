@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,9 +15,9 @@ return new class() extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('section_id')->constrained()->cascadeOnDelete();
+            $table->string('uuid');
             $table->string('title');
-            $table->string('slug');
-            $table->string('video_path');
+            $table->string('video_file_name');
             $table->unsignedBigInteger('duration_seconds');
             $table->text('description')->nullable();
             $table->boolean('is_completed')->default(false);
