@@ -6,6 +6,8 @@ use App\Http\Traits\ImageUpload;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Resource;
+use App\Models\VideoQuality;
+use App\Services\VideoTranscoderService;
 use Illuminate\Support\Str;
 
 class CreateCourseAction
@@ -17,7 +19,7 @@ class CreateCourseAction
      */
     public function handle(array $data): Course
     {
-        $thumbnail = isset($data['thumbnail']) ? $this->createImage($data['thumbnail'], 'courses') : null;
+        $thumbnail = isset($data['thumbnail']) ? $this->createImage($data['thumbnail'], 'courses/thumbnails') : null;
 
         $course = Course::create([
             'uuid' => Str::uuid(),
@@ -34,15 +36,12 @@ class CreateCourseAction
         ]);
 
         if (isset($data['tags'])) {
-
             $course->tags()->attach($data['tags']);
-
         }
 
         if (isset($data['resources'])) {
-
             foreach ($data['resources'] as $key => $value) {
-                $filePath = $this->createImage($value, 'resources');
+                $filePath = $this->createImage($value, 'courses/resources');
 
                 $originalTitle = $value->getClientOriginalName();
 
@@ -52,25 +51,35 @@ class CreateCourseAction
                     'file_path' => $filePath,
                 ]);
             }
-
         }
 
         $totalDuration = 0;
         if (isset($data['videos'])) {
-
             foreach ($data['videos'] as $video) {
-                $videoPath = $this->createImage($video['video_file'], 'lessons');
+                // $videoFileName = $this->createImage($video['video_file'], 'courses/lessons');
 
-                Lesson::create([
-                    'course_id' => $course->id,
+                // if ($videoFileName) {
+                $videoQualities = (new VideoTranscoderService())->transcodeVideo('good.mp4');
+                // }
+
+                $lesson = Lesson::create([
+                    'section_id' => 1,
                     'title' => $video['title'],
-                    'video_path' => $videoPath,
+                    'video_path' => 'good.mp4',
                     'duration_seconds' => $video['duration_seconds'],
                 ]);
 
+                foreach ($videoQualities as $quality) {
+                    VideoQuality::create([
+                        'lesson_id' => $lesson->id,
+                        'label' => $quality['label'],
+                        'resolution' => $quality['resolution'],
+                        'url' => $quality['url'],
+                    ]);
+                }
+
                 $totalDuration += $video['duration_seconds'];
             }
-
         }
 
         $course->update(['duration_seconds' => $totalDuration]);

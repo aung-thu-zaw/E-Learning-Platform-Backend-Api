@@ -46,6 +46,14 @@ class Lesson extends Model
     }
 
     /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany<VideoQuality>
+    */
+    public function videoQualities(): HasMany
+    {
+        return $this->hasMany(VideoQuality::class);
+    }
+
+    /**
     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Subtitle>
     */
     public function subtitles(): HasMany
