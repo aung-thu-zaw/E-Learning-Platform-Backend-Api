@@ -68,16 +68,6 @@ class Course extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
      */
-    protected function introVideoPath(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/courses/intro-videos/$value"),
-        );
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
-     */
     protected function publishedAt(): Attribute
     {
         return Attribute::make(
@@ -120,18 +110,18 @@ class Course extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseMetric>
      */
-    public function metrics()
+    public function metrics(): HasOne
     {
         return $this->hasOne(CourseMetric::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<resource>
-     */
-    public function resources(): HasMany
-    {
-        return $this->hasMany(Resource::class);
-    }
+    // /**
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany<resource>
+    //  */
+    // public function resources(): HasMany
+    // {
+    //     return $this->hasMany(Resource::class);
+    // }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<Project>
@@ -203,6 +193,14 @@ class Course extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'enrollments');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseIntroVideo>
+     */
+    public function courseIntroVideo(): HasOne
+    {
+        return $this->hasOne(CourseIntroVideo::class);
     }
 
     /**

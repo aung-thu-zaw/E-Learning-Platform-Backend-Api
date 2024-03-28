@@ -5,6 +5,7 @@ namespace App\Http\Resources\ELearning;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 class CourseResource extends JsonResource
 {
@@ -30,7 +31,7 @@ class CourseResource extends JsonResource
             'instructor_id' => $this->resource->instructor_id,
             'category_id' => $this->resource->category_id,
             'subcategory_id' => $this->resource->subcategory_id,
-            'intro_video_path' => $this->resource->intro_video_path,
+            'intro_video_name' => $this->resource->courseIntroVideo->video_file_name,
             'thumbnail' => $this->resource->thumbnail,
             'title' => $this->resource->title,
             'slug' => $this->resource->slug,

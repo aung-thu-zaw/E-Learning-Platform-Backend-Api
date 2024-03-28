@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\V1\ELearning\GetSearchResultController;
 use App\Http\Controllers\Api\V1\ELearning\GetSkillTagController;
 use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\GetUserInformationController;
+use App\Http\Controllers\Api\V1\ELearning\GetVideoControllecr;
+use App\Http\Controllers\Api\V1\ELearning\GetVideoController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
 use App\Http\Controllers\Api\V1\ELearning\StripeSubscriptionController;
 use App\Http\Controllers\Api\V1\ELearning\UserCourseEnrollController;
@@ -27,6 +29,7 @@ use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedLearningPathController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::middleware(['auth:sanctum', 'auth.two_factor'])->get('/user', function (Request $request) {
     return $request->user()->load('permissions:name');
@@ -91,6 +94,10 @@ Route::post('/courses/{course:slug}/enroll', UserCourseEnrollController::class)-
 
 Route::post('/lessons/{lesson}/start', [UserCourseLessonInteractionController::class, 'startLesson'])->middleware(['auth:sanctum', 'auth.two_factor']);
 Route::post('/lessons/{lesson}/end', [UserCourseLessonInteractionController::class, 'endLesson'])->middleware(['auth:sanctum', 'auth.two_factor']);
+
+
+Route::get('course/intro-video/{filename}', [GetVideoController::class,"introVideo"])->middleware(["auth"]);
+Route::get('course/lesson-videos/{filename}', [GetVideoController::class,"lessonVideo"])->middleware(["auth"]);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';
