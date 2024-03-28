@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateProfileRequest extends FormRequest
 {
@@ -26,7 +25,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'regex:/^[a-z]+(?:-[a-z]+)*$/',Rule::unique("users", "username")->ignore(auth()->user())],
+            'username' => ['required', 'string', 'regex:/^[a-z]+(?:-[a-z]+)*$/', Rule::unique('users', 'username')->ignore(auth()->user())],
             'profile_private' => ['required', 'boolean'],
             'remove_from_search' => ['required', 'boolean'],
             'captcha_token' => ['required', new RecaptchaRule()],

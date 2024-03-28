@@ -11,8 +11,8 @@ class ReferralCode extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,ReferralCode>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,ReferralCode>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

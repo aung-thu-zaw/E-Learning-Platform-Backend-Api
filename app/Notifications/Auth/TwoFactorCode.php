@@ -36,10 +36,10 @@ class TwoFactorCode extends Notification implements ShouldQueue
     public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage())
-        ->line('Your 6-Digit verification code is '.$notifiable->two_factor_code)
-        ->line('This code was sent to you to verify your login.')
-        ->line('The code will be expire in 5 minutes')
-        ->line('If you have not tried to login, ignore this message.');
+            ->line('Your 6-Digit verification code is '.$notifiable->two_factor_code)
+            ->line('This code was sent to you to verify your login.')
+            ->line('The code will be expire in 5 minutes')
+            ->line('If you have not tried to login, ignore this message.');
     }
 
     /**

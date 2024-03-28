@@ -36,10 +36,10 @@ class UserCourseLessonInteractionController extends Controller
     {
         try {
             $lessonView = LessonWatchTime::where('user_id', auth()->id())
-            ->where('lesson_id', $lesson->id)
-            ->first();
+                ->where('lesson_id', $lesson->id)
+                ->first();
 
-            if (!$lessonView) {
+            if (! $lessonView) {
                 return response()->json(['message' => 'User has not started watching this lesson.'], 400);
             }
 
@@ -54,10 +54,8 @@ class UserCourseLessonInteractionController extends Controller
 
             return response()->json(['message' => 'Lesson view ended successfully.'], 200);
 
-
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
         }
     }
-
 }

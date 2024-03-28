@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1\ELearning;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UserFollowController extends Controller
 {

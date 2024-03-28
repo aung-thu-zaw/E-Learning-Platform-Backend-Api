@@ -24,13 +24,13 @@ class ReminderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "course_id" => ["required","numeric",Rule::exists("courses", "id")],
-            "message" => ["required","string"],
-            "frequency" => ["required","string",Rule::in(["once","weekly","daily"])],
-            "date" => ["nullable","date"],
-            "time" => ["required"],
-            "days" => ["nullable",'array',Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])],
-            "google_calendar_synced" => ["required","boolean"],
+            'course_id' => ['required', 'numeric', Rule::exists('courses', 'id')],
+            'message' => ['required', 'string'],
+            'frequency' => ['required', 'string', Rule::in(['once', 'weekly', 'daily'])],
+            'date' => ['nullable', 'date'],
+            'time' => ['required'],
+            'days' => ['nullable', 'array', Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])],
+            'google_calendar_synced' => ['required', 'boolean'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
     }

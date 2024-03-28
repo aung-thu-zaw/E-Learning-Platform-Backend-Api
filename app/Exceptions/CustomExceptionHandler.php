@@ -15,8 +15,8 @@ class CustomExceptionHandler extends ExceptionHandler
     }
 
     /**
-    * @return array<string>
-    */
+     * @return array<string>
+     */
     protected function transformErrors(ValidationException $exception)
     {
         $errors = [];

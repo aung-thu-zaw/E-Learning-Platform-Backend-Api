@@ -11,16 +11,16 @@ class LessonWatchTime extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,LessonWatchTime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,LessonWatchTime>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,LessonWatchTime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,LessonWatchTime>
+     */
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);

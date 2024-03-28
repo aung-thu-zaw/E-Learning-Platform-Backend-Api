@@ -21,8 +21,8 @@ class Subtitle extends Model
     ];
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,Subtitle>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,Subtitle>
+     */
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);

@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
             $user->notify(new TwoFactorCode());
 
-            return response()->json(["message" => "Two factor code generated!"]);
+            return response()->json(['message' => 'Two factor code generated!']);
 
         } else {
 

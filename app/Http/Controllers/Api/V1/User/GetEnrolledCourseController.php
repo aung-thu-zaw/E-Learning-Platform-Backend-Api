@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ELearning\CourseResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetEnrolledCourseController extends Controller
@@ -16,7 +15,7 @@ class GetEnrolledCourseController extends Controller
         try {
             $user = User::findOrFail(auth()->id());
 
-            $enrolledCourses = $user->enrolledCourses()->with(['instructor', 'sections.lessons','enrollments','savedByUsers'])->paginate(15);
+            $enrolledCourses = $user->enrolledCourses()->with(['instructor', 'sections.lessons', 'enrollments', 'savedByUsers'])->paginate(15);
 
             return CourseResource::collection($enrolledCourses);
 

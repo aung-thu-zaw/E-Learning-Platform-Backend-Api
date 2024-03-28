@@ -52,8 +52,8 @@ class Subcategory extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Subcategory, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Subcategory, never>
+     */
     protected function image(): Attribute
     {
         return Attribute::make(
@@ -62,39 +62,39 @@ class Subcategory extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Subcategory>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Subcategory>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+     */
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
+     */
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
     }
 
     /**
-    * @param Builder<Subcategory> $query
-    */
+     * @param  Builder<Subcategory>  $query
+     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
         $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('category', function ($subquery) use ($searchTerm) {
                 $subquery->where('name', 'like', "%{$searchTerm}%");
             })
-            ->orWhere('name', 'like', "%{$searchTerm}%");
+                ->orWhere('name', 'like', "%{$searchTerm}%");
         });
     }
 }

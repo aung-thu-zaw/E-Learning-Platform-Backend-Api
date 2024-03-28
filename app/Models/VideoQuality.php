@@ -11,11 +11,10 @@ class VideoQuality extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,VideoQuality>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Lesson,VideoQuality>
+     */
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);
     }
-
 }

@@ -4,8 +4,6 @@ namespace App\Http\Requests\User;
 
 use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class TwoFactorRequest extends FormRequest
 {

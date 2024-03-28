@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Course;
-use App\Models\LessonView;
 use App\Models\LessonWatchTime;
 use Illuminate\Console\Command;
 
@@ -15,8 +14,6 @@ class UpdateCourseWatchTime extends Command
      * @var string
      */
     protected $signature = 'courses:update-watch-time';
-
-
 
     /**
      * The console command description.

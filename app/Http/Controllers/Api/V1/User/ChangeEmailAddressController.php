@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ChangeEmailAddressRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ChangeEmailAddressController extends Controller
 {
@@ -15,7 +14,7 @@ class ChangeEmailAddressController extends Controller
         try {
             $user = User::findOrFail(auth()->id());
 
-            $user->update(['email' => $request->email,'email_verified_at' => null]);
+            $user->update(['email' => $request->email, 'email_verified_at' => null]);
 
             $user->sendEmailVerificationNotification();
 

@@ -25,7 +25,7 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => ['required', 'current_password', Rule::exists("users", "password")],
+            'current_password' => ['required', 'current_password', Rule::exists('users', 'password')],
             'password' => ['required', Password::defaults(), 'confirmed'],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];

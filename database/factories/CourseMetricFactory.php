@@ -17,13 +17,13 @@ class CourseMetricFactory extends Factory
      */
     public function definition(): array
     {
-        $courses = Course::pluck("id")->toArray();
+        $courses = Course::pluck('id')->toArray();
 
         return [
-            "course_id" => fake()->randomElement($courses),
-            "views" => fake()->randomNumber(),
-            "enrollments" => fake()->randomNumber(),
-            "rating" => fake()->randomNumber(),
+            'course_id' => fake()->randomElement($courses),
+            'views' => fake()->randomNumber(),
+            'enrollments' => fake()->randomNumber(),
+            'rating' => fake()->randomNumber(),
         ];
     }
 }

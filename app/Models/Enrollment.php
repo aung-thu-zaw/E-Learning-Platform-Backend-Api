@@ -11,16 +11,16 @@ class Enrollment extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Enrollment>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Enrollment>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Enrollment>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Enrollment>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

@@ -7,9 +7,7 @@ use App\Models\Course;
 use App\Models\CourseMetric;
 use App\Models\CourseWatchTime;
 use App\Models\Enrollment;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserCourseEnrollController extends Controller
@@ -31,7 +29,7 @@ class UserCourseEnrollController extends Controller
 
             CourseWatchTime::firstOrCreate(['course_id' => $course->id]);
 
-            return response()->json(["message" => "Enrollment successful."]);
+            return response()->json(['message' => 'Enrollment successful.']);
 
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);

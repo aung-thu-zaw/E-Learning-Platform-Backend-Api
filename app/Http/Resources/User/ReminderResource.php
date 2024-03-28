@@ -15,13 +15,13 @@ class ReminderResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->resource->id,
-            "message" => $this->resource->message,
-            "frequency" => $this->resource->frequency,
-            "date" => $this->resource->date ?? null,
-            "time" => $this->resource->time,
-            "google_calendar_synced" => $this->resource->google_calendar_synced,
-            "days" => $this->resource->reminderDays->pluck('day'),
+            'id' => $this->resource->id,
+            'message' => $this->resource->message,
+            'frequency' => $this->resource->frequency,
+            'date' => $this->resource->date ?? null,
+            'time' => $this->resource->time,
+            'google_calendar_synced' => $this->resource->google_calendar_synced,
+            'days' => $this->resource->reminderDays->pluck('day'),
             'course' => [
                 'id' => $this->resource->course->id,
                 'title' => $this->resource->course->title,
@@ -30,7 +30,7 @@ class ReminderResource extends JsonResource
                 'id' => $this->resource->user->id,
                 'name' => $this->resource->user->display_name,
                 'avatar' => $this->resource->user->avatar,
-            ]
+            ],
         ];
     }
 }

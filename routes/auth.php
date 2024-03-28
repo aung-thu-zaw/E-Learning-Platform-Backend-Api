@@ -47,5 +47,5 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::get('/auth/redirect/{service}', [SocialAuthController::class, 'redirect']);
 Route::get('/auth/callback/{service}', [SocialAuthController::class, 'callback']);
 
-Route::get('/google/authenticate', [GoogleAuthForCalendarController::class,"authenticate"])->name('calendar.authenticate');
-Route::get('/google/calendar/callback', [GoogleAuthForCalendarController::class,"callback"]);
+Route::get('/google/authenticate', [GoogleAuthForCalendarController::class, 'authenticate'])->name('calendar.authenticate');
+Route::get('/google/calendar/callback', [GoogleAuthForCalendarController::class, 'callback']);

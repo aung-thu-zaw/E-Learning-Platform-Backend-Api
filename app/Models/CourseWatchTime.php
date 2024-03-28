@@ -11,8 +11,8 @@ class CourseWatchTime extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseWatchTime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseWatchTime>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

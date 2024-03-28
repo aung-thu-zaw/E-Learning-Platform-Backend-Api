@@ -48,24 +48,24 @@ class Category extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Subcategory>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Subcategory>
+     */
     public function subcategories(): HasMany
     {
         return $this->hasMany(Subcategory::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+     */
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Tag>
+     */
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);

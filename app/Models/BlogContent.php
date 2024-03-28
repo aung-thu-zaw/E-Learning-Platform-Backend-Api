@@ -54,8 +54,8 @@ class BlogContent extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
+     */
     protected function publishedAt(): Attribute
     {
         return Attribute::make(
@@ -64,8 +64,8 @@ class BlogContent extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<BlogContent, never>
+     */
     protected function thumbnail(): Attribute
     {
         return Attribute::make(
@@ -74,42 +74,42 @@ class BlogContent extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<BlogCategory,BlogContent>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<BlogCategory,BlogContent>
+     */
     public function blogCategory(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,BlogContent>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,BlogContent>
+     */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+     */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
     }
 
     /**
-    * @param Builder<BlogContent> $query
-    */
+     * @param  Builder<BlogContent>  $query
+     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
         $query->where(function ($query) use ($searchTerm) {
             $query->whereHas('author', function ($subquery) use ($searchTerm) {
                 $subquery->where('display_name', 'like', "%{$searchTerm}%");
             })
-            ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
-                $subquery->where('name', 'like', "%{$searchTerm}%");
-            })
-            ->orWhere('title', 'like', "%{$searchTerm}%");
+                ->orWhereHas('blogCategory', function ($subquery) use ($searchTerm) {
+                    $subquery->where('name', 'like', "%{$searchTerm}%");
+                })
+                ->orWhere('title', 'like', "%{$searchTerm}%");
         });
     }
 }

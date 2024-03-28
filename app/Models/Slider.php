@@ -48,8 +48,8 @@ class Slider extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Slider, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Slider, never>
+     */
     protected function image(): Attribute
     {
         return Attribute::make(

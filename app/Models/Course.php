@@ -56,8 +56,8 @@ class Course extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+     */
     protected function thumbnail(): Attribute
     {
         return Attribute::make(
@@ -66,8 +66,8 @@ class Course extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+     */
     protected function introVideoPath(): Attribute
     {
         return Attribute::make(
@@ -76,8 +76,8 @@ class Course extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+     */
     protected function publishedAt(): Attribute
     {
         return Attribute::make(
@@ -86,128 +86,128 @@ class Course extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category,Course>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Subcategory,Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Subcategory,Course>
+     */
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Subcategory::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Section>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Section>
+     */
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Course>
+     */
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseMetric>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseMetric>
+     */
     public function metrics()
     {
         return $this->hasOne(CourseMetric::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Resource>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<resource>
+     */
     public function resources(): HasMany
     {
         return $this->hasMany(Resource::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Project>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Project>
+     */
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<BlogContent>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<BlogContent>
+     */
     public function blogContents(): BelongsToMany
     {
         return $this->belongsToMany(BlogContent::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
+     */
     public function learningPaths(): BelongsToMany
     {
         return $this->belongsToMany(LearningPath::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'course_tag', 'course_id', 'tag_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     */
     public function savedByUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_saved_courses', 'course_id', 'user_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
+     */
     public function reminders(): HasMany
     {
         return $this->hasMany(Reminder::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseWatchTime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseWatchTime>
+     */
     public function courseWatchTime(): HasOne
     {
         return $this->hasOne(CourseWatchTime::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
+     */
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'enrollments');
     }
 
     /**
-    * @param Builder<Course> $query
-    */
+     * @param  Builder<Course>  $query
+     */
     public function scopeFilterSearch(Builder $query, string $searchTerm): void
     {
         $query->where(function ($query) use ($searchTerm) {
@@ -225,9 +225,9 @@ class Course extends Model
     }
 
     /**
-    * @param array<string> $filters
-    * @param Builder<Course> $query
-    */
+     * @param  array<string>  $filters
+     * @param  Builder<Course>  $query
+     */
     public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when(
@@ -247,7 +247,7 @@ class Course extends Model
             $query->where('level', $filters['level']);
         });
 
-        $query->when(isset($filters["duration"]) && is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
+        $query->when(isset($filters['duration']) && is_string($filters['duration']) && $filters['duration'] !== 'none', function ($query) use ($filters) {
             if ($filters['duration'] === 'short') {
                 $query->where('duration_seconds', '<', 3600);
             } elseif ($filters['duration'] === 'medium') {

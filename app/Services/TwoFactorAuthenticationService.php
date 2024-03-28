@@ -13,8 +13,8 @@ class TwoFactorAuthenticationService
         $user = User::findOrFail(auth()->id());
 
         $user->update([
-            "two_factor_secret" => Str::random(32),
-            "two_factor_expires_at" => now()->addMinutes(5)
+            'two_factor_secret' => Str::random(32),
+            'two_factor_expires_at' => now()->addMinutes(5),
         ]);
     }
 

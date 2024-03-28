@@ -38,18 +38,17 @@ class Section extends Model
         return 'slug';
     }
 
-
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Section>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Section>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Lesson>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Lesson>
+     */
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);

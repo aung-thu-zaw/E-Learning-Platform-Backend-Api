@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\EmailNotification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +14,7 @@ class UpdateUserEmailNotificationPreferencesController extends Controller
     {
         try {
             $request->validate([
-                "email_notification_id" => ["required", "numeric", Rule::exists("email_notifications", "id")]
+                'email_notification_id' => ['required', 'numeric', Rule::exists('email_notifications', 'id')],
             ]);
 
             $user = User::findOrFail(auth()->id());
@@ -25,7 +24,7 @@ class UpdateUserEmailNotificationPreferencesController extends Controller
             if ($pivotData) {
                 $enabled = $pivotData->enabled;
 
-                $user->emailNotifications()->syncWithoutDetaching([$request->email_notification_id => ['enabled' => !$enabled]]);
+                $user->emailNotifications()->syncWithoutDetaching([$request->email_notification_id => ['enabled' => ! $enabled]]);
 
                 $message = $enabled ? 'Notification disabled successfully.' : 'Notification enabled successfully.';
             } else {
@@ -37,5 +36,4 @@ class UpdateUserEmailNotificationPreferencesController extends Controller
             return $this->apiExceptionResponse($e);
         }
     }
-
 }

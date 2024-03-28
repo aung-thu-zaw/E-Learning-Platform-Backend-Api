@@ -22,16 +22,16 @@ class Project extends Model
     ];
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Project>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Project>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Project>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Project>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

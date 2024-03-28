@@ -29,7 +29,7 @@ use App\Http\Controllers\Api\V1\Admin\Sliders\ChangeSliderStatusController;
 use App\Http\Controllers\Api\V1\Admin\Sliders\SliderController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum','auth.two_factor', 'verified', 'user.role:admin'])
+Route::middleware(['auth:sanctum', 'auth.two_factor', 'verified', 'user.role:admin'])
     ->prefix('admin')
     ->group(function () {
         // ========== NavBanners ==========

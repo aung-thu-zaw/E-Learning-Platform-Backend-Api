@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -31,10 +32,10 @@ return new class () extends Migration {
             $table->string('youtube_url')->nullable();
             $table->string('github_url')->nullable();
             $table->string('personal_website_url')->nullable();
-            $table->foreignId("referrer_id")->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('referrer_id')->nullable()->constrained('users')->nullOnDelete();
             $table->boolean('profile_private')->default(false);
             $table->boolean('remove_from_search')->default(false);
-            $table->boolean("enabled_two_factor")->default(false);
+            $table->boolean('enabled_two_factor')->default(false);
             $table->string('two_factor_code')->nullable();
             $table->dateTime('two_factor_expires_at')->nullable();
             $table->rememberToken();

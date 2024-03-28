@@ -7,7 +7,6 @@ use App\Http\Resources\ELearning\LearningPathResource;
 use App\Models\LearningPath;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetRecommendedLearningPathController extends Controller
@@ -19,14 +18,14 @@ class GetRecommendedLearningPathController extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $learningPaths = LearningPath::with(['creator', 'courses','savedByUsers'])
+            $learningPaths = LearningPath::with(['creator', 'courses', 'savedByUsers'])
                 ->whereHas('tags', function ($query) use ($userInterestIds) {
                     $query->whereIn('id', $userInterestIds);
                 })
-            ->where('status', true)
-            ->orderBy('id', 'desc')
-            ->take(3)
-            ->get();
+                ->where('status', true)
+                ->orderBy('id', 'desc')
+                ->take(3)
+                ->get();
 
             return LearningPathResource::collection($learningPaths);
 

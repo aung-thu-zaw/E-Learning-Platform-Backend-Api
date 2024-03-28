@@ -12,8 +12,8 @@ trait ApiResponses
     }
 
     /**
-    * @param array<string> $data
-    */
+     * @param  array<string>  $data
+     */
     protected function responseWithResult(string $result, string $message, int $status, ?array $data = []): JsonResponse
     {
         return response()->json([

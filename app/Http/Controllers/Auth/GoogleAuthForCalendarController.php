@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Google_Service_Calendar_Event;
 use Google_Client;
 use Google_Service_Calendar;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +14,7 @@ class GoogleAuthForCalendarController extends Controller
 {
     public function authenticate(): RedirectResponse
     {
-        if(!session('google_access_token')) {
+        if (! session('google_access_token')) {
 
             $client = $this->createGoogleClient();
 
@@ -42,7 +41,7 @@ class GoogleAuthForCalendarController extends Controller
 
             // Redirect to a page after successful authentication
             // return response()->json(['message' => 'Google authentication successful.']);
-            return redirect()->away(env("FRONTEND_URL").'/my-learning/learning-reminders');
+            return redirect()->away(env('FRONTEND_URL').'/my-learning/learning-reminders');
         } catch (\Exception $e) {
 
             return response()->json(['error' => 'Failed to handle Google callback.', 'message' => $e->getMessage()], 500);

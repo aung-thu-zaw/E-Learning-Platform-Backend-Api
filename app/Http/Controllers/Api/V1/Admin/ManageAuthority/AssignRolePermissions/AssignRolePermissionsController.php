@@ -58,7 +58,6 @@ class AssignRolePermissionsController extends Controller
                 $user->syncPermissions($role->permissions);
             });
 
-
             $role->load('permissions');
 
             return response()->json($role, 200);

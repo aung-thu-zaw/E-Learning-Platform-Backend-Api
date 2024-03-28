@@ -13,7 +13,7 @@ class LearningPathController extends Controller
     public function index(): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $learningPaths = LearningPath::with(['creator', 'courses','savedByUsers'])
+            $learningPaths = LearningPath::with(['creator', 'courses', 'savedByUsers'])
                 ->where('status', true)
                 ->orderBy('id', 'desc')
                 ->paginate(3)
@@ -29,7 +29,7 @@ class LearningPathController extends Controller
     public function show(LearningPath $learningPath): JsonResponse|LearningPathResource
     {
         try {
-            $learningPath->load(['creator', 'courses','savedByUsers']);
+            $learningPath->load(['creator', 'courses', 'savedByUsers']);
 
             return new LearningPathResource($learningPath);
 

@@ -18,15 +18,15 @@ class EnrollmentFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::where("status", "active")->pluck("id")->toArray();
-        $courses = Course::where("status", "published")->pluck("id")->toArray();
+        $users = User::where('status', 'active')->pluck('id')->toArray();
+        $courses = Course::where('status', 'published')->pluck('id')->toArray();
 
         return [
-            "user_id" => fake()->randomElement($users),
-            "course_id" => fake()->randomElement($courses),
-            "enrolled_at" => fake()->dateTimeBetween('-1 year', 'now'),
-            "completed_at" => fake()->optional()->dateTimeBetween('-1 year', 'now'),
-            "progress" => fake()->numberBetween(0, 100)
+            'user_id' => fake()->randomElement($users),
+            'course_id' => fake()->randomElement($courses),
+            'enrolled_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'completed_at' => fake()->optional()->dateTimeBetween('-1 year', 'now'),
+            'progress' => fake()->numberBetween(0, 100),
         ];
     }
 }

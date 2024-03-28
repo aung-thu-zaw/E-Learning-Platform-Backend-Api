@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\V1\User\UpdateTwoFactorAuthenticationController;
 use App\Http\Controllers\Api\V1\User\UpdateUserEmailNotificationPreferencesController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum','auth.two_factor'])
+Route::middleware(['auth:sanctum', 'auth.two_factor'])
     ->prefix('user')
     ->group(function () {
 
@@ -41,18 +41,15 @@ Route::middleware(['auth:sanctum','auth.two_factor'])
         // ========== My Learning ==========
         Route::get('/enrolled-courses', GetEnrolledCourseController::class);
 
-
         Route::apiResource('/reminders', ReminderController::class);
         Route::apiResource('/reminders', ReminderController::class);
 
         Route::get('/reminder/resources', GetResourcesForReminderController::class);
 
-        Route::post('/sync/reminders/{reminder}/google-calendar', SyncReminderToGoogleCalendarController::class)->name("reminder.sync");
-
+        Route::post('/sync/reminders/{reminder}/google-calendar', SyncReminderToGoogleCalendarController::class)->name('reminder.sync');
 
         Route::post('/enrolled-courses/{course}/mark-as-complete', [CourseCompletionController::class, 'markAsComplete']);
         Route::post('/enrolled-courses/{course}/unmark-as-complete', [CourseCompletionController::class, 'unmarkAsComplete']);
         Route::delete('/enrolled-courses/{course}/unenroll', RemovedFromEnrollmentCourseController::class);
-
 
     });

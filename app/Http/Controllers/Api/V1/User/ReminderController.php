@@ -16,7 +16,7 @@ class ReminderController extends Controller
     public function index(): JsonResponse|AnonymousResourceCollection
     {
         try {
-            $reminder = Reminder::with(['reminderDays','course','user'])->where("user_id", auth()->id())->orderBy("id", "desc")->get();
+            $reminder = Reminder::with(['reminderDays', 'course', 'user'])->where('user_id', auth()->id())->orderBy('id', 'desc')->get();
 
             return ReminderResource::collection($reminder);
         } catch (\Exception $e) {
@@ -37,10 +37,10 @@ class ReminderController extends Controller
                 'google_calendar_synced' => filter_var($request->google_calendar_synced, FILTER_VALIDATE_BOOLEAN),
             ]);
 
-            if(isset($request->days)) {
+            if (isset($request->days)) {
 
-                foreach($request->days as $day) {
-                    ReminderDay::create(["reminder_id" => $reminder->id,"day" => $day]);
+                foreach ($request->days as $day) {
+                    ReminderDay::create(['reminder_id' => $reminder->id, 'day' => $day]);
 
                 }
 
@@ -55,7 +55,7 @@ class ReminderController extends Controller
     public function show(Reminder $reminder): JsonResponse|ReminderResource
     {
         try {
-            $reminder->load(['reminderDays','course','user']);
+            $reminder->load(['reminderDays', 'course', 'user']);
 
             return new ReminderResource($reminder);
         } catch (\Exception $e) {
@@ -76,24 +76,24 @@ class ReminderController extends Controller
                 'google_calendar_synced' => filter_var($request->google_calendar_synced, FILTER_VALIDATE_BOOLEAN),
             ]);
 
-            if(isset($request->days)) {
+            if (isset($request->days)) {
 
                 $currentReminderDays = $reminder->reminderDays->pluck('day');
 
                 foreach ($request->days as $day) {
-                    if (!$currentReminderDays->contains($day)) {
-                        ReminderDay::create(["reminder_id" => $reminder->id, "day" => $day]);
+                    if (! $currentReminderDays->contains($day)) {
+                        ReminderDay::create(['reminder_id' => $reminder->id, 'day' => $day]);
                     }
                 }
 
                 foreach ($currentReminderDays as $currentDay) {
-                    if (!in_array($currentDay, $request->days)) {
+                    if (! in_array($currentDay, $request->days)) {
                         $reminder->reminderDays()->where('day', $currentDay)->delete();
                     }
                 }
             }
 
-            $reminder->load(['reminderDays','course','user']);
+            $reminder->load(['reminderDays', 'course', 'user']);
 
             return new ReminderResource($reminder);
         } catch (\Exception $e) {

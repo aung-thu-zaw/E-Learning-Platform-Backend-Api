@@ -11,8 +11,8 @@ class EmailNotification extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_notification_preferences');

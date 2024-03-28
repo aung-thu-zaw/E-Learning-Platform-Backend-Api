@@ -12,7 +12,7 @@ class GetCourseController extends Controller
     public function __invoke(Course $course): JsonResponse|CourseResource
     {
         try {
-            $course->load(['instructor', 'sections.lessons','enrollments','savedByUsers']);
+            $course->load(['instructor', 'sections.lessons', 'enrollments', 'savedByUsers']);
 
             return new CourseResource($course);
 

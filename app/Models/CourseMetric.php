@@ -11,8 +11,8 @@ class CourseMetric extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseMetric>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseMetric>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

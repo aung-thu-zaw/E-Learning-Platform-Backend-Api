@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Http\Controllers\Controller;
 use App\Models\Reminder;
 use Carbon\Carbon;
+use Google\Service\Calendar\Event;
+use Google\Service\Calendar\EventDateTime;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Google\Service\Calendar\Event;
-use Google\Service\Calendar\EventDateTime;
 
 class SyncReminderToGoogleCalendarController extends Controller
 {
@@ -21,7 +21,7 @@ class SyncReminderToGoogleCalendarController extends Controller
             // Retrieve access token from session
             $accessToken = session('google_access_token');
 
-            if (!$accessToken) {
+            if (! $accessToken) {
                 return response()->json(['error' => 'Google access token not found.'], 401);
             }
 
@@ -66,7 +66,7 @@ class SyncReminderToGoogleCalendarController extends Controller
 
         if ($reminder->frequency === 'once') {
             // Concatenate date and time with a space in between
-            $dateTime = $reminder->date . ' ' . $reminder->time;
+            $dateTime = $reminder->date.' '.$reminder->time;
             // Parse date/time with strtotime
             $timestamp = strtotime($dateTime);
             // Create Carbon instance from timestamp
@@ -94,7 +94,7 @@ class SyncReminderToGoogleCalendarController extends Controller
             if ($reminder->frequency === 'weekly') {
                 // Set recurrence for weekly events based on reminder days
                 $daysOfWeek = $reminder->reminderDays->pluck('day')->toArray();
-                $event->setRecurrence(['RRULE:FREQ=WEEKLY;BYDAY=' . implode(',', $daysOfWeek)]);
+                $event->setRecurrence(['RRULE:FREQ=WEEKLY;BYDAY='.implode(',', $daysOfWeek)]);
             } elseif ($reminder->frequency === 'daily') {
                 // Set recurrence for daily events
                 $event->setRecurrence(['RRULE:FREQ=DAILY']);

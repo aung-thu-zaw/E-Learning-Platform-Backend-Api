@@ -23,8 +23,8 @@ class Reminder extends Model
     ];
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Reminder, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Reminder, never>
+     */
     protected function time(): Attribute
     {
         return Attribute::make(
@@ -33,8 +33,8 @@ class Reminder extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Reminder, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<Reminder, never>
+     */
     protected function date(): Attribute
     {
         return Attribute::make(
@@ -43,24 +43,24 @@ class Reminder extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Reminder>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,Reminder>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Reminder>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Reminder>
+     */
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<ReminderDay>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<ReminderDay>
+     */
     public function reminderDays(): HasMany
     {
         return $this->hasMany(ReminderDay::class);

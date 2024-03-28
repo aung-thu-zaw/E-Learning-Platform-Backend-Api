@@ -22,7 +22,7 @@ class TwoFactorAuthenticate
 
             $user = User::findOrFail(auth()->id());
 
-            if($user->enabled_two_factor) {
+            if ($user->enabled_two_factor) {
 
                 if ($user->two_factor_code && $user->two_factor_expires_at !== null && $user->two_factor_expires_at->lt(now())) {
 
@@ -30,7 +30,7 @@ class TwoFactorAuthenticate
 
                     Auth::guard('web')->logout();
 
-                    return response()->json(["message" => "The two-factor code has expired. Please login again."]);
+                    return response()->json(['message' => 'The two-factor code has expired. Please login again.']);
                 }
             }
         }

@@ -48,8 +48,8 @@ class BlogCategory extends Model
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<BlogContent>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<BlogContent>
+     */
     public function blogContents(): HasMany
     {
         return $this->hasMany(BlogContent::class);

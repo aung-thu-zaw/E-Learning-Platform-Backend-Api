@@ -19,11 +19,11 @@ class SectionFactory extends Factory
      */
     public function definition(): array
     {
-        $courseId = Course::where("status", "published")->pluck('id')->toArray();
+        $courseId = Course::where('status', 'published')->pluck('id')->toArray();
 
         return [
-            "course_id" => fake()->randomElement($courseId),
-            "title" => fake()->sentence()
+            'course_id' => fake()->randomElement($courseId),
+            'title' => fake()->sentence(),
         ];
     }
 

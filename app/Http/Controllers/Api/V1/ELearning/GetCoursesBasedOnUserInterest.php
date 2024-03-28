@@ -8,7 +8,6 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\DB;
 
 class GetCoursesBasedOnUserInterest extends Controller
 {
@@ -19,11 +18,11 @@ class GetCoursesBasedOnUserInterest extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $courses = Course::with(['instructor','sections.lessons','enrollments','savedByUsers'])->whereHas('tags', function ($query) use ($userInterestIds) {
+            $courses = Course::with(['instructor', 'sections.lessons', 'enrollments', 'savedByUsers'])->whereHas('tags', function ($query) use ($userInterestIds) {
                 $query->whereIn('id', $userInterestIds);
             })
-            ->where('status', 'published')
-            ->paginate(9);
+                ->where('status', 'published')
+                ->paginate(9);
 
             return CourseResource::collection($courses);
 

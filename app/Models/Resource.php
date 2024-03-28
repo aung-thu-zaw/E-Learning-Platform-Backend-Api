@@ -21,8 +21,8 @@ class Resource extends Model
     ];
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,Resource>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,resource>
+     */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

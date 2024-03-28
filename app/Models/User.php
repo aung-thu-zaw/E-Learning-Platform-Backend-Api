@@ -23,14 +23,14 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use Billable;
+    use Followable;
+    use Follower;
     use HasApiTokens;
     use HasFactory;
     use HasRoles;
     use HasSlug;
     use Notifiable;
-    use Follower;
-    use Followable;
-    use Billable;
 
     /**
      * The attributes that should be cast.
@@ -44,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_private' => 'boolean',
         'remove_from_search' => 'boolean',
         'enabled_two_factor' => 'boolean',
-        'two_factor_code' => 'string'
+        'two_factor_code' => 'string',
     ];
 
     /**
@@ -65,8 +65,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
+     */
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -75,8 +75,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
-    */
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<User, never>
+     */
     protected function avatar(): Attribute
     {
         return Attribute::make(
@@ -95,82 +95,82 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Course>
+     */
     public function instructorCourses(): HasMany
     {
         return $this->hasMany(Course::class, 'instructor_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
+     */
     public function interests(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'user_interest', 'user_id', 'tag_id')->withTimestamps();
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+     */
     public function savedCourses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'user_saved_courses', 'user_id', 'course_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<LearningPath>
+     */
     public function savedLearningPaths(): BelongsToMany
     {
         return $this->belongsToMany(LearningPath::class, 'user_saved_learning_paths', 'user_id', 'learning_path_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasOne<ReferralCode>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<ReferralCode>
+     */
     public function referralCode(): HasOne
     {
         return $this->hasOne(ReferralCode::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<User>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<User>
+     */
     public function referredUsers(): HasMany
     {
         return $this->hasMany(User::class, 'referrer_id');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Enrollment>
+     */
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Course>
+     */
     public function enrolledCourses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'enrollments');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<EmailNotification>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<EmailNotification>
+     */
     public function emailNotifications(): BelongsToMany
     {
         return $this->belongsToMany(EmailNotification::class, 'user_notification_preferences')
-        ->using(UserNotificationPreference::class)
-        ->withPivot('enabled');
+            ->using(UserNotificationPreference::class)
+            ->withPivot('enabled');
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Reminder>
+     */
     public function reminders(): HasMany
     {
         return $this->hasMany(Reminder::class);

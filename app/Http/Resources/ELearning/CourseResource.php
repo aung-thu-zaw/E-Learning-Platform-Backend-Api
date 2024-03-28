@@ -68,7 +68,7 @@ class CourseResource extends JsonResource
                     'title' => $section->title,
                     'slug' => $section->slug,
                     'duration' => $sectionDuration,
-                    'total_completed_lessons_count' => $section->lessons->where("is_completed", true)->count(),
+                    'total_completed_lessons_count' => $section->lessons->where('is_completed', true)->count(),
                     'lessons' => $section->lessons->map(function ($lesson) {
                         $hours = floor($lesson->duration_seconds / 3600);
                         $minutes = floor(($lesson->duration_seconds % 3600) / 60);
@@ -92,12 +92,14 @@ class CourseResource extends JsonResource
             });
         }
 
-        $data['enrollment'] = $enrollment ? [
-            'id' => $enrollment->id,
-            'enrolled_at' => $enrollment->enrolled_at,
-            'completed_at' => $enrollment->completed_at,
-            'progress' => $enrollment->progress,
-        ] : null;
+        $data['enrollment'] = $enrollment
+            ? [
+                'id' => $enrollment->id,
+                'enrolled_at' => $enrollment->enrolled_at,
+                'completed_at' => $enrollment->completed_at,
+                'progress' => $enrollment->progress,
+            ]
+            : null;
 
         return $data;
     }

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\EmailNotification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class GetEmailNotificationController extends Controller
 {
@@ -16,7 +14,7 @@ class GetEmailNotificationController extends Controller
 
             $user = User::findOrFail(auth()->id());
 
-            $emailNotifications = $user->emailNotifications()->select("name", "description")->get();
+            $emailNotifications = $user->emailNotifications()->select('name', 'description')->get();
 
             return response()->json($emailNotifications);
         } catch (\Exception $e) {

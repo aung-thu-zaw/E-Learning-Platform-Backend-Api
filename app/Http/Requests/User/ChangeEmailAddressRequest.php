@@ -5,7 +5,6 @@ namespace App\Http\Requests\User;
 use App\Rules\RecaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class ChangeEmailAddressRequest extends FormRequest
 {
@@ -25,8 +24,8 @@ class ChangeEmailAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_email' => ['required','email', Rule::exists('users', 'email')],
-            'email' => ['required','email','confirmed','different:current_email', Rule::unique('users', 'email')->ignore(auth()->user())],
+            'current_email' => ['required', 'email', Rule::exists('users', 'email')],
+            'email' => ['required', 'email', 'confirmed', 'different:current_email', Rule::unique('users', 'email')->ignore(auth()->user())],
             'captcha_token' => ['required', new RecaptchaRule()],
         ];
     }

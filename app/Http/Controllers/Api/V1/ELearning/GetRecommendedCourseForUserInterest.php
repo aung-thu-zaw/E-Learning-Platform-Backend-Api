@@ -19,14 +19,14 @@ class GetRecommendedCourseForUserInterest extends Controller
 
             $userInterestIds = $user->interests()->pluck('id');
 
-            $courses = Course::with(['instructor', 'sections.lessons','enrollments','savedByUsers'])
-            ->whereHas('tags', function ($query) use ($userInterestIds) {
-                $query->whereIn('id', $userInterestIds);
-            })
-            ->where('status', 'published')
-            ->orderBy(DB::raw('(SELECT COALESCE(SUM(views), 0) + COALESCE(SUM(enrollments), 0) FROM course_metrics WHERE course_metrics.course_id = courses.id)'), 'desc')
-            ->take(10)
-            ->get();
+            $courses = Course::with(['instructor', 'sections.lessons', 'enrollments', 'savedByUsers'])
+                ->whereHas('tags', function ($query) use ($userInterestIds) {
+                    $query->whereIn('id', $userInterestIds);
+                })
+                ->where('status', 'published')
+                ->orderBy(DB::raw('(SELECT COALESCE(SUM(views), 0) + COALESCE(SUM(enrollments), 0) FROM course_metrics WHERE course_metrics.course_id = courses.id)'), 'desc')
+                ->take(10)
+                ->get();
 
             return CourseResource::collection($courses);
 

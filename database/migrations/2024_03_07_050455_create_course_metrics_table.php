@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -12,7 +13,7 @@ return new class () extends Migration {
     {
         Schema::create('course_metrics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->unique()->constrained("courses");
+            $table->foreignId('course_id')->unique()->constrained('courses');
             $table->unsignedInteger('views')->default(0);
             $table->unsignedInteger('enrollments')->default(0);
             $table->unsignedFloat('rating')->default(0.0);

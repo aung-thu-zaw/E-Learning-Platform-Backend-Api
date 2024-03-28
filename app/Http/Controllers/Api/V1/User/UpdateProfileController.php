@@ -15,12 +15,12 @@ class UpdateProfileController extends Controller
             $user = User::findOrFail(auth()->id());
 
             $user->update([
-                "username" => $request->username,
-                "profile_private" => $request->profile_private,
-                "remove_from_search" => $request->remove_from_search,
+                'username' => $request->username,
+                'profile_private' => $request->profile_private,
+                'remove_from_search' => $request->remove_from_search,
             ]);
 
-            return response()->json(["message" => "Profile updated successfully."]);
+            return response()->json(['message' => 'Profile updated successfully.']);
 
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);

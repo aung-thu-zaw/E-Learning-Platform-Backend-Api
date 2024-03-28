@@ -3,19 +3,18 @@
 namespace App\Services;
 
 use FFMpeg\Format\Video\X264;
-use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use Illuminate\Support\Facades\File;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class VideoTranscoderService
 {
     /**
      * @return array<mixed>
      */
-
     public function transcodeVideo(string $videoFileName): array
     {
         // Check if the directory exists, if not, create it
-        if (!File::exists(public_path('videos'))) {
+        if (! File::exists(public_path('videos'))) {
             File::makeDirectory(public_path('videos'));
         }
 
@@ -40,15 +39,15 @@ class VideoTranscoderService
             $resolution = $formatData['resolution'];
 
             $ffmpeg->export()
-                   ->inFormat($format)
-                   ->toDisk('public')
-                   ->save("courses/lessons/qualities/{$resolution}.mp4");
+                ->inFormat($format)
+                ->toDisk('public')
+                ->save("courses/lessons/qualities/{$resolution}.mp4");
 
             // Store video quality information
             $videoQualities[] = [
-                'label' => 'Quality ' . ($index + 1) . ' - ' . $resolution,
+                'label' => 'Quality '.($index + 1).' - '.$resolution,
                 'resolution' => $resolution,
-                'url' => "videos/{$resolution}.mp4"
+                'url' => "videos/{$resolution}.mp4",
             ];
         }
 

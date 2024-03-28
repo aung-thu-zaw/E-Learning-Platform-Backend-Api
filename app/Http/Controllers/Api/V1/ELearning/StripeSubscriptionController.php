@@ -13,20 +13,20 @@ class StripeSubscriptionController extends Controller
     {
         $user = User::findOrFail(auth()->id());
 
-        return response()->json(["intent" => $user->createSetupIntent()]);
+        return response()->json(['intent' => $user->createSetupIntent()]);
     }
 
     public function subscribe(Request $request): JsonResponse
     {
         $request->validate([
-            "subscription_plan" => ["required"],
-            "payment_method" => ["required"]
+            'subscription_plan' => ['required'],
+            'payment_method' => ['required'],
         ]);
 
         $user = User::findOrFail(auth()->id());
 
         $user->newSubscription('cashier', $request->subscription_plan)->create($request->payment_method);
 
-        return response()->json(["message" => "Subscription successful!"]);
+        return response()->json(['message' => 'Subscription successful!']);
     }
 }

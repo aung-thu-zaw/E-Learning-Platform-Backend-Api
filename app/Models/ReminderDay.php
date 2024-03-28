@@ -11,8 +11,8 @@ class ReminderDay extends Model
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Reminder,ReminderDay>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Reminder,ReminderDay>
+     */
     public function reminder(): BelongsTo
     {
         return $this->belongsTo(Reminder::class);

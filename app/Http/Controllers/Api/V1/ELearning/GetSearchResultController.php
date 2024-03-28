@@ -9,7 +9,6 @@ use App\Models\Course;
 use App\Models\LearningPath;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetSearchResultController extends Controller
@@ -19,7 +18,7 @@ class GetSearchResultController extends Controller
         try {
             $searchResultCourses = Course::search(request('query'))
                 ->query(function (Builder $builder) {
-                    $builder->with(['instructor', 'lessons','enrollments','savedByUsers']);
+                    $builder->with(['instructor', 'lessons', 'enrollments', 'savedByUsers']);
                 })
                 ->where('status', 'published')
                 ->orderBy('id', 'desc')
@@ -28,7 +27,7 @@ class GetSearchResultController extends Controller
 
             $searchResultLearningPaths = LearningPath::search(request('query'))
                 ->query(function (Builder $builder) {
-                    $builder->with(['creator', 'courses','savedByUsers']);
+                    $builder->with(['creator', 'courses', 'savedByUsers']);
                 })
                 ->where('status', true)
                 ->orderBy('id', 'desc')
@@ -38,7 +37,7 @@ class GetSearchResultController extends Controller
             $courses = CourseResource::collection($searchResultCourses)->response()->getData(true);
             $learningPaths = LearningPathResource::collection($searchResultLearningPaths)->response()->getData(true);
 
-            return response()->json(["courses" => $courses,"learningPaths" => $learningPaths]);
+            return response()->json(['courses' => $courses, 'learningPaths' => $learningPaths]);
 
         } catch (\Exception $e) {
             return $this->apiExceptionResponse($e);
