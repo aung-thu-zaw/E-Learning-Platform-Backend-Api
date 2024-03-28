@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,6 +21,7 @@ return new class() extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('title')->unique();
             $table->string('slug')->unique();
+            $table->string('intro_video_path');
             $table->text('course_description');
             $table->text('project_description')->nullable();
             $table->enum('level', ['beginner', 'intermediate', 'advanced', 'all_levels']);

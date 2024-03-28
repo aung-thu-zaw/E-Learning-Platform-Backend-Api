@@ -30,7 +30,7 @@ class SectionFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Section $section) {
-            Lesson::factory()->count(rand(20, 100))->create(['section_id' => $section->id]);
+            Lesson::factory()->count(rand(5, 20))->create(['section_id' => $section->id]);
         });
     }
 }

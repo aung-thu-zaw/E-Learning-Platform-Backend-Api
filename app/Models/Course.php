@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -60,7 +61,17 @@ class Course extends Model
     protected function thumbnail(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/courses/$value"),
+            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/courses/thumbnails/$value"),
+        );
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Casts\Attribute<Course, never>
+    */
+    protected function introVideoPath(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => str_starts_with($value, 'http') || ! $value ? $value : asset("storage/courses/intro-videos/$value"),
         );
     }
 
@@ -168,6 +179,14 @@ class Course extends Model
     public function reminders(): HasMany
     {
         return $this->hasMany(Reminder::class);
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseWatchTime>
+    */
+    public function courseWatchTime(): HasOne
+    {
+        return $this->hasOne(CourseWatchTime::class);
     }
 
     /**

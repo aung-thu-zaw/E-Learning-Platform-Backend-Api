@@ -10,11 +10,13 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('course_views', function (Blueprint $table) {
+        Schema::create('lesson_watch_time', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('watch_time_seconds');
+            $table->foreignId('lesson_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('watch_time_seconds')->default(0);
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_views');
+        Schema::dropIfExists('lesson_watch_time');
     }
 };

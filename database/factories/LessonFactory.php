@@ -25,10 +25,11 @@ class LessonFactory extends Factory
 
         return [
             'section_id' => fake()->randomElement($sectionIds),
-            'title' => $this->faker->sentence(4),
-            'slug' => $this->faker->slug(),
-            'video_path' => $this->faker->word(),
-            'duration_seconds' => $this->faker->numberBetween(180, 2700),
+            'title' => fake()->sentence(4),
+            'slug' => fake()->slug(),
+            'video_path' => fake()->randomElement(["https://www.youtube.com/watch?v=GBdO5myZNsQ&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC","https://www.youtube.com/watch?v=thHPEotZVdA&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=2","https://www.youtube.com/watch?v=ovJfnoqUBk8&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=3","https://www.youtube.com/watch?v=QS8MwC8S4o8&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=4","https://www.youtube.com/watch?v=X9ta1grG1j0&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=5","https://www.youtube.com/watch?v=LZDQhOaBBbk&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=6","https://www.youtube.com/watch?v=dvanqBUoxhc&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=7","https://www.youtube.com/watch?v=tGhMaMIYRiI&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=8","https://www.youtube.com/watch?v=SUfx1y6XO9c&list=PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC&index=9"]),
+            'duration_seconds' => fake()->numberBetween(180, 2700),
+            'is_completed' => fake()->boolean()
         ];
     }
 }

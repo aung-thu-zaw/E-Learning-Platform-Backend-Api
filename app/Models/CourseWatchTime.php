@@ -6,20 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CourseView extends Model
+class CourseWatchTime extends Model
 {
     use HasFactory;
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User,CourseView>
-    */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseView>
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Course,CourseWatchTime>
     */
     public function course(): BelongsTo
     {

@@ -4,6 +4,7 @@ namespace App\Http\Resources\ELearning;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Route;
 
 class CourseResource extends JsonResource
 {
@@ -21,13 +22,15 @@ class CourseResource extends JsonResource
             $totalLessonCount += $section->lessons->count();
         }
 
+        $includeSections = Route::currentRouteName() === 'courses.show';
 
-        return [
+        $data = [
             'id' => $this->resource->id,
             'uuid' => $this->resource->uuid,
             'instructor_id' => $this->resource->instructor_id,
             'category_id' => $this->resource->category_id,
             'subcategory_id' => $this->resource->subcategory_id,
+            'intro_video_path' => $this->resource->intro_video_path,
             'thumbnail' => $this->resource->thumbnail,
             'title' => $this->resource->title,
             'slug' => $this->resource->slug,
@@ -47,10 +50,25 @@ class CourseResource extends JsonResource
                 'name' => $this->resource->instructor->display_name,
                 'avatar' => $this->resource->instructor->avatar,
             ],
-            'sections' => $this->resource->sections->map(function ($section) {
+        ];
+
+        if ($includeSections) {
+            $data['sections'] = $this->resource->sections->map(function ($section) {
+                $sectionDurationSeconds = $section->lessons->sum('duration_seconds');
+                $sectionHours = floor($sectionDurationSeconds / 3600);
+                $sectionMinutes = floor(($sectionDurationSeconds % 3600) / 60);
+
+                if ($sectionHours > 0) {
+                    $sectionDuration = sprintf('%02d h %02d min', $sectionHours, $sectionMinutes);
+                } else {
+                    $sectionDuration = sprintf('%02d min', $sectionMinutes);
+                }
+
                 return [
                     'title' => $section->title,
                     'slug' => $section->slug,
+                    'duration' => $sectionDuration,
+                    'total_completed_lessons_count' => $section->lessons->where("is_completed", true)->count(),
                     'lessons' => $section->lessons->map(function ($lesson) {
                         $hours = floor($lesson->duration_seconds / 3600);
                         $minutes = floor(($lesson->duration_seconds % 3600) / 60);
@@ -71,13 +89,16 @@ class CourseResource extends JsonResource
                         ];
                     }),
                 ];
-            }),
-            'enrollment' => $enrollment ? [
-                'id' => $enrollment->id,
-                'enrolled_at' => $enrollment->enrolled_at,
-                'completed_at' => $enrollment->completed_at,
-                'progress' => $enrollment->progress,
-            ] : null
-        ];
+            });
+        }
+
+        $data['enrollment'] = $enrollment ? [
+            'id' => $enrollment->id,
+            'enrolled_at' => $enrollment->enrolled_at,
+            'completed_at' => $enrollment->completed_at,
+            'progress' => $enrollment->progress,
+        ] : null;
+
+        return $data;
     }
 }
