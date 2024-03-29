@@ -22,6 +22,7 @@ class Lesson extends Model
         'id' => 'integer',
         'section_id' => 'integer',
         'course_id' => 'integer',
+        'is_completed' => 'boolean',
     ];
 
     public function getRouteKeyName()

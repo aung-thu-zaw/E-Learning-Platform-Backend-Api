@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->timestamp('enrolled_at');
             $table->timestamp('completed_at')->nullable();
             $table->unsignedInteger('progress')->default(0);
+            $table->string('last_watched_section_slug')->nullable();
             $table->string('last_watched_lesson_uuid')->nullable();
             $table->timestamps();
         });

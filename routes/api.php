@@ -99,6 +99,8 @@ Route::get('course/intro-video/{filename}', [GetVideoController::class,"introVid
 Route::get('courses/{course}/sections/{section}/lessons/{lesson}', [GetVideoController::class,"lessonVideo"])->middleware(["auth"]);
 
 Route::get('/lessons/{lesson}/metadata', [LessonController::class,'getLessonMetaData'])->middleware(["auth"]);
+Route::put('/lessons/{lesson}/mark-as-complete', [LessonController::class,'markAsComplete'])->middleware(["auth"]);
+Route::put('/lessons/{lesson}/unmark-as-complete', [LessonController::class,'unMarkAsComplete'])->middleware(["auth"]);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

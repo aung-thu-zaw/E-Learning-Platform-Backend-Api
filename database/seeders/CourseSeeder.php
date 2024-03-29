@@ -12,6 +12,6 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-        Course::factory(10)->create(['status' => 'published', 'published_at' => now()]);
+        Course::factory(5)->create(['status' => 'published', 'published_at' => now()]);
     }
 }

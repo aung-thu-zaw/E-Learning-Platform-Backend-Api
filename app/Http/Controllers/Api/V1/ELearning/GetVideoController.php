@@ -39,7 +39,7 @@ class GetVideoController extends Controller
 
         if($enrollment) {
 
-            $enrollment->update(["last_watched_lesson_uuid" => $lesson->uuid]);
+            $enrollment->update(["last_watched_section_slug" => $section->slug,"last_watched_lesson_uuid" => $lesson->uuid]);
         }
 
         try {

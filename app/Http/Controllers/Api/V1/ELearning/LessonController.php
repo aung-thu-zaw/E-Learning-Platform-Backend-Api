@@ -28,4 +28,25 @@ class LessonController extends Controller
         }
     }
 
+    public function markAsComplete(Lesson $lesson): JsonResponse
+    {
+        try {
+            $lesson->update(["is_completed" => true]);
+
+            return response()->json(["message" => "Mark as completed successfully."]);
+        } catch (\Exception $e) {
+            return $this->apiExceptionResponse($e);
+        }
+    }
+
+    public function unmarkAsComplete(Lesson $lesson): JsonResponse
+    {
+        try {
+            $lesson->update(["is_completed" => false]);
+
+            return response()->json(["message" => "Unmark as completed successfully."]);
+        } catch (\Exception $e) {
+            return $this->apiExceptionResponse($e);
+        }
+    }
 }
