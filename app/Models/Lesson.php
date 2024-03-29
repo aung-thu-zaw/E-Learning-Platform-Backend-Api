@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 class Lesson extends Model
 {
@@ -60,5 +59,15 @@ class Lesson extends Model
     public function watchedTimes(): HasMany
     {
         return $this->hasMany(WatchedTime::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     */
+    public function completedLessonsByUser(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'completed_lessons', 'lesson_id', 'user_id')
+                    ->withPivot('enrollment_id')
+                    ->withTimestamps();
     }
 }

@@ -20,7 +20,6 @@ return new class () extends Migration {
             $table->string('video_file_name');
             $table->unsignedBigInteger('duration_seconds');
             $table->text('description')->nullable();
-            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
 

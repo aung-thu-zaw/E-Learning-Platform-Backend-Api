@@ -70,12 +70,19 @@ class CourseResourceWithSectionLessons extends JsonResource
                     $sectionDuration = sprintf('%02d min', $sectionMinutes);
                 }
 
+                $totalCompletedLessonsCount = $section->lessons->sum(function ($lesson) {
+                    return $lesson->completedLessonsByUser()
+                        ->where('user_id', auth()->id())
+                        ->count();
+                });
+
+
                 return [
                     'id' => $section->id,
                     'title' => $section->title,
                     'slug' => $section->slug,
                     'duration' => $sectionDuration,
-                    'total_completed_lessons_count' => $section->lessons->where('is_completed', true)->count(),
+                    'total_completed_lessons_count' => $totalCompletedLessonsCount,
                     'lessons' => $section->lessons->map(function ($lesson) {
                         $hours = floor($lesson->duration_seconds / 3600);
                         $minutes = floor(($lesson->duration_seconds % 3600) / 60);
@@ -94,7 +101,7 @@ class CourseResourceWithSectionLessons extends JsonResource
                             'video_file_name' => $lesson->video_file_name,
                             'duration' => $duration,
                             'description' => $lesson->description,
-                            'is_completed' => $lesson->is_completed,
+                            'is_completed' => auth()->user() ? auth()->user()->completedLessons->contains($lesson->id) : false,
                         ];
                     }),
                 ];

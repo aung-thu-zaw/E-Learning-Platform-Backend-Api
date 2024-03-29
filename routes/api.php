@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ELearning\BrowseCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetCourseController;
 use App\Http\Controllers\Api\V1\ELearning\GetCoursesBasedOnUserInterest;
 use App\Http\Controllers\Api\V1\ELearning\GetInterestTagBeginnerCourseController;
+use App\Http\Controllers\Api\V1\ELearning\GetLessonMetaDataController;
 use App\Http\Controllers\Api\V1\ELearning\LessonController;
 use App\Http\Controllers\Api\V1\ELearning\GetNavTopBannerController;
 use App\Http\Controllers\Api\V1\ELearning\GetNewAndPopularCourseController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Api\V1\ELearning\GetSliderController;
 use App\Http\Controllers\Api\V1\ELearning\GetUserInformationController;
 use App\Http\Controllers\Api\V1\ELearning\GetVideoController;
 use App\Http\Controllers\Api\V1\ELearning\LearningPathController;
+use App\Http\Controllers\Api\V1\ELearning\LessonCompletionController;
 use App\Http\Controllers\Api\V1\ELearning\StripeSubscriptionController;
 use App\Http\Controllers\Api\V1\ELearning\UserCourseEnrollController;
 use App\Http\Controllers\Api\V1\ELearning\UserCourseLessonInteractionController;
@@ -97,9 +99,12 @@ Route::post('/watched-time', [WatchedTimeController::class, 'store'])->middlewar
 Route::get('course/intro-video/{filename}', [GetVideoController::class,"introVideo"]);
 Route::get('courses/{course}/sections/{section}/lessons/{lesson}', [GetVideoController::class,"lessonVideo"])->middleware(["auth"]);
 
-Route::get('/lessons/{lesson}/metadata', [LessonController::class,'getLessonMetaData'])->middleware(["auth"]);
-Route::put('/lessons/{lesson}/mark-as-complete', [LessonController::class,'markAsComplete'])->middleware(["auth"]);
-Route::put('/lessons/{lesson}/unmark-as-complete', [LessonController::class,'unMarkAsComplete'])->middleware(["auth"]);
+Route::get('/lessons/{lesson}/metadata', GetLessonMetaDataController::class)->middleware(["auth"]);
+
+
+
+Route::put('/lessons/{lesson}/mark-as-complete', [LessonCompletionController::class,'markAsComplete'])->middleware(["auth"]);
+Route::put('/lessons/{lesson}/unmark-as-complete', [LessonCompletionController::class,'unMarkAsComplete'])->middleware(["auth"]);
 
 require __DIR__.'/admin.php';
 require __DIR__.'/instructor.php';

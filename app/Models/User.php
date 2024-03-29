@@ -135,6 +135,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Lesson>
+     */
+    public function completedLessons(): BelongsToMany
+    {
+        return $this->belongsToMany(Lesson::class, 'completed_lessons', 'user_id', 'lesson_id')->withTimestamps();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<ReferralCode>
      */
     public function referralCode(): HasOne
