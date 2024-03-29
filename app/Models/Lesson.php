@@ -53,4 +53,12 @@ class Lesson extends Model
     {
         return $this->hasMany(Subtitle::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<WatchedTime>
+     */
+    public function watchedTimes(): HasMany
+    {
+        return $this->hasMany(WatchedTime::class);
+    }
 }

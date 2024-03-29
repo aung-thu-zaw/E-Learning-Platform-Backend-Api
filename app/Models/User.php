@@ -103,6 +103,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<WatchedTime>
+     */
+    public function watchedTimes(): HasMany
+    {
+        return $this->hasMany(WatchedTime::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Tag>
      */
     public function interests(): BelongsToMany

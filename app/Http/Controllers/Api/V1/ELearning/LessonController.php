@@ -13,6 +13,7 @@ class LessonController extends Controller
     {
         try {
             $lessonMetadata = [
+                'id' => $lesson->id,
                 'section_id' => $lesson->section_id,
                 'uuid' => $lesson->uuid,
                 'title' => $lesson->title,

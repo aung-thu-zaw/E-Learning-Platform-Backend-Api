@@ -87,6 +87,7 @@ class CourseResourceWithSectionLessons extends JsonResource
                         }
 
                         return [
+                            'id' => $lesson->id,
                             'section_id' => $lesson->section_id,
                             'title' => $lesson->title,
                             'uuid' => $lesson->uuid,

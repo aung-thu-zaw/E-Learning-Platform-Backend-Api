@@ -172,11 +172,11 @@ class Course extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<CourseWatchTime>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<WatchedTime>
      */
-    public function courseWatchTime(): HasOne
+    public function watchedTimes(): HasMany
     {
-        return $this->hasOne(CourseWatchTime::class);
+        return $this->hasMany(WatchedTime::class);
     }
 
     /**

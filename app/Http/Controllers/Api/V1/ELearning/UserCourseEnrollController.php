@@ -27,8 +27,6 @@ class UserCourseEnrollController extends Controller
                 ['enrollments' => DB::raw('enrollments + 1')]
             );
 
-            CourseWatchTime::firstOrCreate(['course_id' => $course->id]);
-
             return response()->json(['message' => 'Enrollment successful.']);
 
         } catch (\Exception $e) {

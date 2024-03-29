@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\V1\ELearning\UserFollowController;
 use App\Http\Controllers\Api\V1\ELearning\UserInterestTagController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedCourseController;
 use App\Http\Controllers\Api\V1\ELearning\UserSavedLearningPathController;
+use App\Http\Controllers\Api\V1\ELearning\WatchedTimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -89,11 +90,9 @@ Route::post('/user/{user:id}/unfollow', [UserFollowController::class, 'unfollow'
 Route::get('/courses/{course:slug}', GetCourseController::class)->name('courses.show');
 Route::post('/courses/{course:slug}/enroll', UserCourseEnrollController::class)->middleware('auth');
 
-// Route::post('/courses/{course:slug}/{section}/{lesson}', UserCourseLessonInteractionController::class)->middleware("auth");
 
-Route::post('/lessons/{lesson}/start', [UserCourseLessonInteractionController::class, 'startLesson'])->middleware(['auth:sanctum', 'auth.two_factor']);
-Route::post('/lessons/{lesson}/end', [UserCourseLessonInteractionController::class, 'endLesson'])->middleware(['auth:sanctum', 'auth.two_factor']);
-
+Route::post('/watched-time', [WatchedTimeController::class, 'store'])->middleware(['auth:sanctum', 'auth.two_factor']);
+;
 
 Route::get('course/intro-video/{filename}', [GetVideoController::class,"introVideo"]);
 Route::get('courses/{course}/sections/{section}/lessons/{lesson}', [GetVideoController::class,"lessonVideo"])->middleware(["auth"]);
